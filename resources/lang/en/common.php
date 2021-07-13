@@ -14,6 +14,7 @@ return [
     'Date' => 'Date',
     'Username' => 'Username',
     'User Role' => 'User Role',
+    'Select User Role' => 'Select User Role',
     'Contact No 1' => 'Contact No 1',
     'Contact No 2' => 'Contact No 2',
     'Address' => 'Address',

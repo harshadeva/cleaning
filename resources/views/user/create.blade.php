@@ -25,7 +25,7 @@
 @section('rightbar-content')
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <form action="{{ route('company.store') }}" method="POST">
+        <form action="{{ route('user.store') }}" method="POST">
             <div class="row">
                 <div class="col-md-8">
                     <div class="card m-b-30">
@@ -39,9 +39,15 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         @csrf
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.text',
-                                            ['label'=>'First Name','name'=>'first_name','placeholder'=>'Enter first name'])
+                                        <div class="col-lg-12 form-group">
+                                            <label for="user_role">{{ __('common.User Role') }}</label>
+                                            <select class="select2-single form-control" id="user_role_id"
+                                                name="user_role_id">
+                                                <option disabled selected>{{ __('common.Select User Role') }}</option>
+                                                @foreach ($userRoles as $userRole)
+                                                    <option value="{{ $userRole->id }}">{{ $userRole->name }} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',

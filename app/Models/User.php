@@ -86,7 +86,7 @@ class User extends Authenticatable
         $record->last_name = $data['last_name'];
         $record->email = $data['email'];
         $record->password = Hash::make($data['password']);
-        $record->status = 1;
+        $record->status = 1;//active
         $record->save();
         return $record;
     }

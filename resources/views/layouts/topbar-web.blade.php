@@ -31,16 +31,14 @@
                                     <div class="dropdown-item">
                                         <div class="profilename d-flex align-items-start">
                                             <h4>{{ Auth::user()->first_name }}</h4>
-                                            <span>{{ Auth::user()->first_name }}</span>
+                                        </div>
+
+                                        <div class="profilename d-flex align-items-start">
+                                            <h6 class="role_name">Super Admin</h6>
                                         </div>
                                     </div>
                                     <div class="userbox">
                                         <ul class="list-unstyled mb-0">
-                                            <li class="media dropdown-item">
-                                                <a href="#" class="profile-icon"><img
-                                                        src="{{ asset('assets/images/svg-icon/user.svg') }}"
-                                                        class="img-fluid" alt="user">My Profile</a>
-                                            </li>
                                             <li class="media dropdown-item">
                                                 <form id="logout_form" method="POST" action="{{ route('logout') }}">
                                                     {{ csrf_field() }}

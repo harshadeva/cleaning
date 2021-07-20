@@ -14,6 +14,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+
         /* company permision */
         Permission::create(['name' => 'company_create']);
         Permission::create(['name' => 'company_edit']);
@@ -34,10 +35,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'site_delete']);
 
         /* report permision */
+        Permission::create(['name' => 'report_site_comment']);
         Permission::create(['name' => 'report_create']);
         Permission::create(['name' => 'report_edit']);
         Permission::create(['name' => 'report_view']);
         Permission::create(['name' => 'report_delete']);
-
     }
 }

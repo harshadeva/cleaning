@@ -46,4 +46,8 @@
          display: none;
      }
 
+     .role_name{
+        color: #777777;
+     }
+
  </style>

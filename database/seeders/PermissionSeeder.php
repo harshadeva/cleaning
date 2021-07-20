@@ -27,5 +27,17 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'user_edit']);
         Permission::create(['name' => 'user_delete']);
 
+        /* site permision */
+        Permission::create(['name' => 'site_create']);
+        Permission::create(['name' => 'site_edit']);
+        Permission::create(['name' => 'site_view']);
+        Permission::create(['name' => 'site_delete']);
+
+        /* report permision */
+        Permission::create(['name' => 'report_create']);
+        Permission::create(['name' => 'report_edit']);
+        Permission::create(['name' => 'report_view']);
+        Permission::create(['name' => 'report_delete']);
+
     }
 }

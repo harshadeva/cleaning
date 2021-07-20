@@ -22,23 +22,25 @@ class Employee extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function scopeAdmin($query)
     {
         return $query->where('employee_type_id', 1);
     }
+
     public function scopeSupervisor($query)
     {
         return $query->where('employee_type_id', 2);
     }
+
     public function scopeWorker($query)
     {
         return $query->where('employee_type_id', 3);
     }
 
-    public static function register($user, $company,$employeeTypeId)
+    public static function register($user, $company, $employeeTypeId)
     {
         $record = new self();
         $record->user_id  = $user->id;
@@ -47,17 +49,27 @@ class Employee extends Model
         $record->status = 1;
         $record->save();
 
-        self::storeUserRoles($user,$employeeTypeId);
+        self::storeUserRoles($user, $employeeTypeId);
         return $record;
     }
 
-    private static function storeUserRoles($user,$employeeTypeId){
-        if($employeeTypeId == 1){
-            $user->assignRole('company admin');
+    private static function storeUserRoles($user, $employeeTypeId)
+    {
+        if ($employeeTypeId == 1) {
+            $user->syncRoles('company admin');
         } else if ($employeeTypeId == 2) {
-            $user->assignRole('supervisor');
+            $user->syncRoles('supervisor');
         } else if ($employeeTypeId == 3) {
-            $user->assignRole('worker');
+            $user->syncRoles('worker');
         }
+    }
+
+    public static function edit($userId, $compayId, $employeeTypeId)
+    {
+        $record = self::where('company_id', $compayId)->where('user_id', $userId)->first();
+        $record->employee_type_id  = $employeeTypeId;
+        $record->save();
+
+        self::storeUserRoles($record->user,$employeeTypeId);
     }
 }

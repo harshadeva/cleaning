@@ -1,13 +1,13 @@
 @extends('layouts.main')
 @section('title')
-    Company View
+    Site View
 @endsection
 @section('breadcrump')
     <div class="breadcrumb-list">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.Home') }}</a></li>
             <li class="breadcrumb-item " aria-current="page"><a
-                    href="{{ route('company.index') }}">{{ __('common.Company') }}</a></li>
+                    href="{{ route('site.index') }}">{{ __('common.Site') }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ __('common.View') }}</li>
         </ol>
     </div>

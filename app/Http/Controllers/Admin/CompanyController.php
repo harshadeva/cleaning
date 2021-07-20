@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Classes\CatchErrors;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyStoreReqest;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Models\Company;
@@ -19,7 +20,7 @@ class CompanyController extends Controller
     {
         try {
             $records = Company::all();
-            return view('company.index')->with(['records' => $records]);
+            return view('admin.company.index')->with(['records' => $records]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -28,7 +29,7 @@ class CompanyController extends Controller
     public function create()
     {
         try {
-            return view('company.create');
+            return view('admin.company.create');
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -38,18 +39,17 @@ class CompanyController extends Controller
     {
         try {
             $record = Company::find($id);
-            return view('company.edit', ['record' => $record]);
+            return view('admin.company.edit', ['record' => $record]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
     }
 
-
     public function show($id)
     {
         try {
             $record = Company::find($id);
-            return view('company.show', ['record' => $record]);
+            return view('admin.company.show', ['record' => $record]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -64,7 +64,7 @@ class CompanyController extends Controller
             $companyAdmin = $this->storeCompanyAdmin($user, $company);
             $request['company_admin_id'] = $companyAdmin->id;
             DB::commit();
-            return redirect()->route('company.index')->with(['successMessage' => 'Company saved']);
+            return redirect()->route('admin.company.index')->with(['successMessage' => 'Company saved']);
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }
@@ -77,7 +77,7 @@ class CompanyController extends Controller
             $company = $this->updateCompany($id, $request);
             $this->updateCompanyAdmin($company, $request);
             DB::commit();
-            return redirect()->route('company.index')->with(['successMessage' => 'Company updated']);
+            return redirect()->route('admin.company.index')->with(['successMessage' => 'Company updated']);
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }
@@ -96,8 +96,6 @@ class CompanyController extends Controller
             return CatchErrors::rollback($e);
         }
     }
-
-
 
     private function storeFirstUser($request)
     {

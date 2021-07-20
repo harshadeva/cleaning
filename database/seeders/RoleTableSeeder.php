@@ -23,12 +23,23 @@ class RoleTableSeeder extends Seeder
         $companyAdmin = Role::create(['name' => 'company admin']);
         $companyAdmin->givePermissionTo(
             [
-                'user_creation_page', 'user_create', 'user_view', 'user_edit', 'user_delete'
+                'user_creation_page', 'user_create', 'user_view', 'user_edit', 'user_delete',
+                'site_create', 'site_view', 'site_edit', 'site_delete'
             ]
         );
 
-        Role::create(['name' => 'supervisor']);
+        $supervisor = Role::create(['name' => 'supervisor']);
+        $supervisor->givePermissionTo(
+            [
+                'report_create', 'report_view', 'report_edit', 'report_delete'
+            ]
+        );
         Role::create(['name' => 'worker']);
-        Role::create(['name' => 'site admin']);
+        $siteAdmin = Role::create(['name' => 'site admin']);
+        $siteAdmin->givePermissionTo(
+            [
+                'report_site_comment', 'report_view',
+            ]
+        );
     }
 }

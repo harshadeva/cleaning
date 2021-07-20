@@ -42,23 +42,23 @@
                                                 <td>
                                                     @if ($record->status == 1)
                                                         <input type="checkbox"
-                                                            onchange="changeStatus(this,'{{ route('company.destroy', ['company' => $record->id]) }}')"
+                                                            onchange="changeStatus(this,'{{ route('admin.company.destroy', ['company' => $record->id]) }}')"
                                                             class="js-switch-success-multicolor-on-off" checked />
                                                     @else
                                                         <input type="checkbox"
-                                                            onchange="changeStatus(this,'{{ route('company.destroy', ['company' => $record->id]) }}')"
+                                                            onchange="changeStatus(this,'{{ route('admin.company.destroy', ['company' => $record->id]) }}')"
                                                             class="js-switch-success-multicolor-on-off" />
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
                                                     <p>
-                                                        <a type='button'
-                                                            href="{{ route('company.show', ['company' => $record->id]) }}'"
+                                                        <a type='button' title="More Details"
+                                                            href="{{ route('admin.company.show', ['company' => $record->id]) }}"
                                                             class='btn btn-info'>
                                                             <i class='fa fa-eye'></i>
                                                         </a>
-                                                        <a type='button'
-                                                            href="{{ route('company.edit', ['company' => $record->id]) }}"
+                                                        <a type='button' title="Edit"
+                                                            href="{{ route('admin.company.edit', ['company' => $record->id]) }}"
                                                             class='btn btn-warning'>
                                                             <i class='fa fa-edit'></i>
                                                         </a>

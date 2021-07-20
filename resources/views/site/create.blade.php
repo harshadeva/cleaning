@@ -1,13 +1,13 @@
 @extends('layouts.main')
 @section('title')
-    User Create
+    Site Create
 @endsection
 @section('breadcrump')
     <div class="breadcrumb-list">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.Home') }}</a></li>
             <li class="breadcrumb-item " aria-current="page"><a
-                    href="{{ route('company.index') }}">{{ __('common.Company') }}</a></li>
+                    href="{{ route('site.index') }}">{{ __('common.Site') }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ __('common.Create') }}</li>
         </ol>
     </div>
@@ -25,58 +25,58 @@
 @section('rightbar-content')
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <form action="{{ route('user.store') }}" method="POST">
+        <form action="{{ route('site.store') }}" method="POST">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="card m-b-30">
                         <div class="row">
                             <!-- Start col -->
                             <div class="card-body">
                                 <div class="col-md-12">
-                                    <h4>User Details</h4>
+                                    <h4>Site Details</h4>
                                     <hr />
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         @csrf
-                                        <div class="col-lg-12 form-group">
-                                            <label for="user_role">{{ __('common.User Role') }}</label>
-                                            <select class="select2-single form-control" id="user_role_id"
-                                                name="user_role_id">
-                                                <option disabled selected>{{ __('common.Select User Role') }}</option>
-                                                @foreach ($userRoles as $userRole)
-                                                    <option value="{{ $userRole->id }}">{{ $userRole->name }} </option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-lg-12">
+                                            @include('components.inputs.text',
+                                            ['label'=>'Site Name','name'=>'site_name','placeholder'=>'Enter site name'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
-                                            ['label'=>'First Name','name'=>'first_name','placeholder'=>'Enter first name'])
+                                            ['label'=>'Contact No 1','name'=>'contact_no_1','placeholder'=>'0xxxxxxxxx'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
-                                            ['label'=>'Last Name','name'=>'last_name','placeholder'=>'Enter last name'])
+                                            ['label'=>'Contact No 2','name'=>'contact_no_2','placeholder'=>'0xxxxxxxxx'])
                                         </div>
                                         <div class="col-lg-12">
-                                            @include('components.inputs.email',['label'=>'Email','name'=>'email','placeholder'=>'Enter
-                                            email'])
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.password',['label'=>'Password','name'=>'password'])
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.password',
-                                            ['label'=>'Re-Enter Password','name'=>'password_confirmation'])
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            @include('components.buttons.submit',['classes'=>'btnTopMargin'])
+                                            @include('components.inputs.textarea',['label'=>'Address','name'=>'address','placeholder'=>'Address'])
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card m-b-30">
+                        <div class="row">
+
+                            @include('components.forms.first_user_registration',['header'=>'Site Admin Details'])
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card m-b-30">
+                        <div class="row">
+                            @include('components.forms.section_adding_form',['header'=>'Sections Details'])
                         </div>
                     </div>
                 </div>
@@ -93,4 +93,6 @@
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom-form-select.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/custom-repeater.js') }}"></script>
+
 @endsection

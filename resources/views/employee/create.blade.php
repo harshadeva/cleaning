@@ -1,13 +1,14 @@
 @extends('layouts.main')
 @section('title')
-    Company Create
+    Employee Registration
 @endsection
 @section('breadcrump')
     <div class="breadcrumb-list">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.Home') }}</a></li>
-            <li class="breadcrumb-item " aria-current="page"><a href="{{ route('company.index') }}">{{ __('common.Company') }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ __('common.Create') }}</li>
+            <li class="breadcrumb-item " aria-current="page"><a
+                    href="{{ route('user.index') }}">{{ __('common.Employee') }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ __('common.Registration') }}</li>
         </ol>
     </div>
 @endsection
@@ -24,57 +25,30 @@
 @section('rightbar-content')
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <form action="{{ route('company.store') }}" method="POST">
+        <form action="{{ route('user.store') }}" method="POST">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="card m-b-30">
                         <div class="row">
                             <!-- Start col -->
                             <div class="card-body">
                                 <div class="col-md-12">
-                                    <h4>Company Details</h4>
+                                    <h4>Employee Details</h4>
                                     <hr />
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         @csrf
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.text',
-                                            ['label'=>'Company Name','name'=>'company_name','placeholder'=>'Enter company name'])
+                                        <div class="col-lg-12 form-group">
+                                            <label for="user_role">{{ __('common.Designation') }}</label>
+                                            <select class="select2-single form-control" id="user_role_id"
+                                                name="user_role_id">
+                                                <option disabled selected>{{ __('common.Select User Role') }}</option>
+                                                @foreach ($userRoles as $userRole)
+                                                    <option value="{{ $userRole->id }}">{{ $userRole->name }} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.date',['label'=>'Start Date','name'=>'start_date'])
-                                        </div>
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.text',
-                                            ['label'=>'Contact No 1','name'=>'contact_no_1','placeholder'=>'0xxxxxxxxx'])
-                                        </div>
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.text',
-                                            ['label'=>'Contact No 2','name'=>'contact_no_2','placeholder'=>'0xxxxxxxxx'])
-                                        </div>
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.textarea',['label'=>'Address','name'=>'address','placeholder'=>'Address'])
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card m-b-30">
-                        <div class="row">
-                            <!-- Start col -->
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <h4>Company Admin Details</h4>
-                                    <hr />
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        @csrf
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
                                             ['label'=>'First Name','name'=>'first_name','placeholder'=>'Enter first name'])
@@ -84,7 +58,8 @@
                                             ['label'=>'Last Name','name'=>'last_name','placeholder'=>'Enter last name'])
                                         </div>
                                         <div class="col-lg-12">
-                                            @include('components.inputs.email',['label'=>'Email','name'=>'email','placeholder'=>'Enter email'])
+                                            @include('components.inputs.email',['label'=>'Email','name'=>'email','placeholder'=>'Enter
+                                            email'])
                                         </div>
 
                                         <div class="col-lg-12">

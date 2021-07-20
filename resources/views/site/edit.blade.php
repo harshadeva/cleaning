@@ -1,13 +1,13 @@
 @extends('layouts.main')
 @section('title')
-    Company Edit
+    Site Edit
 @endsection
 @section('breadcrump')
     <div class="breadcrumb-list">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.Home') }}</a></li>
             <li class="breadcrumb-item " aria-current="page"><a
-                    href="{{ route('company.index') }}">{{ __('common.Company') }}</a></li>
+                    href="{{ route('site.index') }}">{{ __('common.Site') }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ __('common.Edit') }}</li>
         </ol>
     </div>
@@ -25,10 +25,9 @@
 @section('rightbar-content')
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <form action="{{ route('company.update', ['company' => $record->id]) }}" method="POST">
+        <form action="{{ route('site.update', ['site' => $record->id]) }}" method="POST">
             <input name="_method" type="hidden" value="PUT">
-            <input type="hidden" name="admin_user_id" value="{{ $record->admin()->user_id }}">
-
+            <input name="site_admin_id" value="{{ $record->site_admin_id }}" type="hidden" value="PUT">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card m-b-30">
@@ -36,7 +35,7 @@
                             <!-- Start col -->
                             <div class="card-body">
                                 <div class="col-md-12">
-                                    <h4>Company Details</h4>
+                                    <h4>Site Details</h4>
                                     <hr />
                                 </div>
                                 <div class="col-md-12">
@@ -45,14 +44,9 @@
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
                                             [
-                                            'label'=>'Company Name',
-                                            'name'=>'company_name','value'=>$record->name,'placeholder'=>'Enter
-                                            company name'])
-                                        </div>
-                                        <div class="col-lg-12">
-                                            @include('components.inputs.date',[
-                                            'label'=>'Start Date',
-                                            'name'=>'start_date'])
+                                            'label'=>'Site Name',
+                                            'name'=>'site_name','value'=>$record->name,'placeholder'=>'Enter
+                                            site name'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
@@ -82,7 +76,7 @@
                             <!-- Start col -->
                             <div class="card-body">
                                 <div class="col-md-12">
-                                    <h4>Company Admin Details</h4>
+                                    <h4>Site Admin Details</h4>
                                     <hr />
                                 </div>
                                 <div class="col-md-12">
@@ -92,18 +86,18 @@
                                             @include('components.inputs.text',
                                             [
                                             'label'=>'First Name',
-                                            'name'=>'first_name','value'=>$record->admin()->user->first_name,'placeholder'=>'Enter
+                                            'name'=>'first_name','value'=>$record->admin->first_name,'placeholder'=>'Enter
                                             first name'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
                                             [
                                             'label'=>'Last Name',
-                                            'name'=>'last_name','value'=>$record->admin()->user->last_name,'placeholder'=>'Enter
+                                            'name'=>'last_name','value'=>$record->admin->last_name,'placeholder'=>'Enter
                                             last name'])
                                         </div>
                                         <div class="col-lg-12">
-                                            @include('components.inputs.email',['label'=>'Email','value'=>$record->admin()->user->email,'name'=>'email'])
+                                            @include('components.inputs.email',['label'=>'Email','value'=>$record->admin->email,'name'=>'email'])
                                         </div>
 
                                         <div class="col-lg-12">
@@ -125,6 +119,15 @@
                     </div>
                 </div>
             </div>
+             <div class="row">
+                <div class="col-md-12">
+                    <div class="card m-b-30">
+                        <div class="row">
+                            @include('components.forms.section_adding_form',['header'=>'Sections Details'])
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <!-- End Contentbar -->
@@ -137,9 +140,4 @@
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom-form-select.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#start_date').val("{{ date('Y/m/d', strtotime($record->start_date)) }}");
-        });
-    </script>
 @endsection

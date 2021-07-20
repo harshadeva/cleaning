@@ -30,7 +30,8 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profilelink">
                                     <div class="dropdown-item">
                                         <div class="profilename d-flex align-items-start">
-                                            <h4>{{ Auth::user()->name }}</h4>
+                                            <h4>{{ Auth::user()->first_name }}</h4>
+                                            <span>{{ Auth::user()->first_name }}</span>
                                         </div>
                                     </div>
                                     <div class="userbox">
@@ -39,11 +40,6 @@
                                                 <a href="#" class="profile-icon"><img
                                                         src="{{ asset('assets/images/svg-icon/user.svg') }}"
                                                         class="img-fluid" alt="user">My Profile</a>
-                                            </li>
-                                            <li class="media dropdown-item">
-                                                <a href="#" class="profile-icon"><img
-                                                        src="{{ asset('assets/images/svg-icon/email.svg') }}"
-                                                        class="img-fluid" alt="email">Email</a>
                                             </li>
                                             <li class="media dropdown-item">
                                                 <form id="logout_form" method="POST" action="{{ route('logout') }}">

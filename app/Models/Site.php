@@ -16,11 +16,6 @@ class Site extends Model
         return $query->where('status', 1);
     }
 
-    public function siteSections()
-    {
-        return $this->hasMany(SiteSection::class);
-    }
-
     public function admin()
     {
         return $this->belongsTo(User::class, 'site_admin_id');

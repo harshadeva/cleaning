@@ -46,17 +46,6 @@
                                     </p>
                                 </div>
                             @endif
-                            <br />
-                            <br />
-
-                            <div class="col-md-12">
-                                <h4>Sections ({{ $record->siteSections->count() }})</h4>
-                                <ul>
-                                    @foreach ($record->siteSections as $section)
-                                        <li>{{ $section->section->name }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>

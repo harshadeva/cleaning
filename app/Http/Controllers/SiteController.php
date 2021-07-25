@@ -20,7 +20,7 @@ class SiteController extends Controller
     public function index()
     {
         try {
-            $records = Site::withCount('siteSections')->company()->latest()->get();
+            $records = Site::company()->latest()->get();
             return view('site.index', ['records' => $records]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
@@ -30,8 +30,7 @@ class SiteController extends Controller
     public function create()
     {
         try {
-            $sections = Section::active()->get();
-            return view('site.create', ['sections' => $sections]);
+            return view('site.create');
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -40,9 +39,8 @@ class SiteController extends Controller
     public function edit($id)
     {
         try {
-            $record = Site::with(['siteSections'])->find($id);
-            $sections = Section::active()->get();
-            return view('site.edit', ['record' => $record, 'sections' => $sections]);
+            $record = Site::find($id);
+            return view('site.edit', ['record' => $record]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -63,8 +61,7 @@ class SiteController extends Controller
         DB::beginTransaction();
         try {
             $user = $this->storeFirstUser($request);
-            $site = $this->storeSite($request, $user);
-            $this->storeOrUpdateSections($request, $site);
+            $this->storeSite($request, $user);
             DB::commit();
             return redirect()->route('site.index')->with(['successMessage' => 'Site saved']);
         } catch (Exception $e) {
@@ -108,7 +105,6 @@ class SiteController extends Controller
         $record->contact_no1 = $request->contact_no_1;
         $record->contact_no2 = $request->contact_no_2;
         $record->save();
-        $this->storeOrUpdateSections($request, $record);
         return $record;
     }
 
@@ -136,19 +132,6 @@ class SiteController extends Controller
     private function storeSite($request, $user)
     {
         return Site::register($request, $user);
-    }
-
-    private function storeOrUpdateSections($request, $site)
-    {
-        SiteSection::where('site_id', $site->id)->whereNotIn('id', $request['sections'])->delete();
-        foreach ($request['sections'] as $sectionId) {
-            SiteSection::updateOrCreate([
-                'site_id' => $site->id,
-                'section_id' => $sectionId
-            ], [
-                'status' => 1
-            ]);
-        }
     }
 
     public function getSections()

@@ -116,13 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card m-b-30">
-                        @include('components.forms.section_adding_form',['header'=>'Sections Details'])
-                    </div>
-                </div>
-            </div>
+
             <div class="row mb-5 mt-n3">
                 <div class="col-md-12">
                     @include('components.buttons.submit')
@@ -140,13 +134,5 @@
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom-form-select.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/custom-repeater.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $("#repeater").createRepeater();
-            if ($('.items').length == 0) {
-                $('#reapeater-add-btn').click();
-            }
-        });
-    </script>
+
 @endsection

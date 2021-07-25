@@ -27,7 +27,6 @@
                                     <tr>
                                         <th>{{ __('common.Site Name') }}</th>
                                         <th>{{ __('common.Site Admin') }}</th>
-                                        <th>{{ __('common.Sections') }}</th>
                                         <th>{{ __('common.Created At') }}</th>
                                         <th>{{ __('common.Status') }}</th>
                                         <th class="text-center">{{ __('common.Action') }}</th>
@@ -39,7 +38,6 @@
                                             <tr>
                                                 <td>{{ $record->name }}</td>
                                                 <td>{{ $record->admin->name }}</td>
-                                                <td>{{ $record->site_sections_count }} Section{{ $record->site_sections_count > 1 ? 's':'' }}</td>
                                                 <td>{{ $record->created_at->format('Y-m-d H:i:s') }}</td>
                                                 <td>
                                                     @if ($record->status == 1)

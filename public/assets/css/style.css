@@ -71,6 +71,22 @@ html {
   min-height: 100%;
 }
 
+.vue-star-rating-rating-text {
+  font-weight: bold;
+  font-size: 1.3em;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  color: rgb(240, 0, 0);
+  background: #fff;
+}
+
+
+.toast-alert {
+    background: rgb(5, 37, 216);
+}
+
+
 body {
   font-family: "Muli", sans-serif;
   margin: 0;

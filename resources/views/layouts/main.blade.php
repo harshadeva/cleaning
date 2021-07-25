@@ -9,6 +9,7 @@
 
     <!-- styles -->
     @include('layouts.styles')
+    @routes
 </head>
 
 <body class="vertical-layout">
@@ -22,8 +23,10 @@
         <!-- Start Rightbar -->
         @include('layouts.rightbar')
 
-        @include('layouts.toast-success')
-        @include('layouts.toast-error')
+        <div class="toast-alert">
+            @include('layouts.toast-success')
+            @include('layouts.toast-error')
+        </div>
         @yield('content')
 
     </div>

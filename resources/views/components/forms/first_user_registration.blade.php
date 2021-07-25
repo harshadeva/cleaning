@@ -19,17 +19,14 @@
             </div>
 
             <div class="col-lg-12">
-                @include('components.inputs.password',['label'=>'Password','name'=>'password'])
+                @include('components.inputs.password',['label'=>'Password','name'=>'password','placeholder'=>'Enter password here'])
             </div>
 
             <div class="col-lg-12">
                 @include('components.inputs.password',
-                ['label'=>'Re-Enter Password','name'=>'password_confirmation'])
+                ['label'=>'Re-Enter Password','name'=>'password_confirmation','placeholder'=>'Enter again here'])
             </div>
 
-            <div class="col-lg-12">
-                @include('components.buttons.submit',['classes'=>'btnTopMargin'])
-            </div>
         </div>
     </div>
 </div>

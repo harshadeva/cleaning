@@ -31,6 +31,7 @@ class SiteStoreRequest extends FormRequest
             'last_name' => 'required|max:100',
             'email' => 'required|email|max:200|unique:user,email',
             'password' => 'required|confirmed',
+            'sections'=>'required|array'
         ];
     }
 
@@ -44,6 +45,7 @@ class SiteStoreRequest extends FormRequest
             'password' => 'password',
             'contact_no_1' => 'contact number',
             'contact_no_2' => 'contact number',
+            'sections' => 'sections',
         ];
     }
 }

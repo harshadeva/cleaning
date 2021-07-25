@@ -45,11 +45,11 @@
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
-                                            ['label'=>'Contact No 1','name'=>'contact_no_1','placeholder'=>'0xxxxxxxxx'])
+                                            ['label'=>'Contact Number - 1','name'=>'contact_no_1','placeholder'=>'Enter contact number'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
-                                            ['label'=>'Contact No 2','name'=>'contact_no_2','placeholder'=>'0xxxxxxxxx'])
+                                            ['label'=>'Contact Number - 2','name'=>'contact_no_2','placeholder'=>'Enter contact number'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.textarea',['label'=>'Address','name'=>'address','placeholder'=>'Address'])
@@ -64,7 +64,6 @@
                 <div class="col-md-6">
                     <div class="card m-b-30">
                         <div class="row">
-
                             @include('components.forms.first_user_registration',['header'=>'Site Admin Details'])
 
                         </div>
@@ -75,10 +74,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card m-b-30">
-                        <div class="row">
-                            @include('components.forms.section_adding_form',['header'=>'Sections Details'])
-                        </div>
+                        @include('components.forms.section_adding_form',['header'=>'Sections Details'])
+                        <span class="text-danger">{{ $errors->first('sections') }}</span>
                     </div>
+                </div>
+            </div>
+            <div class="row mb-5 mt-n3">
+                <div class="col-md-12">
+                    @include('components.buttons.submit')
                 </div>
             </div>
         </form>
@@ -94,5 +97,13 @@
     <script src="{{ asset('assets/plugins/bootstrap-tagsinput/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom-form-select.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom-repeater.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#repeater").createRepeater();
+            if ($('.items').length == 0) {
+                $('#reapeater-add-btn').click();
+            }
+        });
+    </script>
 
 @endsection

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Classes\CatchErrors;
 use App\Http\Requests\SiteStoreRequest;
 use App\Http\Requests\SiteUpdateRequest;
+use App\Models\Employee;
+use App\Models\Section;
 use App\Models\Site;
+use App\Models\SiteSection;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,7 +20,7 @@ class SiteController extends Controller
     public function index()
     {
         try {
-            $records = Site::company()->get();
+            $records = Site::withCount('siteSections')->company()->latest()->get();
             return view('site.index', ['records' => $records]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
@@ -27,7 +30,8 @@ class SiteController extends Controller
     public function create()
     {
         try {
-            return view('site.create');
+            $sections = Section::active()->get();
+            return view('site.create', ['sections' => $sections]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -36,8 +40,9 @@ class SiteController extends Controller
     public function edit($id)
     {
         try {
-            $record = Site::find($id);
-            return view('site.edit', ['record' => $record]);
+            $record = Site::with(['siteSections'])->find($id);
+            $sections = Section::active()->get();
+            return view('site.edit', ['record' => $record, 'sections' => $sections]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -58,7 +63,8 @@ class SiteController extends Controller
         DB::beginTransaction();
         try {
             $user = $this->storeFirstUser($request);
-            $this->storeSite($request, $user);
+            $site = $this->storeSite($request, $user);
+            $this->storeOrUpdateSections($request, $site);
             DB::commit();
             return redirect()->route('site.index')->with(['successMessage' => 'Site saved']);
         } catch (Exception $e) {
@@ -102,6 +108,7 @@ class SiteController extends Controller
         $record->contact_no1 = $request->contact_no_1;
         $record->contact_no2 = $request->contact_no_2;
         $record->save();
+        $this->storeOrUpdateSections($request, $record);
         return $record;
     }
 
@@ -129,5 +136,23 @@ class SiteController extends Controller
     private function storeSite($request, $user)
     {
         return Site::register($request, $user);
+    }
+
+    private function storeOrUpdateSections($request, $site)
+    {
+        SiteSection::where('site_id', $site->id)->whereNotIn('id', $request['sections'])->delete();
+        foreach ($request['sections'] as $sectionId) {
+            SiteSection::updateOrCreate([
+                'site_id' => $site->id,
+                'section_id' => $sectionId
+            ], [
+                'status' => 1
+            ]);
+        }
+    }
+
+    public function getSections()
+    {
+        return Section::active()->get();
     }
 }

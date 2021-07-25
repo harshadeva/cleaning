@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -14,6 +15,9 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+
+        Schema::disableForeignKeyConstraints();
+        Permission::truncate();
 
         /* company permision */
         Permission::create(['name' => 'company_create']);
@@ -40,5 +44,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'report_edit']);
         Permission::create(['name' => 'report_view']);
         Permission::create(['name' => 'report_delete']);
+
+        Schema::enableForeignKeyConstraints();
+
     }
 }

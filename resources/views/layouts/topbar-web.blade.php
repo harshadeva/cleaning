@@ -34,7 +34,7 @@
                                         </div>
 
                                         <div class="profilename d-flex align-items-start">
-                                            <h6 class="role_name">Super Admin</h6>
+                                            <h6 class="role_name">{{ Auth::user()->roles()->first()->name }}</h6>
                                         </div>
                                     </div>
                                     <div class="userbox">
@@ -57,4 +57,5 @@
         <!-- End col -->
     </div>
     <!-- End row -->
+    
 </div>

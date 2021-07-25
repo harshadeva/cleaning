@@ -11,8 +11,9 @@ class Site extends Model
     use HasFactory;
     protected $table = 'site';
 
-    public function scopeActive($query){
-        return $query->where('status',1);
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 
     public function siteSections()
@@ -22,10 +23,16 @@ class Site extends Model
 
     public function admin()
     {
-        return $this->belongsTo(User::class,'site_admin_id');
+        return $this->belongsTo(User::class, 'site_admin_id');
     }
 
-    public function scopeCompany($query){
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'site_id');
+    }
+
+    public function scopeCompany($query)
+    {
         return $query->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id);
     }
 

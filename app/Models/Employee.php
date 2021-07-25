@@ -4,11 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Employee extends Model
 {
     use HasFactory;
     protected $table = 'employee';
+    protected $appends = ['name'];
+
+
+    public function getNameAttribute()
+    {
+        return $this->user->name;
+    }
 
     public function employeeType()
     {
@@ -20,9 +28,24 @@ class Employee extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function reportSections()
+    {
+        return $this->hasMany(ReportSection::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function scopeAuth($query)
+    {
+        return $query->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 
     public function scopeAdmin($query)
@@ -40,26 +63,37 @@ class Employee extends Model
         return $query->where('employee_type_id', 3);
     }
 
-    public static function register($user, $company, $employeeTypeId)
+    public static function register($user, $company, $userRoleId)
     {
         $record = new self();
         $record->user_id  = $user->id;
         $record->company_id  = $company->id;
-        $record->employee_type_id  = $employeeTypeId;
+        $record->employee_type_id  = self::getEmployeeType($userRoleId);
         $record->status = 1;
         $record->save();
 
-        self::storeUserRoles($user, $employeeTypeId);
+        self::storeUserRoles($user, $userRoleId);
         return $record;
     }
 
-    private static function storeUserRoles($user, $employeeTypeId)
+    private static function getEmployeeType($userRoleId)
     {
-        if ($employeeTypeId == 1) {
+        if ($userRoleId == 2) {
+            return 1;
+        } else if ($userRoleId == 3) {
+            return 2;
+        } else if ($userRoleId == 4) {
+            return 3;
+        }
+    }
+
+    private static function storeUserRoles($user, $userRoleId)
+    {
+        if ($userRoleId == 2) {
             $user->syncRoles('company admin');
-        } else if ($employeeTypeId == 2) {
+        } else if ($userRoleId == 3) {
             $user->syncRoles('supervisor');
-        } else if ($employeeTypeId == 3) {
+        } else if ($userRoleId == 4) {
             $user->syncRoles('worker');
         }
     }
@@ -70,6 +104,6 @@ class Employee extends Model
         $record->employee_type_id  = $employeeTypeId;
         $record->save();
 
-        self::storeUserRoles($record->user,$employeeTypeId);
+        self::storeUserRoles($record->user, $employeeTypeId);
     }
 }

@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(
         );
 
         Route::resource('user', UserController::class)->names('user');
+        Route::get('site/get_sections/{siteId}', [SiteController::class,'getSections'])->name('site.get_sections');
         Route::resource('site', SiteController::class)->names('site');
         Route::resource('report', ReportController::class)->names('report');
     }

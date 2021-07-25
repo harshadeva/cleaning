@@ -43,9 +43,10 @@
                                             <label for="user_role">{{ __('common.Designation') }}</label>
                                             <select class="select2-single form-control" id="user_role_id"
                                                 name="user_role_id">
-                                                <option disabled selected>{{ __('common.Select User Role') }}</option>
+                                                <option disabled selected>{{ __('common.Select Designation') }}</option>
                                                 @foreach ($userRoles as $userRole)
-                                                    <option value="{{ $userRole->id }}">{{ $userRole->name }} </option>
+                                                    <option value="{{ $userRole->id }}">
+                                                        {{ Str::ucfirst($userRole->name) }} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -71,14 +72,19 @@
                                             ['label'=>'Re-Enter Password','name'=>'password_confirmation'])
                                         </div>
 
-                                        <div class="col-lg-12">
-                                            @include('components.buttons.submit',['classes'=>'btnTopMargin'])
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
+                </div>
+            </div>
+            <div class="row mb-5 mt-n3">
+                <div class="col-md-12">
+                    @include('components.buttons.submit')
                 </div>
             </div>
         </form>

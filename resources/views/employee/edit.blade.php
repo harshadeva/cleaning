@@ -71,15 +71,16 @@
                                             @include('components.inputs.password',
                                             ['label'=>'Re-Enter Password','name'=>'password_confirmation'])
                                         </div>
-
-                                        <div class="col-lg-12">
-                                            @include('components.buttons.submit',['classes'=>'btnTopMargin'])
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+             <div class="row mb-5 mt-n3">
+                <div class="col-md-12">
+                    @include('components.buttons.submit')
                 </div>
             </div>
         </form>

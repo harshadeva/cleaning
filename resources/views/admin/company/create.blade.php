@@ -47,11 +47,11 @@
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
-                                            ['label'=>'Contact No 1','name'=>'contact_no_1','placeholder'=>'0xxxxxxxxx'])
+                                            ['label'=>'Contact Number - 1','name'=>'contact_no_1','placeholder'=>'Ener contact number'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.text',
-                                            ['label'=>'Contact No 2','name'=>'contact_no_2','placeholder'=>'0xxxxxxxxx'])
+                                            ['label'=>'Contact Number - 2','name'=>'contact_no_2','placeholder'=>'Ener contact number'])
                                         </div>
                                         <div class="col-lg-12">
                                             @include('components.inputs.textarea',['label'=>'Address','name'=>'address','placeholder'=>'Address'])
@@ -69,6 +69,11 @@
                              @include('components.forms.first_user_registration',['header'=>'Company Admin Details'])
                         </div>
                     </div>
+                </div>
+            </div>
+             <div class="row mb-5 mt-n3">
+                <div class="col-md-12">
+                    @include('components.buttons.submit')
                 </div>
             </div>
         </form>

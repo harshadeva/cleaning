@@ -66,7 +66,7 @@ class UserController extends Controller
             $company = User::find(Auth::user()->id)->companyAdminAccount()->company;
             Employee::register($user, $company, $request['user_role_id']);
             DB::commit();
-            return redirect()->back()->with(['successMessage' => 'Employee Registerd Successfully']);
+            return redirect()->route('user.index')->with(['successMessage' => 'Employee Registerd Successfully']);
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }
@@ -80,7 +80,21 @@ class UserController extends Controller
             $company_id = User::find(Auth::user()->id)->companyAdminAccount()->company_id;
             Employee::edit($user->id, $company_id, $request['employee_type_id']);
             DB::commit();
-            return redirect()->back()->with(['successMessage' => 'Employee Updated Successfully']);
+            return redirect()->route('user.index')->with(['successMessage' => 'Employee Updated Successfully']);
+        } catch (Exception $e) {
+            return CatchErrors::rollback($e);
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $record = User::find($id);
+            $record->status = !$record->status;
+            $record->save();
+            DB::commit();
+            return ['success' => 'User status changed'];
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }

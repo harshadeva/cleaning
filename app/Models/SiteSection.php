@@ -9,6 +9,11 @@ class SiteSection extends Model
 {
     use HasFactory;
     protected $table = 'site_section';
+    protected $guarded = [];
+
+    public function scopeActive($query){
+        return $query->where('status',1);
+    }
 
     public function section()
     {

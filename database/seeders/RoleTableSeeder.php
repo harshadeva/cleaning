@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\RoleHasPermission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class RoleTableSeeder extends Seeder
 {
@@ -14,6 +16,10 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        Role::truncate();
+        RoleHasPermission::truncate();
+
         $superAdmin = Role::create(['name' => 'super admin']);
         $superAdmin->givePermissionTo([
             'company_create', 'company_view', 'company_edit', 'company_delete',
@@ -24,7 +30,8 @@ class RoleTableSeeder extends Seeder
         $companyAdmin->givePermissionTo(
             [
                 'user_creation_page', 'user_create', 'user_view', 'user_edit', 'user_delete',
-                'site_create', 'site_view', 'site_edit', 'site_delete'
+                'site_create', 'site_view', 'site_edit', 'site_delete',
+                'report_create', 'report_view', 'report_edit', 'report_delete'
             ]
         );
 
@@ -41,5 +48,8 @@ class RoleTableSeeder extends Seeder
                 'report_site_comment', 'report_view',
             ]
         );
+
+        Schema::enableForeignKeyConstraints();
+
     }
 }

@@ -19,6 +19,9 @@
 <script src="{{ asset('assets/plugins/datepicker/i18n/datepicker.en.js') }}"></script>
 <script src="{{ asset('assets/js/custom/custom-form-datepicker.js') }}"></script>
 
+<!-- mix -->
+<script src="{{ asset('js/app.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         $.ajaxSetup({

@@ -57,9 +57,9 @@
                         @endcanany
                          @canany(['report_create', 'report_view','report_edit','report_create'])
                             @include('layouts.leftbar.dropdown-nav-link',
-                            ['label'=>'Site',
+                            ['label'=>'Report',
                             'subroutes'=>[
-                            ['permissions'=>['report_create'],'label'=>'Register','route'=>route('report.create')],
+                            ['permissions'=>['report_create'],'label'=>'Create','route'=>route('report.create')],
                             ['permissions'=>['report_view'],'label'=>'View','route'=>route('report.index')]
                             ]
                             ]

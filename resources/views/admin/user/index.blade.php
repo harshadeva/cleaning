@@ -56,13 +56,12 @@
                                                 </td>
                                                 <td style="text-align: center">
                                                     <p>
-                                                        @if($record->hasRole('company admin'))
-                                                        <a type='button'
-                                                        title="View Company Details"
-                                                            href="{{ route('admin.company.show', ['company' => $record->companyAdminAccount()->company_id]) }}"
-                                                            class='btn btn-info'>
-                                                            <i class='fa fa-eye'></i>
-                                                        </a>
+                                                        @if ($record->hasRole('company admin'))
+                                                            <a type='button' title="View Company Details"
+                                                                href="{{ route('admin.company.show', ['company' => $record->companyAdminAccount()->company_id]) }}"
+                                                                class='btn btn-info'>
+                                                                <i class='fa fa-eye'></i>
+                                                            </a>
                                                         @endif
                                                     </p>
                                                 </td>
@@ -87,63 +86,18 @@
     <script>
         function changeStatus(element, url) {
             $(element).attr('disabled', true);
-            var status = $(element).prop('checked');
 
-            if (status) {
-                var heading = "{{ __('common.Activate') }}?";
-                var subHeading = "";
-                var confirmBtm = "{{ __('common.Activate') }}";
-                var message = "{{ __('common.Activated') }}";
-                var description = "{{ __('common.User activated') }}!";
-                var checked = true;
-            } else {
-                var heading = "{{ __('common.Deactivate') }}?";
-                var subHeading = "";
-                var confirmBtm = "{{ __('common.Deactivate') }}";
-                var message = "{{ __('common.Deactivated') }}";
-                var description = "{{ __('common.User deactivated') }}!";
-                var checked = false;
-            }
-
-            swal({
-                title: heading,
-                text: subHeading,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: confirmBtm,
-                cancelButtonText: "{{ __('common.Cancel') }}",
-                confirmButtonClass: 'btn btn-danger',
-                cancelButtonClass: 'btn btn-success m-l-10',
-                buttonsStyling: false
-            }).then(function() {
-
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    success: function(data) {
-                        if (data.success) {
-                            swal(
-                                message,
-                                description,
-                                'success'
-                            );
-                        } else {
-                            swal(
-                                'Error',
-                                data.errors.error,
-                                'error'
-                            );
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 2000);
-                        }
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function(data) {
+                    if (data.success) {
+                        showSuccess(data.success);
+                    } else {
+                        showError('Something went wrong!');
                     }
-                });
-
-            }, function(dismiss) {
-                window.location.reload();
+                }
             });
-
 
         }
     </script>

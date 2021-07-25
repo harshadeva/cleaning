@@ -60,14 +60,24 @@ class User extends Authenticatable
         return $this->employees()->admin()->first();
     }
 
-    public function scopeCompanyEmployee()
+    public function employeeAccount()
     {
-        return $this->employees()->where('company_id',User::find(Auth::user()->id)->companyAdminAccount()->company_id)->first();
+        return $this->employees()->first();
+    }
+
+    public function scopeCompanyEmployee($query)
+    {
+        return $query->employees()->where('company_id',User::find(Auth::user()->id)->companyAdminAccount()->company_id)->first();
     }
 
     public function employees()
     {
         return $this->hasMany(Employee::class,'user_id');
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'user_id');
     }
 
     public function siteAdmins()

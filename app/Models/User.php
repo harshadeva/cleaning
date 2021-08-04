@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->employees()->first();
     }
 
+    public function getCompany()
+    {
+        return $this->employees()->first()->company;
+    }
+
     public function scopeCompanyEmployee($query)
     {
         return $query->employees()->where('company_id',User::find(Auth::user()->id)->companyAdminAccount()->company_id)->first();

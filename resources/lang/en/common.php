@@ -32,6 +32,8 @@ return [
     'Rating' => 'Rating',
     'Created By' => 'Created By',
     'Report' => 'Report',
+    'Sites' => 'Sites',
+    'Employees' => 'Employees',
     'Contact Number - 1' => 'Contact Number - 1',
     'Contact Number - 2' => 'Contact Number - 2',
     'Address' => 'Address',

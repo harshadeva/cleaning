@@ -21,6 +21,11 @@ class Site extends Model
         return $this->belongsTo(User::class, 'site_admin_id');
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function reports()
     {
         return $this->hasMany(Report::class, 'site_id');

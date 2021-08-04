@@ -9,6 +9,7 @@
 
     <!-- styles -->
     @include('layouts.styles')
+    <input type="hidden" name="csrf-token" value="{{ csrf_token() }}">
     @routes
 </head>
 

@@ -18,6 +18,10 @@ class Company extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function sites(){
+        return $this->hasMany(Site::class);
+    }
+
     public static function register($data)
     {
         $record = new self();

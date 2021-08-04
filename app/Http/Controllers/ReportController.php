@@ -8,6 +8,7 @@ use App\Http\Requests\ReportUpdateRequest;
 use App\Models\Employee;
 use App\Models\Report;
 use App\Models\ReportSection;
+use App\Models\ReportSectionMedia;
 use App\Models\Section;
 use App\Models\Site;
 use App\Models\User;
@@ -21,13 +22,13 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         try {
-            $records = Report::whereHas('site',function($q){
-                $q->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id);
-            })->latest()->get()->map(function($item){
+            $records = Report::whereHas('site', function ($q) {
+                $q->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id);
+            })->latest()->get()->map(function ($item) {
                 $item['sum_rating'] = $item->getOverallRating();
                 return $item;
             });
-            return view('report.index',['records'=>$records, 'successMessage'=>$request['successMessage']]);
+            return view('report.index', ['records' => $records, 'successMessage' => $request['successMessage']]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -36,13 +37,13 @@ class ReportController extends Controller
     public function create(Request $request)
     {
         try {
-            $sites = Site::where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id)->get();
+            $sites = Site::where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id)->get();
             $sections = Section::active()->get();
             $employees = Employee::with(['user'])->auth()->worker()->active()->get()->map(function ($item) {
                 $item['name'] = $item->user->name;
                 return $item;
             });
-            return view('report.create', ['sites' => $sites, 'employees' => $employees, 'sections'=> $sections]);
+            return view('report.create', ['sites' => $sites, 'employees' => $employees, 'sections' => $sections]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -62,7 +63,7 @@ class ReportController extends Controller
             $record->save();
             $this->storeSections($record, $request);
             DB::commit();
-            return response()->json(['successMessage'=>'Report saved']);
+            return response()->json(['successMessage' => 'Report saved']);
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }
@@ -74,22 +75,35 @@ class ReportController extends Controller
         $arrayColumns = array_column($sections, 'id');
         ReportSection::where('report_id', $report->id)->whereNotIn('id', $arrayColumns)->delete();
         foreach ($sections as $section) {
-           ReportSection::updateOrCreate([
-                'id'=> $section['id'],
-                'report_id'=> $report->id
-            ],[
-                'section_id'=> $section['section_id'],
-                'employee_id'=> $section['employee_id'],
-                'rating'=> $section['rating'],
-                'description'=> $section['remark'],
-                'status'=> 1,
+            $reportSection =  ReportSection::updateOrCreate([
+                'id' => $section['id'] ?? null,
+                'report_id' => $report->id
+            ], [
+                'section_id' => $section['section_id'],
+                'employee_id' => $section['employee_id'],
+                'rating' => $section['rating'],
+                'description' => $section['remark'],
+                'status' => 1,
+            ]);
+            $this->storeOrUpdateReportSectionMedia($reportSection, $section);
+        }
+    }
+
+    public function storeOrUpdateReportSectionMedia($reportSection, $section)
+    {
+        ReportSectionMedia::where('report_section_id', $reportSection->id)->whereNotIn('media_id', $section['files'])->delete();
+        foreach ($section['files'] as $mediaId) {
+            ReportSectionMedia::updateOrCreate([
+                'report_section_id' => $reportSection->id,
+                'media_id' => $mediaId
             ]);
         }
     }
 
-    public function show($id){
+    public function show($id)
+    {
         try {
-            $record = Report::with(['site', 'reportSections.employee.user','reportSections.section'])->find($id);
+            $record = Report::with(['site','reportSections.employee.user','reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
             return view('report.show', ['record' => $record]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
@@ -99,16 +113,16 @@ class ReportController extends Controller
     public function edit($id)
     {
         try {
-            $record = Report::with(['site', 'reportSections.employee.user', 'reportSections.section'])->find($id);
+            $record = Report::with(['site', 'reportSections.employee.user','reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
             $sections = Section::active()->get();
             $employees = Employee::with(['user'])->auth()->worker()->active()->get();
-            return view('report.edit', ['record' => $record,'employees' => $employees, 'sections'=> $sections]);
+            return view('report.edit', ['record' => $record, 'employees' => $employees, 'sections' => $sections]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
     }
 
-    public function update($id,ReportUpdateRequest $request)
+    public function update($id, ReportUpdateRequest $request)
     {
         DB::beginTransaction();
         try {

@@ -10,7 +10,7 @@ class ReportStoreRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(["errorMessage" =>$validator->errors()->first()], 200));
+        throw new HttpResponseException(response()->json(["errorMessage" => $validator->errors()->first()], 200));
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -30,8 +30,8 @@ class ReportStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'site_id'=>'required',
-            'date'=>'required|date'
+            'site_id' => 'required',
+            'date' => 'required|date'
         ];
     }
 
@@ -44,12 +44,17 @@ class ReportStoreRequest extends FormRequest
             }
 
             $sections = $this->site_sections;
-            foreach($sections as $section){
+            foreach ($sections as $section) {
+                $collection = collect($sections);
                 if (!isset($section['section_id']) || $section['section_id']  == null) {
-                    return $validator->errors()->add('section_id',"Please select section");
+                    return $validator->errors()->add('section_id', "Please select section");
                 }
                 if (!isset($section['employee_id']) || $section['section_id']  == null) {
                     return $validator->errors()->add('employee_id', "Please select employee");
+                }
+                $exists = $collection->where('section_id', $section['section_id'])->where('employee_id', $section['employee_id'])->count();
+                if ($exists > 1) {
+                    return $validator->errors()->add('employee_id', "Employee has repeated in same section");
                 }
             }
         });

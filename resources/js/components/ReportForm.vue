@@ -75,18 +75,28 @@
                       :show-rating="false"
                       :star-size="starSize"
                       v-model="form.site_sections[index].rating"
-                      @rating-selected="setRating($event, index)"
                     >
                     </star-rating>
                   </div>
                   <div class="col-md-12">
                     <label>Remarks</label>
-                    <input
+                    <textarea
                       v-model="form.site_sections[index].remark"
-                      type="text"
                       class="form-control"
-                      placeholder="Remark"
-                    />
+                      placeholder="Write something"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-12 mt-2">
+                    <vue-dropzone
+                      :ref="index + 'ref'"
+                      :useCustomSlot="true"
+                      :id="index + 'dropzone'"
+                      :duplicateCheck="true"
+                      :options="dropzoneOptions"
+                      @vdropzone-removed-file="fileRemoved(index,$event)"
+                      @vdropzone-error="errorMessage"
+                      @vdropzone-success="uploadSuccess(index, $event)"
+                    ></vue-dropzone>
                   </div>
                   <div class="col-md-12 mt-3">
                     <button
@@ -124,6 +134,17 @@ export default {
   props: ["sites", "employees", "sections"],
   data() {
     return {
+      dropzoneOptions: {
+        url: route("upload.store"),
+        thumbnailWidth: 150,
+        maxFilesize: 10,
+        addRemoveLinks: true,
+        headers: {
+          "My-Awesome-Header": "header value",
+          "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+      },
       form: {
         site_id: "",
         date: "",
@@ -135,11 +156,12 @@ export default {
             remark: "",
             section: null,
             employee: null,
+            files: [],
           },
         ],
       },
       selected_data: {
-        site: {},
+        site: null,
       },
     };
   },
@@ -159,7 +181,7 @@ export default {
         return 40; //function to transform your src to large
       } else if (screenWidth > 398) {
         return 35;
-      } else if (screenWidth > 310) {
+      } else if (screenWidth > 360) {
         return 25;
       } else {
         return 20;
@@ -167,7 +189,26 @@ export default {
     },
   },
   methods: {
-    setRating(rating, index) {
+    fileRemoved(index,file) {
+      let media_id = JSON.parse(file.xhr.responseText).upload_id;
+      var position = this.form.site_sections[index].files.indexOf(media_id);
+      if (index > -1) {
+        this.form.site_sections[index].files.splice(position, 1);
+      }
+    },
+    uploadSuccess(index, file) {
+      let response = JSON.parse(file.xhr.response);
+      if (response.successMessage != null) {
+        this.form.site_sections[index].files.push(response.upload_id);
+        showSuccess(response.successMessage);
+      }
+    },
+
+    errorMessage(file, message) {
+      showError(message.message);
+    },
+
+    rating(rating, index) {
       this.form.site_sections[index].rating = rating;
     },
     /* Form repeater functions : Start */
@@ -180,6 +221,7 @@ export default {
         remark: "",
         section: null,
         employee: null,
+        files: [],
       };
       this.form.site_sections.push(newObject);
     },

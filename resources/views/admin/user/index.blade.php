@@ -28,7 +28,7 @@
                                 <thead>
                                     <tr>
                                         <th>{{ __('common.Name') }}</th>
-                                        <th>{{ __('common.Username') }}</th>
+                                        <th>{{ __('common.Company') }}</th>
                                         <th>{{ __('common.User Role') }}</th>
                                         <th>{{ __('common.Created At') }}</th>
                                         <th>{{ __('common.Status') }}</th>
@@ -40,7 +40,7 @@
                                         @foreach ($records as $record)
                                             <tr>
                                                 <td>{{ $record->name }}</td>
-                                                <td>{{ $record->email }}</td>
+                                                <td>{{ $record->getCompany()->name }}</td>
                                                 <td>{{ ucwords($record->getRoleNames()->first()) }}</td>
                                                 <td>{{ $record->created_at }}</td>
                                                 <td>

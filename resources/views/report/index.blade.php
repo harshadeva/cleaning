@@ -45,15 +45,16 @@
 
                                                 <td class="text-center">
                                                     <p>
-                                                        <a type='button' title="More Details"
-                                                            href="{{ route('report.show', ['report' => $record->id]) }}"
-                                                            class='btn btn-info'>
-                                                            <i class='fa fa-eye'></i>
-                                                        </a>
+
                                                         <a type='button' title="Edit Report"
                                                             href="{{ route('report.edit', ['report' => $record->id]) }}"
                                                             class='btn btn-warning'>
                                                             <i class='fa fa-edit'></i>
+                                                        </a>
+                                                        <a type='button' title="More Details"
+                                                            href="{{ route('report.show', ['report' => $record->id]) }}"
+                                                            class='btn btn-info'>
+                                                            <i class='fa fa-eye'></i>
                                                         </a>
                                                     </p>
                                                 </td>
@@ -61,7 +62,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="text-center" colspan="5">
+                                            <td class="text-center" colspan="6">
                                                 No records to display!
                                             </td>
                                         </tr>

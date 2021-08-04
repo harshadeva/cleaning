@@ -50,7 +50,7 @@ class UserController extends Controller
     public function edit($id)
     {
         try {
-            $user = User::with('roles')->find($id);
+            $user = User::find($id);
             $employeeTypes = EmployeeType::where('id', '!=', 1)->get();
             return view('employee.edit', ['record' => $user, 'employeeTypes' => $employeeTypes]);
         } catch (Exception $e) {

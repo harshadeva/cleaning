@@ -30,19 +30,20 @@
                 <div class="card m-b-30">
                     <div class="row">
                         <div class="card-body">
-                            <div class="col-md-12">
+                            <div class="col-md-12 text-center">
                                 <h4>{{ $record->name }}</h4>
                                 <hr />
                             </div>
                             <div class="col-md-12">
                                 <p>
-                                    {{ $record->address }}
+                                    <em class="fa fa-map-marker"></em> {{ $record->address }}
                                 </p>
                             </div>
                             @if ($record->contact_no1 != null || $record->contact_no2 != null)
                                 <div class="col-md-12">
                                     <p>
-                                        {{ $record->contact_no1 }} / {{ $record->contact_no2 }}
+                                        <em class="fa fa-phone-square"></em> {{ $record->contact_no1 }} /
+                                        {{ $record->contact_no2 }}
                                     </p>
                                 </div>
                             @endif
@@ -50,6 +51,53 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="card m-b-30">
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <h4> <em class="fa fa-user-circle-o"> </em>&nbsp; Employees</h4>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <ul>
+                                    @foreach ($record->employees()->active()->get()
+        as $employee)
+                                        <li>
+                                            {{ $employee->name }} ( {{ $employee->employeeType->name }} )
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card m-b-30">
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <h4> <em class="fa fa-building"></em>&nbsp; Sites</h4>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <ul>
+                                    @foreach ($record->sites()->active()->get()
+        as $site)
+                                        <li>
+                                            {{ $site->name }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- End Contentbar -->

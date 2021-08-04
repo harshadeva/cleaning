@@ -46,7 +46,7 @@
                   <div class="col-md-5">
                     <label for="section">Section</label>
                     <v-select
-                      v-model="form.site_sections[index].section"
+                      v-model="site_section.section"
                       :options="sectionsArray"
                       label="name"
                       @input="sectionChanged($event, index)"
@@ -55,7 +55,7 @@
                   <div class="col-md-7">
                     <label for="section">Employee</label>
                     <v-select
-                      v-model="form.site_sections[index].employee"
+                      v-model="site_section.employee"
                       :options="employeesArray"
                       label="name"
                       @input="employeeChanged($event, index)"
@@ -65,7 +65,7 @@
                     <label
                       >Rating
                       <span class="vue-star-rating-rating-text">{{
-                        form.site_sections[index].rating
+                        site_section.rating
                       }}</span>
                     </label>
                     <star-rating
@@ -75,19 +75,29 @@
                       :inline="true"
                       :show-rating="false"
                       :star-size="starSize"
-                      v-model="form.site_sections[index].rating"
-                      @rating-selected="setRating($event, index)"
+                      v-model="site_section.rating"
                     >
                     </star-rating>
                   </div>
                   <div class="col-md-12">
                     <label>Remarks</label>
                     <input
-                      v-model="form.site_sections[index].remark"
+                      v-model="site_section.remark"
                       type="text"
                       class="form-control"
                       placeholder="Remark"
                     />
+                  </div>
+                  <div class="col-md-12 mt-2">
+                    <vue-dropzone
+                      :ref="index + 'dropzoneRef'"
+                      :id="index + 'dropzone'"
+                      :duplicateCheck="true"
+                      :options="dropzoneOptions"
+                      @vdropzone-removed-file="fileRemoved(index, $event)"
+                      @vdropzone-error="errorMessage"
+                      @vdropzone-success="uploadSuccess(index, $event)"
+                    ></vue-dropzone>
                   </div>
                   <div class="col-md-12 mt-3">
                     <button
@@ -125,21 +135,22 @@ export default {
   props: ["record", "employees", "sections"],
   data() {
     return {
+      dropzoneOptions: {
+        url: route("upload.store"),
+        thumbnailWidth: 150,
+        maxFilesize: 10,
+        addRemoveLinks: true,
+        headers: {
+          "My-Awesome-Header": "header value",
+          "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+      },
       form: {
         _method: "PUT",
         id: "",
         date: "",
-        site_sections: [
-          {
-            id: "",
-            section_id: "",
-            rating: 0,
-            employee_id: "",
-            remark: "",
-            section: null,
-            employee: null,
-          },
-        ],
+        site_sections: [],
       },
     };
   },
@@ -159,7 +170,7 @@ export default {
         return 40; //function to transform your src to large
       } else if (screenWidth > 398) {
         return 35;
-      } else if (screenWidth > 310) {
+      } else if (screenWidth > 360) {
         return 25;
       } else {
         return 20;
@@ -169,22 +180,71 @@ export default {
   mounted() {
     this.form.date = this.recordArray.date;
     this.form.id = this.recordArray.id;
-    this.recordArray.report_sections.forEach((value, key) => {
-      let newObject = {
-        id: value.id,
-        section_id: value.section_id,
-        rating: value.rating,
-        remark: value.description,
-        employee_id: value.employee_id,
-        employee: value.employee,
-        section: value.section,
-      };
-      this.form.site_sections[key] = newObject;
+    this.recordArray.report_sections.forEach((report_section, key) => {
+      this.setSectionData(report_section);
+      this.setDropzones(report_section, key);
     });
   },
   methods: {
-    setRating(rating, index) {
-      this.form.site_sections[index].rating = rating;
+    setSectionData(report_section) {
+      let object = {
+        id: report_section.id,
+        section_id: report_section.section_id,
+        rating: report_section.rating,
+        remark: report_section.description,
+        employee_id: report_section.employee_id,
+        employee: report_section.employee,
+        section: report_section.section,
+        files: report_section.report_section_medias.map((a) => a.media.id),
+      };
+      this.form.site_sections.push(object);
+    },
+    setDropzones(report_section, key) {
+      report_section.report_section_medias.forEach(
+        (report_section_media, key2) => {
+          let file = {
+            size: 123,
+            id: report_section_media.media.id,
+            name: report_section_media.media.name,
+            type: "image/png",
+          };
+          let url = report_section_media.media.path;
+          let refName = key.toString() + "dropzoneRef";
+          this.$nextTick(function () {
+            this.$refs[refName][0].manuallyAddFile(file, url);
+          });
+        }
+      );
+    },
+    fileRemoved(index, file) {
+      if (file.id) {
+        this.removeUploadedFile(index, file);
+      } else {
+        this.removeNewUploaded(index, file);
+      }
+    },
+    removeUploadedFile(index,file) {
+      var position = this.form.site_sections[index].files.indexOf(file.id);
+      if (index > -1) {
+        this.form.site_sections[index].files.splice(position, 1);
+      }
+    },
+    removeNewUploaded(index, file) {
+      let media_id = JSON.parse(file.xhr.responseText).upload_id;
+      var position = this.form.site_sections[index].files.indexOf(media_id);
+      if (index > -1) {
+        this.form.site_sections[index].files.splice(position, 1);
+      }
+    },
+    errorMessage(file, message) {
+      showError(message.message);
+    },
+    uploadSuccess(index, file) {
+      let response = JSON.parse(file.xhr.response);
+      if (response.successMessage != null) {
+        this.form.site_sections[index].files.push(response.upload_id);
+        showSuccess(response.successMessage);
+      }
     },
     /* Form repeater functions : Start */
     addRepeater() {
@@ -197,6 +257,7 @@ export default {
         remark: "",
         section: null,
         employee: null,
+        files: [],
       };
       this.form.site_sections.push(newObject);
     },

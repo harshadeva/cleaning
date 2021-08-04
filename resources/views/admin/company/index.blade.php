@@ -27,6 +27,8 @@
                                     <tr>
                                         <th>{{ __('common.Company Name') }}</th>
                                         <th>{{ __('common.Company Admin') }}</th>
+                                        <th style="text-align: center">{{ __('common.Sites') }}</th>
+                                        <th style="text-align: center">{{ __('common.Employees') }}</th>
                                         <th>{{ __('common.Created At') }}</th>
                                         <th>{{ __('common.Status') }}</th>
                                         <th class="text-center">{{ __('common.Action') }}</th>
@@ -38,6 +40,8 @@
                                             <tr>
                                                 <td>{{ $record->name }}</td>
                                                 <td>{{ $record->admin()->user->name }}</td>
+                                                <td style="text-align: center" >{{ $record->sites()->active()->count() }}</td>
+                                                <td style="text-align: center" >{{ $record->employees()->active()->count() }}</td>
                                                 <td>{{ $record->created_at->format('Y-m-d H:i:s') }}</td>
                                                 <td>
                                                     @if ($record->status == 1)

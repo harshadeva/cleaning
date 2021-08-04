@@ -104,7 +104,7 @@ class CompanyController extends Controller
 
     private function storeCompanyAdmin($user, $company)
     {
-        return Employee::register($user, $company, 1); // 1 is company admin value
+        return Employee::register($user, $company, 2); // 2 is company admin value
     }
 
     private function storeCompany($request)

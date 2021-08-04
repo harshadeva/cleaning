@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Employee extends Model
 {
@@ -40,7 +41,7 @@ class Employee extends Model
 
     public function scopeAuth($query)
     {
-        return $query->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id);
+        return $query->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id);
     }
 
     public function scopeActive($query)
@@ -65,6 +66,7 @@ class Employee extends Model
 
     public static function register($user, $company, $userRoleId)
     {
+        Log::info($userRoleId);
         $record = new self();
         $record->user_id  = $user->id;
         $record->company_id  = $company->id;

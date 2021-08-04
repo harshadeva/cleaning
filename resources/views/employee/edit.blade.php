@@ -30,7 +30,7 @@
                                     <div class="row">
                                         @csrf
                                         <div class="col-lg-12 form-group">
-                                            @if ($record->companyEmployee()->employee_type_id == 1)
+                                            @if ($record->employees()->first()->employee_type_id == 1)
                                             <input type="hidden" value="1" name="employee_type_id" />
                                                 @include('components.inputs.text',
                                                 ['label'=>'Designation','id'=>'employee_type','name'=>'employee_type','disabled'=>'disabled',
@@ -90,7 +90,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            let userRole = "{{ $record->companyEmployee()->employee_type_id }}";
+            let userRole = "{{ $record->employees()->first()->employee_type_id }}";
             if (userRole != 1) {
                 $('#employee_type_id').val(userRole).trigger('change');
             }

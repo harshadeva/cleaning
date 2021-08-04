@@ -30,4 +30,9 @@ class ReportSection extends Model
     {
         return $this->belongsTo(Employee::class, 'employee_id');
     }
+
+    public function reportSectionMedias()
+    {
+        return $this->hasMany(ReportSectionMedia::class);
+    }
 }

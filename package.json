@@ -19,7 +19,10 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.3",
+        "@popperjs/core": "^2.9.3",
         "babel-preset-es2015": "^6.24.1",
+        "bootstrap": "^5.1.0",
+        "bootstrap-vue": "^2.21.2",
         "vue": "^2.6.14",
         "vue-cool-lightbox": "^2.7.4",
         "vue-select": "^3.12.1",

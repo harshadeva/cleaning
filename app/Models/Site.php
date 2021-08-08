@@ -31,7 +31,7 @@ class Site extends Model
         return $this->hasMany(Report::class, 'site_id');
     }
 
-    public function scopeCompany($query)
+    public function scopeAuthCompany($query)
     {
         return $query->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id);
     }

@@ -125,7 +125,7 @@
                         ) in report_section.report_section_medias"
                         :key="media_index"
                         @click="setImage(index, media_index)"
-                        :src="report_section_media.media.path"
+                        :src="report_section_media.media.path.thumbnail"
                       />
                     </div>
                   </div>
@@ -174,7 +174,7 @@ export default {
       var array = [];
       this.report.report_sections[index].report_section_medias.forEach(
         function (item) {
-          array.push(item.media.path);
+          array.push(item.media.path.original);
         }
       );
       this.items = array;

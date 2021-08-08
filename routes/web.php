@@ -7,6 +7,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
+use App\Models\Media;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(
     function () {
+        Route::get('test', function () {
+            return Media::latest()->first();
+        });
         Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::prefix('admin')->name('admin.')->group(
             function () {

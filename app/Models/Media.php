@@ -12,16 +12,31 @@ class Media extends Model
     protected $table = 'media';
     protected $appends = ['path'];
 
-    public function reportSectionMedias(){
+    public function reportSectionMedias()
+    {
         return $this->hasMany(ReportSectionMedia::class);
     }
 
-    public function getPathAttribute(){
-        return asset('storage/images/' . Auth::user()->getCompany()->id . '_office') .'/'. $this->name;
+    public function getPathAttribute()
+    {
+        return $this->getImagesArray();
     }
 
-    public static function getFolderPath(){
-        return 'public/images/' . Auth::user()->getCompany()->id . '_office/';
+    public static function getFolderPath($type, $size)
+    {
+        return $type . '/' . 'images/' . Auth::user()->getCompany()->id . '_office/' . $size . '/';
     }
 
+    public function getImagesArray()
+    {
+        $imageArray = [];
+        $imagesizes = config('common.imagesSize');
+        array_push($imagesizes,['name'=>'original']);
+        foreach ($imagesizes as $imagesize) {
+            $folderName = $imagesize['name'];
+            $path = asset(self::getFolderPath('storage', $folderName) . $this->name);
+            $imageArray[$folderName] = $path;
+        }
+        return $imageArray;
+    }
 }

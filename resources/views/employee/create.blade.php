@@ -59,8 +59,7 @@
                                             ['label'=>'Last Name','name'=>'last_name','placeholder'=>'Enter last name'])
                                         </div>
                                         <div class="col-lg-12">
-                                            @include('components.inputs.email',['label'=>'Email','name'=>'email','placeholder'=>'Enter
-                                            email'])
+                                            @include('components.inputs.email',['label'=>'Email','name'=>'email','placeholder'=>'Enter email'])
                                         </div>
 
                                         <div class="col-lg-12">

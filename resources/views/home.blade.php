@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>Left</h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>Right</h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>

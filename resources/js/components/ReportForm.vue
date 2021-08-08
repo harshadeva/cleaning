@@ -7,7 +7,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
-                  <label>Sites</label>
+                  <label>Site</label>
                   <v-select
                     v-model="selected_data.site"
                     :options="siteArray"
@@ -29,97 +29,129 @@
           </div>
         </div>
       </div>
-      <div class="card m-b-30">
+      <div
+        v-for="(site_section, index) in this.form.site_sections"
+        :key="index"
+        class="card"
+      >
         <div class="row">
           <div class="col-md-12">
             <div class="card-body">
-              <div
-                v-for="(site_section, index) in this.form.site_sections"
-                :key="index"
-                class="form-group"
-              >
-                <div class="row">
-                  <div class="col-md-12">
-                    <hr />
-                  </div>
-                  <div class="col-md-5">
-                    <label for="section">Section</label>
-                    <v-select
-                      v-model="form.site_sections[index].section"
-                      :options="sectionsArray"
-                      label="name"
-                      @input="sectionChanged($event, index)"
-                    />
-                  </div>
-                  <div class="col-md-7">
-                    <label for="section">Employee</label>
-                    <v-select
-                      v-model="form.site_sections[index].employee"
-                      :options="employeesArray"
-                      label="name"
-                      @input="employeeChanged($event, index)"
-                    />
-                  </div>
-                  <div class="col-md-12">
-                    <label
-                      >Rating
-                      <span class="vue-star-rating-rating-text">{{
-                        form.site_sections[index].rating
-                      }}</span>
-                    </label>
-                    <star-rating
-                      :max-rating="10"
-                      :glow="2"
-                      :animate="true"
-                      :inline="true"
-                      :show-rating="false"
-                      :star-size="starSize"
-                      v-model="form.site_sections[index].rating"
-                    >
-                    </star-rating>
-                  </div>
-                  <div class="col-md-12">
-                    <label>Remarks</label>
-                    <textarea
-                      v-model="form.site_sections[index].remark"
-                      class="form-control"
-                      placeholder="Write something"
-                    ></textarea>
-                  </div>
-                  <div class="col-md-12 mt-2">
-                    <vue-dropzone
-                      :ref="index + 'ref'"
-                      :useCustomSlot="true"
-                      :id="index + 'dropzone'"
-                      :duplicateCheck="true"
-                      :options="dropzoneOptions"
-                      @vdropzone-removed-file="fileRemoved(index,$event)"
-                      @vdropzone-error="errorMessage"
-                      @vdropzone-success="uploadSuccess(index, $event)"
-                    ></vue-dropzone>
-                  </div>
-                  <div class="col-md-12 mt-3">
-                    <button
-                      class="btn btn-danger"
-                      @click="removeRepeater(index)"
-                    >
-                      <em class="fa fa-times"></em> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
               <div class="row">
-                <div class="col-md-12 mt-3">
-                  <button class="btn btn-info" @click="addRepeater">
-                    <em class="fa fa-plus"></em> Add Another Section
+                <div class="col-md-3 pb-2">
+                  <em class="fa fa-building"></em>
+                  <span>{{ site_section.section_name }}</span>
+                </div>
+                <div class="col-md-6 pb-2">
+                  <em class="fa fa-user"></em>
+                  <span>{{ site_section.employee_name }}</span>
+                  &nbsp;
+                  <em class="fa fa-star pb-2"></em>
+                  <span>{{ site_section.rating }}</span>
+                  &nbsp; &nbsp;
+                  <em class="fa fa-image pb-2"></em>
+                  <span>{{ site_section.files.length }}</span>
+                </div>
+                <div class="col-md-3 d-flex flex-row justify-content-end">
+                  <b-button
+                    style="
+                       {
+                        outline: none;
+                        box-shadow: none;
+                      }
+                    "
+                    v-b-toggle="'collapse-' + index"
+                    class="btn-top-margin btn btn-primary"
+                  >
+                    <span v-if="site_section.expanded">
+                      <em class="fa fa-angle-double-up"></em>
+                      Less&nbsp;&nbsp;</span
+                    >
+                    <span v-else
+                      ><em class="fa fa-angle-double-down"></em> More</span
+                    ></b-button
+                  >
+                  <button
+                    class="btn btn-danger ml-1"
+                    @click="removeRepeater(index)"
+                  >
+                    <em class="fa fa-times"></em> Remove
                   </button>
                 </div>
+                <b-collapse
+                  @show="collapseShow(index)"
+                  @hide="collapseHide(index)"
+                  :id="'collapse-' + index"
+                  class="mt-2 col-md-12"
+                  :visible="site_section.expanded"
+                >
+                  <hr />
+                  <b-row>
+                    <div class="col-md-6">
+                      <label for="section">Section</label>
+                      <v-select
+                        v-model="site_section.section"
+                        :options="sectionsArray"
+                        label="name"
+                        @input="sectionChanged($event, index)"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="section">Employee</label>
+                      <v-select
+                        v-model="site_section.employee"
+                        :options="employeesArray"
+                        label="name"
+                        @input="employeeChanged($event, index)"
+                      />
+                    </div>
+                    <div class="col-md-12">
+                      <star-rating
+                        style="margin-top: 28px"
+                        :max-rating="10"
+                        :glow="2"
+                        :animate="true"
+                        :inline="true"
+                        :star-size="starSize"
+                        v-model="site_section.rating"
+                      >
+                      </star-rating>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                      <label>Remarks</label>
+                      <textarea
+                        v-model="site_section.remark"
+                        class="form-control"
+                        placeholder="Write something"
+                      ></textarea>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                      <vue-dropzone
+                        :ref="index + 'ref'"
+                        :useCustomSlot="true"
+                        :id="index + 'dropzone'"
+                        :duplicateCheck="true"
+                        :options="dropzoneOptions"
+                        @vdropzone-removed-file="fileRemoved(index, $event)"
+                        @vdropzone-error="errorMessage"
+                        @vdropzone-success="uploadSuccess(index, $event)"
+                      ></vue-dropzone>
+                    </div>
+                  </b-row>
+                </b-collapse>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row mb-5 mt-n3">
+      <div class="row mt-2">
+        <div class="col-md-12 d-flex flex-row-reverse">
+          <button class="btn btn-info" @click="addRepeater">
+            <em class="fa fa-plus"></em> Add Another Section
+          </button>
+        </div>
+      </div>
+      <div class="row pb-5 mt-2">
         <div class="col-md-12">
           <button type="submit" name="submit" class="btn btn-success">
             Submit
@@ -150,7 +182,10 @@ export default {
         date: "",
         site_sections: [
           {
+            expanded: false,
             section_id: "",
+            section_name: "Section name",
+            employee_name: "Employee name",
             rating: 0,
             employee_id: "",
             remark: "",
@@ -178,9 +213,9 @@ export default {
     starSize() {
       let screenWidth = screen.width;
       if (screenWidth > 565) {
-        return 40; //function to transform your src to large
+        return 30; //function to transform your src to large
       } else if (screenWidth > 398) {
-        return 35;
+        return 30;
       } else if (screenWidth > 360) {
         return 25;
       } else {
@@ -189,10 +224,16 @@ export default {
     },
   },
   methods: {
-    fileRemoved(index,file) {
+    collapseShow(index) {
+      this.form.site_sections[index].expanded = true;
+    },
+    collapseHide(index) {
+      this.form.site_sections[index].expanded = false;
+    },
+    fileRemoved(index, file) {
       let media_id = JSON.parse(file.xhr.responseText).upload_id;
       var position = this.form.site_sections[index].files.indexOf(media_id);
-      if (index > -1) {
+      if (position > -1) {
         this.form.site_sections[index].files.splice(position, 1);
       }
     },
@@ -215,7 +256,10 @@ export default {
     addRepeater() {
       event.preventDefault();
       let newObject = {
+        expanded: false,
         section_id: "",
+        section_name: "Section name",
+        employee_name: "Employee name",
         rating: 0,
         employee_id: "",
         remark: "",
@@ -228,7 +272,6 @@ export default {
 
     removeRepeater(index) {
       event.preventDefault();
-
       this.form.site_sections.splice(index, 1);
     },
     /* Form repeater functions : End */
@@ -237,9 +280,11 @@ export default {
     },
     sectionChanged(item, index) {
       this.form.site_sections[index].section_id = item ? item.id : null;
+      this.form.site_sections[index].section_name = item ? item.name : "";
     },
     employeeChanged(item, index) {
       this.form.site_sections[index].employee_id = item ? item.id : null;
+      this.form.site_sections[index].employee_name = item ? item.name : null;
     },
     submitForm() {
       event.preventDefault();
@@ -270,18 +315,10 @@ export default {
       let form = {
         site_id: "",
         date: "",
-        site_sections: [
-          {
-            section_id: "",
-            rating: 0,
-            employee_id: "",
-            remark: "",
-            section: null,
-            employee: null,
-          },
-        ],
+        site_sections: [],
       };
       this.form = form;
+      this.addRepeater();
       this.selected_data.site = null;
     },
   },

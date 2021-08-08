@@ -7,11 +7,18 @@ import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import CoolLightBox from 'vue-cool-lightbox'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
+import { BootstrapVue } from 'bootstrap-vue'
 
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-Vue.component('report-form',require('./components/ReportForm.vue').default);
-Vue.component('report-form-edit',require('./components/ReportFormEdit.vue').default);
-Vue.component('report-view',require('./components/ReportView.vue').default);
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+
+Vue.component('report-form', require('./components/ReportForm.vue').default);
+Vue.component('report-form-edit', require('./components/ReportFormEdit.vue').default);
+Vue.component('report-view', require('./components/ReportView.vue').default);
 Vue.component("v-select", vSelect);
 Vue.component('star-rating', StarRating)
 Vue.component('vue-dropzone', vue2Dropzone)
@@ -19,5 +26,5 @@ Vue.component('vue-dropzone', vue2Dropzone)
 Vue.use(CoolLightBox);
 
 const app = new Vue({
-    el:'#app',
+    el: '#app',
 });

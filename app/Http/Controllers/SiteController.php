@@ -20,7 +20,7 @@ class SiteController extends Controller
     public function index()
     {
         try {
-            $records = Site::company()->latest()->get();
+            $records = Site::authCompany()->latest()->get();
             return view('site.index', ['records' => $records]);
         } catch (Exception $e) {
             return CatchErrors::render($e);

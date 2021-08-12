@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CompanyController as AdminCompanyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UploadController;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(
     function () {
         Route::get('test', function () {
-            return Media::latest()->first();
+            return view('pdf.report');
         });
         Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::prefix('admin')->name('admin.')->group(
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(
         Route::resource('user', UserController::class)->names('user');
         Route::get('site/get_sections/{siteId}', [SiteController::class,'getSections'])->name('site.get_sections');
         Route::resource('site', SiteController::class)->names('site');
+        Route::get('report/print', [PdfController::class, 'print'])->name('report.print');
         Route::resource('report', ReportController::class)->names('report');
         Route::resource('upload', UploadController::class)->names('upload');
     }

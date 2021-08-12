@@ -103,7 +103,7 @@ class ReportController extends Controller
     public function show($id)
     {
         try {
-            $record = Report::with(['site','reportSections.employee.user','reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
+            $record = Report::with(['site', 'reportSections.employee.user', 'reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
             return view('report.show', ['record' => $record]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
@@ -113,7 +113,7 @@ class ReportController extends Controller
     public function edit($id)
     {
         try {
-            $record = Report::with(['site', 'reportSections.employee.user','reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
+            $record = Report::with(['site', 'reportSections.employee.user', 'reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
             $sections = Section::active()->get();
             $employees = Employee::with(['user'])->auth()->worker()->active()->get();
             return view('report.edit', ['record' => $record, 'employees' => $employees, 'sections' => $sections]);
@@ -138,4 +138,6 @@ class ReportController extends Controller
             return CatchErrors::rollback($e);
         }
     }
+
+
 }

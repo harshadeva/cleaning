@@ -56,6 +56,11 @@
                                                             class='btn btn-info'>
                                                             <i class='fa fa-eye'></i>
                                                         </a>
+                                                        <a type='button' title="Print"
+                                                            href="{{ route('report.print', ['report_id' => $record->id]) }}"
+                                                            class='btn btn-primary'>
+                                                            <i class='fa fa-print'></i>
+                                                        </a>
                                                     </p>
                                                 </td>
                                             </tr>

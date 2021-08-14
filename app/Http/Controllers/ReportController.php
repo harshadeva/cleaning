@@ -55,6 +55,7 @@ class ReportController extends Controller
         try {
             $record = new Report();
             $record->site_id = $request['site_id'];
+            $record->signature_id = $request['signature_id'];
             $record->user_id = Auth::user()->id;
             $record->date = $request['date'];
             $record->supervisor_comment = $request['supervisor_comment'];
@@ -128,6 +129,7 @@ class ReportController extends Controller
         try {
             $record = Report::find($id);
             $record->date = $request['date'];
+            $record->signature_id = $request['signature_id'];
             $record->supervisor_comment = $request['supervisor_comment'];
             $record->site_admin_comment = $request['site_admin_comment'];
             $record->save();
@@ -138,6 +140,4 @@ class ReportController extends Controller
             return CatchErrors::rollback($e);
         }
     }
-
-
 }

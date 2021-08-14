@@ -17,6 +17,7 @@ class CreateReportTable extends Migration
             $table->id();
             $table->unsignedBigInteger('site_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('signature_id');
             $table->date('date');
             $table->text('supervisor_comment')->nullable();
             $table->text('site_admin_comment')->nullable();
@@ -25,6 +26,7 @@ class CreateReportTable extends Migration
 
             $table->foreign('site_id')->references('id')->on('site')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('signature_id')->references('id')->on('media')->onDelete('cascade');
         });
     }
 

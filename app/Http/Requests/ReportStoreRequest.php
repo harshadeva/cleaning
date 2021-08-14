@@ -31,6 +31,7 @@ class ReportStoreRequest extends FormRequest
     {
         return [
             'site_id' => 'required',
+            'signature_id' => 'required|exists:media,id',
             'date' => 'required|date'
         ];
     }
@@ -58,5 +59,11 @@ class ReportStoreRequest extends FormRequest
                 }
             }
         });
+    }
+
+    public function attributes(){
+        return [
+            'signature_id'=> 'signature'
+        ];
     }
 }

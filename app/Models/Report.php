@@ -18,6 +18,10 @@ class Report extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function signature(){
+        return $this->belongsTo(Media::class, 'signature_id');
+    }
+
     public function reportSections()
     {
         return $this->hasMany(ReportSection::class, 'report_id');

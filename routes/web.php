@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(
         Route::resource('site', SiteController::class)->names('site');
         Route::get('report/print', [PdfController::class, 'print'])->name('report.print');
         Route::resource('report', ReportController::class)->names('report');
+        Route::post('upload/signature', [UploadController::class, 'storeSignature'])->name('upload.storeSignature');
         Route::resource('upload', UploadController::class)->names('upload');
     }
 );

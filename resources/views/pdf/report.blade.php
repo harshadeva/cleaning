@@ -37,6 +37,10 @@
         }
 
         tr.details {
+            /* background-color: #dddddd; */
+        }
+
+        th {
             background-color: #dddddd;
         }
 
@@ -56,7 +60,6 @@
             margin-bottom: 0px;
         }
 
-
     </style>
 </head>
 
@@ -64,12 +67,10 @@
 
     <div class="flex-container">
         <div class="print-panel">
-            <p> <b>Printed Date : </b> {{ date('Y-m-d H:i:s') }}</p>
-            <p> <b>Report ID : </b>{{ $report->id }}</p>
-            <p> <b>Printed By : </b>{{ Auth::user()->name }}</p>
-            <br />
-            <p> <b>Report Date : </b>{{ $report->date }}</p>
-            <p> <b>Report Created By : </b>{{ $report->user->name }}</p>
+            <h2 style="margin-bottom:5px;"><i>Site Supervisor Report</i></h2>
+            <p style="color:rgb(66, 66, 66)" > <b>Printed Date : </b> {{ date('Y-m-d H:i:s') }}</p>
+            <p style="color:rgb(66, 66, 66)" > <b>Report ID : </b>{{ $report->id }}</p>
+            <p style="color:rgb(66, 66, 66)" > <b>Printed By : </b>{{ Auth::user()->name }}</p>
         </div>
         <div class="logo-panel">
             <?php
@@ -86,11 +87,11 @@
             $logoBase64Data = base64_encode($logoData);
             $logoData = 'data:image/' . $type . ';base64,' . $logoBase64Data;
             ?>
-            <img style="width: 120px;height:120px;float: right;" src="{{ $logoData }}">
+            <img style="width: 100px;height:100px;float: right;" src="{{ $logoData }}">
         </div>
 
         <div class="site-name">
-                <h4><u>{{ $report->site->name }}</u></h4>
+            <h4><u>{{ $report->site->name }}</u></h4>
         </div>
         <div class="report-table">
             <table>
@@ -129,7 +130,7 @@
 
                         ?>
                         <td>
-                            <img style="width: 100px;height:100px" src="{{ $imageData }}">
+                            <img height="100px" width="100px" src="{{ $imageData }}">
                         </td>
                         @if ($key % 4 == 0 && $key != 0)
                             </tr>
@@ -139,6 +140,46 @@
 
                 @endforeach
             </table>
+
+            <br />
+            <br />
+            <br />
+            <table width="100%">
+                <tr>
+                    <td colspan="1">
+                        <h5>Overrall Rating :
+                            {{ round($report->reportSections->sum('rating') / $report->reportSections->count()) }} /  {{ config('common.rating__by') }}
+                        </h5>
+                        <h5>Created Date :
+                            {{ $report->date }}
+                        </h5>
+                        <h5>Created By :
+                            {{ $report->user->name }}
+                        </h5>
+                    </td>
+                    <td style="text-align: right" colspan="1">
+                        <h5>Signature : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+
+                        <?php
+                        $signatureUrl = base_path() . $report->signature->raw_path['thumbnail'];
+                        $arrContextOptions = [
+                            'ssl' => [
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                            ],
+                        ];
+                        $type = pathinfo($signatureUrl, PATHINFO_EXTENSION);
+                        $signatureData = file_get_contents($signatureUrl, false, stream_context_create($arrContextOptions));
+                        $signatureBase64Data = base64_encode($signatureData);
+                        $signatureImageData = 'data:image/' . $type . ';base64,' . $signatureBase64Data;
+
+                        ?>
+
+                        <img height="100px" width="150px" src="{{ $signatureImageData }}">
+                    </td>
+                </tr>
+            </table>
+
         </div>
     </div>
 </body>

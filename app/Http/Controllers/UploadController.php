@@ -18,24 +18,54 @@ class UploadController extends Controller
             $file = $request['file'];
             $extension = $file->extension();
             $companyId = Auth::user()->getCompany()->id;
-            $imageName = $companyId.'_'.date('Y_m_d_H_i_s').'_'.uniqid().'.'.$extension;
+            $imageName = $companyId . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.' . $extension;
 
-            Storage::putFileAs(Media::getFolderPath('public','original'), $file, $imageName);
-
+            Storage::makeDirectory(Media::getFolderPath('public', 'original'));
+            Image::make(file_get_contents($request->file))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));
             $imagesizes = config('common.imagesSize');
             foreach ($imagesizes as $imagesize) {
                 $folderName = $imagesize['name'];
-                Storage::makeDirectory(Media::getFolderPath('public',$folderName));
+                Storage::makeDirectory(Media::getFolderPath('public', $folderName));
                 Image::make($file)->resize($imagesize['width'], $imagesize['height'])->save(public_path(Media::getFolderPath('storage', $folderName) . $imageName));
             }
 
-        }
-        $record = new Media();
-        $record->name = $imageName;
-        $record->status = 1;
-        $record->save();
-        
+            $record = new Media();
+            $record->name = $imageName;
+            $record->status = 1;
+            $record->save();
 
-        return response()->json(['successMessage' => 'File uploaded', 'upload_id' => $record->id], 200);
+
+            return response()->json(['successMessage' => 'File uploaded', 'upload_id' => $record->id], 200);
+        }
+        return response()->json(['errorMessage' => 'No file found'], 401);
     }
+
+    public function storeSignature(Request $request)
+    {
+            Log::info($request->all());
+            if ($request->has('file')) {
+                $companyId = Auth::user()->getCompany()->id;
+                $imageName = $companyId . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.png';
+
+                Storage::makeDirectory(Media::getFolderPath('public', 'original'));
+                Image::make(file_get_contents($request->file))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));
+
+                $imagesizes = config('common.imagesSize');
+                foreach ($imagesizes as $imagesize) {
+                    $folderName = $imagesize['name'];
+                    Storage::makeDirectory(Media::getFolderPath('public', $folderName));
+                    Image::make(file_get_contents($request->file))->resize($imagesize['width'], $imagesize['height'])->save(public_path(Media::getFolderPath('storage', $folderName) . $imageName));
+                }
+
+                $record = new Media();
+                $record->name = $imageName;
+                $record->status = 1;
+                $record->save();
+
+
+                return response()->json(['successMessage' => 'File uploaded', 'upload_id' => $record->id], 200);
+            }
+            return response()->json(['errorMessage' => 'No file found'], 401);
+    }
+
 }

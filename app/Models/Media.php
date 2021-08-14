@@ -17,6 +17,11 @@ class Media extends Model
         return $this->hasMany(ReportSectionMedia::class);
     }
 
+    public function signatures()
+    {
+        return $this->hasMany(Report::class,'signature_id');
+    }
+
     public function getPathAttribute()
     {
         return $this->getImagesArray();

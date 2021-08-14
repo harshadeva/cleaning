@@ -8,6 +8,8 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import CoolLightBox from 'vue-cool-lightbox'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 import { BootstrapVue } from 'bootstrap-vue'
+import VueSignaturePad from 'vue-signature-pad';
+
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -24,6 +26,7 @@ Vue.component('star-rating', StarRating)
 Vue.component('vue-dropzone', vue2Dropzone)
 
 Vue.use(CoolLightBox);
+Vue.use(VueSignaturePad);
 
 const app = new Vue({
     el: '#app',

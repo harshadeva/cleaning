@@ -46,14 +46,15 @@
         </div>
       </div>
     </div>
-    <div class="card m-b-30"  v-for="(report_section, index) in this.report.report_sections"
-              :key="index">
+    <div
+      class="card m-b-30"
+      v-for="(report_section, index) in this.report.report_sections"
+      :key="index"
+    >
       <div class="row">
         <div class="col-md-12">
           <div class="card-body">
-            <div
-              class="form-group"
-            >
+            <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <hr />
@@ -132,6 +133,24 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card m-b-30 mt-4 col-md-6">
+      <div class="card-body">
+        <div class="row pb-5 mt-2">
+          <div class="col-md-12">
+            <u>Signature</u>
+          </div>
+          <div class="col-md-6">
+            <img
+              alt="signature"
+              height="100px"
+              width="100%"
+              :src="report.signature.path['original']"
+            />
           </div>
         </div>
       </div>

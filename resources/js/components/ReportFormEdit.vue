@@ -159,6 +159,45 @@
           </button>
         </div>
       </div>
+       <div class="card m-b-30 mt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row pb-5 mt-2">
+                <div class="col-md-12">
+                  <u>Signature</u>
+                </div>
+                <div class="col-md-6">
+                  <VueSignaturePad v-if="signature_edited"
+                    :customStyle="{ border: '1px solid black' }"
+                    width="100%"
+                    height="100px"
+                    ref="signaturePad"
+                  />
+                        <img v-else alt="signature" height="100px" width="100%" :src="selected_data.signature">
+
+                </div>
+                <div class="col-md-6">
+                  <button
+                    v-if="form.signature_id != null"
+                    class="btn btn-success"
+                    @click="save"
+                  >
+                    Confirmed <em class="fa fa-check"> </em>
+                  </button>
+                  <button v-else class="btn btn-primary" @click="save">
+                    Confirm <em class="fa fa-question-circle"></em>
+                  </button>
+                  <br />
+                  <button class="btn btn-danger mt-2" @click="undo">
+                    Clear &nbsp;<em class="fa fa-history"></em>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row mb-5 pb-5 mt-n3">
         <div class="col-md-12">
           <button type="submit" name="submit" class="btn btn-success">
@@ -185,12 +224,17 @@ export default {
             .content,
         },
       },
+      signature_edited:false,
       form: {
         _method: "PUT",
         id: "",
         date: "",
+        signature_id: null,
         site_sections: [],
       },
+      selected_data:{
+          signature:""
+      }
     };
   },
   computed: {
@@ -219,12 +263,50 @@ export default {
   mounted() {
     this.form.date = this.recordArray.date;
     this.form.id = this.recordArray.id;
+    this.form.signature_id = this.recordArray.signature_id;
+    this.selected_data.signature = this.recordArray.signature.path['original'];
     this.recordArray.report_sections.forEach((report_section, key) => {
       this.setSectionData(report_section);
       this.setDropzones(report_section, key);
     });
+     this.$refs.signaturePad.lockSignaturePad();
+     this.$refs.signaturePad.addImages([this.recordArray.signature.path['original']]);
   },
   methods: {
+       signatureUpload(file) {
+      let data = new FormData();
+      data.append("file", file);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+          "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+      };
+
+      axios
+        .post(route("upload.storeSignature"), data, config)
+        .then((response) => {
+          if (response.data.successMessage) {
+            this.form.signature_id = response.data.upload_id;
+          }
+        });
+    },
+    undo() {
+      event.preventDefault();
+     this.signature_edited = true;
+      this.form.signature_id = null;
+      this.$refs.signaturePad.undoSignature();
+     this.$refs.signaturePad.openSignaturePad();
+
+    },
+    save() {
+      event.preventDefault();
+      const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
+      if (!isEmpty) {
+        this.signatureUpload(data);
+      }
+    },
     collapseShow(index) {
       this.form.site_sections[index].expanded = true;
     },

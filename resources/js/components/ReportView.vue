@@ -32,7 +32,7 @@
                 >
                 </textarea>
               </div>
-              <div v-if="report.site_admin_comment != null" class="col-md-12">
+              <div v-if="report.site_admin_comment != null" class="col-md-12 mt-2">
                 <label>Site Admin Commnent</label>
                 <textarea
                   class="form-control"
@@ -142,12 +142,12 @@
       <div class="card-body">
         <div class="row pb-5 mt-2">
           <div class="col-md-12">
-            <u>Signature</u>
+                  <label>Signature</label>
+
           </div>
-          <div class="col-md-6">
+          <div class="col-md-12">
             <img
               alt="signature"
-              height="100px"
               width="100%"
               :src="report.signature.path['original']"
             />

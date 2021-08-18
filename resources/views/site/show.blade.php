@@ -26,7 +26,7 @@
     <!-- Start Contentbar -->
     <div class="contentbar">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card m-b-30">
                     <div class="row">
                         <div class="card-body">
@@ -35,17 +35,25 @@
                                 <hr />
                             </div>
                             <div class="col-md-12">
-                                <p>
+                                <p> <em class="fa fa-map-marker"></em>
                                     {{ $record->address }}
                                 </p>
                             </div>
                             @if ($record->contact_no1 != null || $record->contact_no2 != null)
                                 <div class="col-md-12">
-                                    <p>
+                                    <p><em class="fa fa-phone"></em>
                                         {{ $record->contact_no1 }} / {{ $record->contact_no2 }}
                                     </p>
                                 </div>
                             @endif
+                             <div class="col-md-12">
+                                 <hr/>
+                             </div>
+                              <div class="col-md-12">
+                                 <h6>Site Admin : {{ $record->admin->name }} </h6>
+                                 <h6>Reports Count : {{ $record->reports()->active()->count() }} </h6>
+                                 <h6>Avarage Rating : {{ $record->getAvarageRating() }} </h6>
+                             </div>
                         </div>
                     </div>
                 </div>

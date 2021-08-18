@@ -44,6 +44,13 @@ class Employee extends Model
         return $query->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id);
     }
 
+    public function getAvarageRating(){
+        $totalWorks = $this->reportSections()->active()->count();
+        $totalRating = $this->reportSections()->active()->sum('rating');
+        if($totalWorks == 0) return 0;
+        return round($totalRating / $totalWorks);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', 1);

@@ -10,6 +10,11 @@ class Report extends Model
     use HasFactory;
     protected $table = 'report';
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     public function site(){
         return $this->belongsTo(Site::class,'site_id');
     }
@@ -25,6 +30,11 @@ class Report extends Model
     public function reportSections()
     {
         return $this->hasMany(ReportSection::class, 'report_id');
+    }
+
+    public function siteAdminMedias()
+    {
+        return $this->hasMany(SiteAdminMedia::class, 'report_id');
     }
 
     public function getOverallRating(){

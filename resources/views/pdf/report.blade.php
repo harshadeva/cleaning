@@ -4,16 +4,16 @@
 <head>
     <style>
         .flex-container {
-            display: flex;
-            flex-direction: row;
-            align-items: start;
-            background-color: #f1f1f1;
+            /* background-color: #f1f1f1; */
             width: 100%
         }
 
+        .logo-panel {
+            margin-top: -105px;
+        }
 
         .site-name>* {
-            margin-top: 140px;
+            margin-top: 150px;
             left: 50%;
             position: relative;
             transform: translate(-15%, 0);
@@ -21,7 +21,7 @@
         }
 
         .report-table {
-            padding-top: 165px;
+            padding-top: 5px;
         }
 
         table {
@@ -44,12 +44,6 @@
             background-color: #dddddd;
         }
 
-        .self-end {
-            margin-left: auto;
-            width: 60%;
-            padding: 10px;
-        }
-
         .print-panel>p {
             margin-top: 0px;
             margin-bottom: 0px;
@@ -64,17 +58,21 @@
 </head>
 
 <body>
+    <?php
+    $imageDefaultWidth = '100px';
+    $imageDefaultHeight = '100px';
+    $imageTopMargin = '15px';
+    ?>
 
     <div class="flex-container">
         <div class="print-panel">
-            <h2 style="margin-bottom:5px;"><i>Site Supervisor Report</i></h2>
-            <p style="color:rgb(66, 66, 66)" > <b>Printed Date : </b> {{ date('Y-m-d H:i:s') }}</p>
-            <p style="color:rgb(66, 66, 66)" > <b>Report ID : </b>{{ $report->id }}</p>
-            <p style="color:rgb(66, 66, 66)" > <b>Printed By : </b>{{ Auth::user()->name }}</p>
+            <h2 style="margin-bottom:5px;">Site Supervisor Report</h2>
+            <p style="color:rgb(66, 66, 66)"> <b>Printed Date : </b> {{ date('Y-m-d H:i:s') }}</p>
+            <p style="color:rgb(66, 66, 66)"> <b>Report ID : </b>{{ $report->id }}</p>
+            <p style="color:rgb(66, 66, 66)"> <b>Printed By : </b>{{ Auth::user()->name }}</p>
         </div>
         <div class="logo-panel">
             <?php
-
             $logoUrl = base_path() . $logo->raw_path['thumbnail'];
             $arrContextOptions = [
                 'ssl' => [
@@ -87,7 +85,7 @@
             $logoBase64Data = base64_encode($logoData);
             $logoData = 'data:image/' . $type . ';base64,' . $logoBase64Data;
             ?>
-            <img style="width: 100px;height:100px;float: right;" src="{{ $logoData }}">
+            <img style="width: 120px;height:100px;float: right;" src="{{ $logoData }}">
         </div>
 
         <div class="site-name">
@@ -110,35 +108,77 @@
                             </span> </td>
                         <td>{{ $reportSection->description }}</td>
                     </tr>
-                    @foreach ($reportSection->reportSectionMedias as $key => $reportSectionMedia)
-                        @if ($key % 4 == 1 || $key == 0)
-                            <tr>
-                        @endif
+                    <tr>
+                        <td colspan="4">
+                            @foreach ($reportSection->reportSectionMedias as $key => $reportSectionMedia)
 
-                        <?php
-                        $avatarUrl = base_path() . $reportSectionMedia->media->raw_path['thumbnail'];
-                        $arrContextOptions = [
-                            'ssl' => [
-                                'verify_peer' => false,
-                                'verify_peer_name' => false,
-                            ],
-                        ];
-                        $type = pathinfo($avatarUrl, PATHINFO_EXTENSION);
-                        $avatarData = file_get_contents($avatarUrl, false, stream_context_create($arrContextOptions));
-                        $avatarBase64Data = base64_encode($avatarData);
-                        $imageData = 'data:image/' . $type . ';base64,' . $avatarBase64Data;
 
-                        ?>
-                        <td>
-                            <img height="100px" width="100px" src="{{ $imageData }}">
+                                <?php
+                                $avatarUrl = base_path() . $reportSectionMedia->media->raw_path['thumbnail'];
+                                $arrContextOptions = [
+                                    'ssl' => [
+                                        'verify_peer' => false,
+                                        'verify_peer_name' => false,
+                                    ],
+                                ];
+                                $type = pathinfo($avatarUrl, PATHINFO_EXTENSION);
+                                $avatarData = file_get_contents($avatarUrl, false, stream_context_create($arrContextOptions));
+                                $avatarBase64Data = base64_encode($avatarData);
+                                $imageData = 'data:image/' . $type . ';base64,' . $avatarBase64Data;
+
+                                ?>
+
+                                <img style="margin-top: {{ $imageTopMargin }};" height="{{ $imageDefaultHeight }}"
+                                    width="{{ $imageDefaultWidth }}" src="{{ $imageData }}">
+
+
+
+                            @endforeach
                         </td>
-                        @if ($key % 4 == 0 && $key != 0)
-                            </tr>
-                        @endif
-
-                    @endforeach
-
+                    </tr>
                 @endforeach
+            </table>
+            <br />
+            <br />
+            <br />
+            <table width="100%">
+                @if( $report->site_admin_comment != null)
+                <tr>
+                    <td colspan>
+                        <h5 style="display: inline">Site Admin Comment : </h5>
+                        <span>{{ $report->site_admin_comment }}</span>
+                    </td>
+                </tr>
+                @endif
+                @if ($report->siteAdminMedias->count() > 0)
+                    <tr>
+                        <td>
+                            @foreach ($report->siteAdminMedias as $key => $siteAdminMedias)
+
+                                <?php
+                                $siteAdminImageUrl = base_path() . $siteAdminMedias->media->raw_path['thumbnail'];
+                                $arrContextOptions = [
+                                    'ssl' => [
+                                        'verify_peer' => false,
+                                        'verify_peer_name' => false,
+                                    ],
+                                ];
+                                $type = pathinfo($siteAdminImageUrl, PATHINFO_EXTENSION);
+                                $siteAdminImageData = file_get_contents($siteAdminImageUrl, false, stream_context_create($arrContextOptions));
+                                $siteAdminImageBase64Data = base64_encode($siteAdminImageData);
+                                $adminCommentData = 'data:image/' . $type . ';base64,' . $siteAdminImageBase64Data;
+
+                                ?>
+
+                                <img style="margin-top: {{ $imageTopMargin }};" height="{{ $imageDefaultHeight }}"
+                                    width="{{ $imageDefaultWidth }}" src="{{ $adminCommentData }}">
+
+
+                            @endforeach
+                        </td>
+                    </tr>
+                @endif
+
             </table>
 
             <br />
@@ -146,9 +186,10 @@
             <br />
             <table width="100%">
                 <tr>
-                    <td colspan="1">
+                    <td colspan="2">
                         <h5>Overrall Rating :
-                            {{ round($report->reportSections->sum('rating') / $report->reportSections->count()) }} /  {{ config('common.rating__by') }}
+                            {{ round($report->reportSections->sum('rating') / $report->reportSections->count()) }} /
+                            {{ config('common.rating__by') }}
                         </h5>
                         <h5>Created Date :
                             {{ $report->date }}
@@ -157,7 +198,7 @@
                             {{ $report->user->name }}
                         </h5>
                     </td>
-                    <td style="text-align: right" colspan="1">
+                    <td style="text-align: left" colspan="2">
                         <h5>Signature : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
 
                         <?php
@@ -175,11 +216,10 @@
 
                         ?>
 
-                        <img height="100px" width="150px" src="{{ $signatureImageData }}">
+                        <img height="80px" width="350px" src="{{ $signatureImageData }}">
                     </td>
                 </tr>
             </table>
-
         </div>
     </div>
 </body>

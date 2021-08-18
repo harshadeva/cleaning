@@ -46,21 +46,34 @@
                                                 <td class="text-center">
                                                     <p>
 
-                                                        <a type='button' title="Edit Report"
-                                                            href="{{ route('report.edit', ['report' => $record->id]) }}"
-                                                            class='btn btn-warning'>
-                                                            <i class='fa fa-edit'></i>
-                                                        </a>
-                                                        <a type='button' title="More Details"
-                                                            href="{{ route('report.show', ['report' => $record->id]) }}"
-                                                            class='btn btn-info'>
-                                                            <i class='fa fa-eye'></i>
-                                                        </a>
+                                                        @canany(['report_create', 'report_edit'])
+                                                            <a type='button' title="Edit Report"
+                                                                href="{{ route('report.edit', ['report' => $record->id]) }}"
+                                                                class='btn btn-warning  text-white'>
+                                                                <i class='fa fa-edit'></i>
+                                                            </a>
+                                                        @endcanany
+                                                        @canany(['report_create', 'report_edit', 'report_delete',
+                                                            'report_view'])
+                                                            <a type='button' title="More Details"
+                                                                href="{{ route('report.show', ['report' => $record->id]) }}"
+                                                                class='btn btn-info  text-white'>
+                                                                <i class='fa fa-eye'></i>
+                                                            </a>
+                                                        @endcanany
+
                                                         <a type='button' title="Print"
                                                             href="{{ route('report.print', ['report_id' => $record->id]) }}"
-                                                            class='btn btn-primary'>
+                                                            class='btn btn-primary  text-white'>
                                                             <i class='fa fa-print'></i>
                                                         </a>
+                                                        @canany(['comment_add'])
+                                                            <a type='button' title="Add Comment"
+                                                                href="{{ route('report_comment.create', ['report_id' => $record->id]) }}"
+                                                                class='btn btn-warning text-white'>
+                                                                <i class='fa fa-comment'></i>
+                                                            </a>
+                                                        @endcanany
                                                     </p>
                                                 </td>
                                             </tr>

@@ -31,7 +31,8 @@ class RoleTableSeeder extends Seeder
             [
                 'user_creation_page', 'user_create', 'user_view', 'user_edit', 'user_delete',
                 'site_create', 'site_view', 'site_edit', 'site_delete',
-                'report_create', 'report_view', 'report_edit', 'report_delete'
+                'report_create', 'report_view', 'report_edit', 'report_delete',
+                'setting_view', 'setting_edit'
             ]
         );
 
@@ -46,6 +47,7 @@ class RoleTableSeeder extends Seeder
         $siteAdmin->givePermissionTo(
             [
                 'report_site_comment', 'report_view',
+                'comment_add'
             ]
         );
 

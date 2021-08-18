@@ -17,8 +17,7 @@ class UploadController extends Controller
         if ($request->hasFile('file')) {
             $file = $request['file'];
             $extension = $file->extension();
-            $companyId = Auth::user()->getCompany()->id;
-            $imageName = $companyId . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.' . $extension;
+            $imageName = 'csmt' . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.' . $extension;
 
             Storage::makeDirectory(Media::getFolderPath('public', 'original'));
             Image::make(file_get_contents($request->file))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));
@@ -44,8 +43,7 @@ class UploadController extends Controller
     {
             Log::info($request->all());
             if ($request->has('file')) {
-                $companyId = Auth::user()->getCompany()->id;
-                $imageName = $companyId . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.png';
+                $imageName = 'csmt' . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.png';
 
                 Storage::makeDirectory(Media::getFolderPath('public', 'original'));
                 Image::make(file_get_contents($request->file))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));

@@ -85,7 +85,7 @@
                   class="mt-2 col-md-12"
                   :visible="site_section.expanded"
                 >
-                  <hr />
+                  <!-- <hr /> -->
                   <b-row>
                     <div class="col-md-6">
                       <label for="section">Section</label>
@@ -157,7 +157,7 @@
             <div class="card-body">
               <div class="row pb-5 mt-2">
                 <div class="col-md-12">
-                  <u>Signature</u>
+                 <label>Signature</label>
                 </div>
                 <div class="col-md-6">
                   <VueSignaturePad

@@ -22,6 +22,11 @@ class Media extends Model
         return $this->hasMany(Report::class,'signature_id');
     }
 
+    public function siteAdminMedias()
+    {
+        return $this->hasMany(SiteAdminMedia::class, 'media_id');
+    }
+
     public function getPathAttribute()
     {
         return $this->getImagesArray();
@@ -34,7 +39,7 @@ class Media extends Model
 
     public static function getFolderPath($type, $size)
     {
-        return $type . '/' . 'images/' . Auth::user()->getCompany()->id . '_office/' . $size . '/';
+        return $type . '/' . 'images/_office/' . $size . '/';
     }
 
     public function getImagesArray()

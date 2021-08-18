@@ -84,6 +84,7 @@
                                 <hr />
                             </div>
                             <div class="col-md-12">
+                                @if($record->sites()->active()->count() > 0)
                                 <ul>
                                     @foreach ($record->sites()->active()->get()
         as $site)
@@ -92,6 +93,9 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                                @else
+                                <span style="opacity: 0.6">  No Sites Yet  </span>
+                                @endif
                             </div>
                         </div>
                     </div>

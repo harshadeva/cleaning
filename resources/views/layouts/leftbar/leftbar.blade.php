@@ -65,6 +65,9 @@
                             ]
                             )
                         @endcanany
+                         @canany(['setting_view', 'setting_edit'])
+                                @include('layouts.leftbar.nav-link',['permissions'=>['setting_view','setting_edit'],'label'=>'Settings','route'=>route('settings.index')])
+                        @endcanany
                     @endif
 
                     {{-- @include('layouts.leftbar.nav-link',['label'=>'User','route'=>route('user.index')]) --}}

@@ -62,12 +62,12 @@
                                                     <p>
                                                         <a type='button'
                                                             href="{{ route('user.edit', ['user' => $record->id]) }}"
-                                                            class='btn btn-warning'>
+                                                            class='btn btn-warning  text-white'>
                                                             <i class='fa fa-edit'></i>
                                                         </a>
                                                         <a type='button'
                                                             href="{{ route('user.show', ['user' => $record->id]) }}"
-                                                            class='btn btn-info'>
+                                                            class='btn btn-info text-white'>
                                                             <i class='fa fa-eye'></i>
                                                         </a>
                                                     </p>

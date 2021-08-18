@@ -36,6 +36,18 @@ class Site extends Model
         return $query->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id);
     }
 
+    public function getAvarageRating(){
+        $reports = $this->reports()->active()->get();
+        $count = 0;
+        $total = 0;
+        foreach($reports as $report){
+            $count ++;
+            $total += $report->getOverallRating();
+        }
+        if($count == 0) return 0;
+        return round($total/$count);
+    }
+
     public static function register($data, $user)
     {
         $record = new self();

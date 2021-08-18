@@ -54,12 +54,12 @@
                                                     <p>
                                                         <a type='button' title="More Details"
                                                             href="{{ route('site.show', ['site' => $record->id]) }}"
-                                                            class='btn btn-info'>
+                                                            class='btn btn-info  text-white'>
                                                             <i class='fa fa-eye'></i>
                                                         </a>
                                                         <a type='button' title="Edit"
                                                             href="{{ route('site.edit', ['site' => $record->id]) }}"
-                                                            class='btn btn-warning'>
+                                                            class='btn btn-warning  text-white'>
                                                             <i class='fa fa-edit'></i>
                                                         </a>
                                                     </p>

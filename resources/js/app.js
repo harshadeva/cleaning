@@ -21,6 +21,8 @@ Vue.use(BootstrapVue)
 Vue.component('report-form', require('./components/ReportForm.vue').default);
 Vue.component('report-form-edit', require('./components/ReportFormEdit.vue').default);
 Vue.component('report-view', require('./components/ReportView.vue').default);
+Vue.component('report-comment-create', require('./components/ReportCommentCreate.vue').default);
+Vue.component('settings-form', require('./components/setting/Settings.vue').default);
 Vue.component("v-select", vSelect);
 Vue.component('star-rating', StarRating)
 Vue.component('vue-dropzone', vue2Dropzone)

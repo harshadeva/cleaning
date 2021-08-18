@@ -72,7 +72,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="text-center" colspan="5">
+                                            <td class="text-center" colspan="7">
                                                 No records to display!
                                             </td>
                                         </tr>

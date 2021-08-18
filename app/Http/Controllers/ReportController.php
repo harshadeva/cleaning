@@ -22,12 +22,22 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         try {
-            $records = Report::whereHas('site', function ($q) {
-                $q->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id);
-            })->latest()->get()->map(function ($item) {
-                $item['sum_rating'] = $item->getOverallRating();
-                return $item;
-            });
+
+            if(User::find(Auth::user()->id)->hasRole('site admin')){
+                $records = Report::where('site_id', User::find(Auth::user()->id)->siteAdmins()->first()->id )->latest()->get()->map(function ($item) {
+                    $item['sum_rating'] = $item->getOverallRating();
+                    return $item;
+                });
+            }
+            else{
+                $records = Report::whereHas('site', function ($q) {
+                    $q->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id);
+                })->latest()->get()->map(function ($item) {
+                    $item['sum_rating'] = $item->getOverallRating();
+                    return $item;
+                });
+            }
+
             return view('report.index', ['records' => $records, 'successMessage' => $request['successMessage']]);
         } catch (Exception $e) {
             return CatchErrors::render($e);

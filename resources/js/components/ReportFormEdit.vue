@@ -165,7 +165,8 @@
             <div class="card-body">
               <div class="row pb-5 mt-2">
                 <div class="col-md-12">
-                  <u>Signature</u>
+                    <label>Signature</label>
+
                 </div>
                 <div class="col-md-6">
                   <VueSignaturePad v-if="signature_edited"
@@ -181,7 +182,6 @@
                   <button
                     v-if="form.signature_id != null"
                     class="btn btn-success"
-                    @click="save"
                   >
                     Confirmed <em class="fa fa-check"> </em>
                   </button>

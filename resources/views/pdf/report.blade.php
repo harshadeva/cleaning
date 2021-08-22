@@ -73,6 +73,7 @@
         </div>
         <div class="logo-panel">
             <?php
+            if(isset($logo->raw_path)){
             $logoUrl = base_path() . $logo->raw_path['thumbnail'];
             $arrContextOptions = [
                 'ssl' => [
@@ -86,6 +87,9 @@
             $logoData = 'data:image/' . $type . ';base64,' . $logoBase64Data;
             ?>
             <img style="width: 120px;height:100px;float: right;" src="{{ $logoData }}">
+        <?php
+        }
+        ?>
         </div>
 
         <div class="site-name">

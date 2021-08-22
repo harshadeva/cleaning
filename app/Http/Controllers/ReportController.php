@@ -47,7 +47,7 @@ class ReportController extends Controller
     public function create(Request $request)
     {
         try {
-            $sites = Site::where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id)->get();
+            $sites = Site::with(['siteSections.section'])->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id)->get();
             $sections = Section::active()->get();
             $employees = Employee::with(['user'])->auth()->worker()->active()->get()->map(function ($item) {
                 $item['name'] = $item->user->name;

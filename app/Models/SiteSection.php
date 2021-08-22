@@ -24,4 +24,10 @@ class SiteSection extends Model
     {
         return $this->belongsTo(Site::class);
     }
+
+    public function getAvarage(){
+        return ReportSection::where('section_id',$this->section_id)->whereHas('report',function($q){
+            $q->where('site_id',$this->site_id);
+        })->active()->sum('rating');
+    }
 }

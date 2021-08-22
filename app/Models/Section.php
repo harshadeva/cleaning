@@ -14,4 +14,9 @@ class Section extends Model
         return $query->where('status',1);
     }
 
+    public function siteSections()
+    {
+        return $this->hasMany(SiteSection::class);
+    }
+
 }

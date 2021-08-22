@@ -27,6 +27,7 @@
                                     <tr>
                                         <th>{{ __('common.Site Name') }}</th>
                                         <th>{{ __('common.Site Admin') }}</th>
+                                        <th style="text-align: center" >{{ __('common.Sections') }}</th>
                                         <th>{{ __('common.Created At') }}</th>
                                         <th>{{ __('common.Status') }}</th>
                                         <th class="text-center">{{ __('common.Action') }}</th>
@@ -38,6 +39,7 @@
                                             <tr>
                                                 <td>{{ $record->name }}</td>
                                                 <td>{{ $record->admin->name }}</td>
+                                                <td style="text-align: center" ><a class="btn btn-primary text-white" href="{{ route('site_section.edit',['site_id'=>$record->id]) }}"> {{ $record->site_sections_count }} </a></td>
                                                 <td>{{ $record->created_at->format('Y-m-d H:i:s') }}</td>
                                                 <td>
                                                     @if ($record->status == 1)

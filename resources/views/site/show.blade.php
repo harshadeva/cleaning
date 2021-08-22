@@ -46,14 +46,58 @@
                                     </p>
                                 </div>
                             @endif
-                             <div class="col-md-12">
-                                 <hr/>
-                             </div>
-                              <div class="col-md-12">
-                                 <h6>Site Admin : {{ $record->admin->name }} </h6>
-                                 <h6>Reports Count : {{ $record->reports()->active()->count() }} </h6>
-                                 <h6>Avarage Rating : {{ $record->getAvarageRating() }} </h6>
-                             </div>
+                            <div class="col-md-12">
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <h6>Site Admin : {{ $record->admin->name }} </h6>
+                                <h6>Reports Count : {{ $record->reports()->active()->count() }} </h6>
+                                <h6>Avarage Rating : {{ $record->getAvarageRating() }} <span style="opacity:0.8"> /
+                                        {{ config('common.rating__by') }} </span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-b-30">
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <h4>Sections</h4>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+
+                                <div class="table-responsive">
+                                    <table id="default-datatable" class="display table table-borderless">
+                                        <thead>
+                                            <tr style="background: rgb(216, 216, 216)">
+                                                <th scope="col">Section Name</th>
+                                                <th style="text-align: center" scope="col">Avarage</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (isset($record) && count($record->siteSections) > 0)
+                                                @foreach ($record->siteSections as $siteSection)
+                                                    <tr>
+                                                        <td>{{ $siteSection->section->name }}</td>
+                                                        <td style="text-align: center" >{{ $siteSection->getAvarage() }} / {{config('common.rating__by')  }} </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td class="text-center" colspan="2">
+                                                        No sections added!
+                                                    </td>
+                                                </tr>
+
+                                            @endif
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

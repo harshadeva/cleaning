@@ -72,12 +72,12 @@ class User extends Authenticatable
 
     public function scopeCompanyEmployee($query)
     {
-        return $query->employees()->where('company_id',User::find(Auth::user()->id)->companyAdminAccount()->company_id)->first();
+        return $query->employees()->where('company_id', User::find(Auth::user()->id)->companyAdminAccount()->company_id)->first();
     }
 
     public function employees()
     {
-        return $this->hasMany(Employee::class,'user_id');
+        return $this->hasMany(Employee::class, 'user_id');
     }
 
     public function reports()
@@ -111,20 +111,44 @@ class User extends Authenticatable
         $record->last_name = $data['last_name'];
         $record->email = $data['email'];
         $record->password = Hash::make($data['password']);
-        $record->status = 1;//active
+        $record->status = 1; //active
         $record->save();
         return $record;
     }
 
-    public static function edit($id, $data){
+    public static function edit($id, $data)
+    {
         $record = self::find($id);
         $record->first_name = $data['first_name'];
         $record->last_name = $data['last_name'];
         $record->email = $data['email'];
-        if($data['password'] != null){
+        if ($data['password'] != null) {
             $record->password = Hash::make($data['password']);
         }
         $record->save();
         return $record;
+    }
+
+    public function getPerformanceChart()
+    {
+        return ['series' => [
+            [
+                'name' => "series-1",
+                'data' => [55, 62, 89, 66, 98, 72, 101, 75, 94, 120, 117, 139],
+            ],
+        ], 'x_axis' => [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ]];
     }
 }

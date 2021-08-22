@@ -25,53 +25,69 @@
 @section('rightbar-content')
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card m-b-30">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>{{ $record->name }}</h4>
-                                <hr />
-                            </div>
-
-                            <div class="col-md-6">
-                                <p title="User role">
-                                    <em class="fa fa-address-card"></em>
-                                    {{ $record->employees()->first()->employeeType->name }}
-                                </p>
-                            </div>
-
-                            <div class="col-md-6">
-                                <p title="Company name">
-                                    <em class="fa fa-building"></em> {{ $record->employees()->first()->company->name }}
-                                </p>
-                            </div>
-
-                            <div class="col-md-6">
-                                <p title="Email">
-                                    <em class="fa fa-envelope-o"></em> {{ $record->email }}
-                                </p>
-                            </div>
-
-                            @if ($record->employees()->first()->employee_type_id != 1)
+        <div id="app">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <div class="row">
                                 <div class="col-md-12">
+                                    <h4>{{ $record->name }}</h4>
                                     <hr />
                                 </div>
-                                <div class="col-md-12">
-                                    <h6>Total Works :
-                                        {{ $record->employees()->first()->reportSections()->active()->count() }}</h6>
+
+                                <div class="col-md-6">
+                                    <p title="User role">
+                                        <em class="fa fa-address-card"></em>
+                                        {{ $record->employees()->first()->employeeType->name }}
+                                    </p>
                                 </div>
-                                <div class="col-md-12">
-                                    <h6>Avarage Rating : {{ $record->employees()->first()->getAvarageRating() }}</h6>
+
+                                <div class="col-md-6">
+                                    <p title="Company name">
+                                        <em class="fa fa-building"></em>
+                                        {{ $record->employees()->first()->company->name }}
+                                    </p>
                                 </div>
-                            @endif
+
+                                <div class="col-md-6">
+                                    <p title="Email">
+                                        <em class="fa fa-envelope-o"></em> {{ $record->email }}
+                                    </p>
+                                </div>
+
+                                @if ($record->employees()->first()->employee_type_id != 1)
+                                    <div class="col-md-12">
+                                        <hr />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h6>Total Works :
+                                            {{ $record->employees()->first()->reportSections()->active()->count() }}</h6>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h6>Avarage Rating : {{ $record->employees()->first()->getAvarageRating() }}</h6>
+                                    </div>
+                                @endif
 
 
 
+                            </div>
                         </div>
                     </div>
                 </div>
+                @if(1 == 2)
+                <div class="col-md-6">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <bar-chart chart_data="{{ json_encode($record->getPerformanceChart()) }}"  ></bar-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>

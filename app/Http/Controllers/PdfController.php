@@ -20,7 +20,7 @@ class PdfController extends Controller
 
     private function loadView($reportId){
         $report = Report::find($reportId);
-        $logo = Media::find(14);
+        $logo = $report->site->company->logo_path;
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('pdf.report', ['logo'=> $logo,'report' => $report]);
         return $pdf->download('report.pdf');
     }

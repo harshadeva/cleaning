@@ -9,6 +9,7 @@ import CoolLightBox from 'vue-cool-lightbox'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 import { BootstrapVue } from 'bootstrap-vue'
 import VueSignaturePad from 'vue-signature-pad';
+import VueApexCharts from 'vue-apexcharts'
 
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -23,9 +24,13 @@ Vue.component('report-form-edit', require('./components/ReportFormEdit.vue').def
 Vue.component('report-view', require('./components/ReportView.vue').default);
 Vue.component('report-comment-create', require('./components/ReportCommentCreate.vue').default);
 Vue.component('settings-form', require('./components/setting/Settings.vue').default);
+Vue.component('file-preview', require('./components/setting/FilePreview.vue').default);
+Vue.component('site-sections', require('./components/section/EditSections.vue').default);
+Vue.component('bar-chart', require('./components/dashboard/BarChart.vue').default);
 Vue.component("v-select", vSelect);
 Vue.component('star-rating', StarRating)
 Vue.component('vue-dropzone', vue2Dropzone)
+Vue.component('apexchart', VueApexCharts)
 
 Vue.use(CoolLightBox);
 Vue.use(VueSignaturePad);

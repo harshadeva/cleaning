@@ -13,7 +13,7 @@
         <!-- Start Navigationbar -->
         <div class="navigationbar">
             <ul class="vertical-menu">
-                @include('layouts.leftbar.nav-link',['label'=>'Dashboard','route'=>'#'])
+                @include('layouts.leftbar.nav-link',['icon'=>'dripicons-pulse','label'=>'Dashboard','route'=>route('home')])
                 @auth
                     @if (Auth::user()->hasRole('super admin'))
                         @canany(['company_view', 'company_edit', 'company_create', 'company_delete'])
@@ -66,7 +66,7 @@
                             )
                         @endcanany
                          @canany(['setting_view', 'setting_edit'])
-                                @include('layouts.leftbar.nav-link',['permissions'=>['setting_view','setting_edit'],'label'=>'Settings','route'=>route('settings.index')])
+                                @include('layouts.leftbar.nav-link',['icon'=>'dripicons-gear','permissions'=>['setting_view','setting_edit'],'label'=>'Settings','route'=>route('settings.index')])
                         @endcanany
                     @endif
 

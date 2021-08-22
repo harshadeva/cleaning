@@ -108,7 +108,6 @@
                                             @include('components.inputs.password',
                                             ['label'=>'Re-Enter Password','name'=>'password_confirmation'])
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

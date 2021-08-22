@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportCommentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SiteSectionController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Models\Media;
@@ -43,11 +44,16 @@ Route::middleware(['auth'])->group(
 
 
         Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+        Route::post('settings/store', [SettingsController::class, 'store'])->name('settings.store');
         Route::get('report/print', [PdfController::class, 'print'])->name('report.print');
         Route::get('report_comment/create/{report_id}', [ReportCommentController::class, 'create'])->name('report_comment.create');
         Route::post('report_comment/store', [ReportCommentController::class, 'store'])->name('report_comment.store');
         Route::resource('report', ReportController::class)->names('report');
         Route::post('upload/signature', [UploadController::class, 'storeSignature'])->name('upload.storeSignature');
+        Route::get('upload/get_default', [UploadController::class, 'getDefault'])->name('upload.get_default');
         Route::resource('upload', UploadController::class)->names('upload');
+        Route::get('site_section/edit/{site_id}', [SiteSectionController::class, 'edit'])->name('site_section.edit');
+        Route::post('site_section/update', [SiteSectionController::class, 'update'])->name('site_section.update');
+
     }
 );

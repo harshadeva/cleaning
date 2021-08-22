@@ -41,6 +41,10 @@ class PermissionSeeder extends Seeder
 
         /* report permision */
         Permission::create(['name' => 'report_site_comment']);
+        Permission::create(['name' => 'super_admin_dashboard']);
+        Permission::create(['name' => 'company_admin_dashboard']);
+        Permission::create(['name' => 'supervisor_dashboard']);
+        Permission::create(['name' => 'site_admin_dashboard']);
         Permission::create(['name' => 'comment_add']);
         Permission::create(['name' => 'report_create']);
         Permission::create(['name' => 'report_edit']);

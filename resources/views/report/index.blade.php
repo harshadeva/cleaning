@@ -39,7 +39,7 @@
                                             <tr>
                                                 <td>{{ $record->date }}</td>
                                                 <td>{{ $record->site->name }}</td>
-                                                <td>{{ $record->sum_rating }}</td>
+                                                <td>{{ $record->sum_rating }}  / {{config('common.rating__by')}} </td>
                                                 <td>{{ $record->user->name }}</td>
                                                 <td>{{ $record->created_at->format('Y-m-d H:i:s') }}</td>
 

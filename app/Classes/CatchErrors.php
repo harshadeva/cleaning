@@ -29,4 +29,11 @@ class CatchErrors
         Log::info($e);
         return view('errors.500');
     }
+
+    public static function axiosRollback($e, $message = 'Something went wrong! Process not completed', $route = null)
+    {
+        DB::rollBack();
+        Log::info($e);
+        return  response()->json(['errorMessage' => $message]);
+    }
 }

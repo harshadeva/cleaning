@@ -32,7 +32,12 @@ class ReportStoreRequest extends FormRequest
         return [
             'site_id' => 'required',
             'signature_id' => 'required|exists:media,id',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'site_sections'=>'array|required|min:1',
+            'site_sections.*.section_id'=>'required|numeric|exists:section,id',
+            'site_sections.*.rating'=>'required|numeric|min:0|max:10',
+            'site_sections.*.employee_id'=>'required|numeric',
+            'site_sections.*.remark'=>'nullable|max:2500',
         ];
     }
 
@@ -63,7 +68,11 @@ class ReportStoreRequest extends FormRequest
 
     public function attributes(){
         return [
-            'signature_id'=> 'signature'
+            'signature_id'=> 'signature',
+            'site_sections.*.section_id'=> 'section name',
+            'site_sections.*.rating'=> 'rating',
+            'site_sections.*.employee_id'=> 'employee',
+            'site_sections.*.remark'=> 'remark',
         ];
     }
 }

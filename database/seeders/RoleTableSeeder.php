@@ -23,7 +23,7 @@ class RoleTableSeeder extends Seeder
         $superAdmin = Role::create(['name' => 'super admin']);
         $superAdmin->givePermissionTo([
             'company_create', 'company_view', 'company_edit', 'company_delete',
-            'user_create', 'user_view', 'user_edit', 'user_delete'
+            'user_create', 'user_view', 'user_edit', 'user_delete','super_admin_dashboard'
         ]);
 
         $companyAdmin = Role::create(['name' => 'company admin']);
@@ -32,14 +32,16 @@ class RoleTableSeeder extends Seeder
                 'user_creation_page', 'user_create', 'user_view', 'user_edit', 'user_delete',
                 'site_create', 'site_view', 'site_edit', 'site_delete',
                 'report_create', 'report_view', 'report_edit', 'report_delete',
-                'setting_view', 'setting_edit'
+                'setting_view', 'setting_edit',
+                'company_admin_dashboard'
             ]
         );
 
         $supervisor = Role::create(['name' => 'supervisor']);
         $supervisor->givePermissionTo(
             [
-                'report_create', 'report_view', 'report_edit', 'report_delete'
+                'report_create', 'report_view', 'report_edit', 'report_delete',
+                'supervisor_dashboard'
             ]
         );
         Role::create(['name' => 'worker']);
@@ -47,7 +49,8 @@ class RoleTableSeeder extends Seeder
         $siteAdmin->givePermissionTo(
             [
                 'report_site_comment', 'report_view',
-                'comment_add'
+                'comment_add',
+                'site_admin_dashboard'
             ]
         );
 

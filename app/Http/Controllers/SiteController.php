@@ -20,7 +20,7 @@ class SiteController extends Controller
     public function index()
     {
         try {
-            $records = Site::authCompany()->latest()->get();
+            $records = Site::withCount('siteSections')->authCompany()->latest()->get();
             return view('site.index', ['records' => $records]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
@@ -61,9 +61,9 @@ class SiteController extends Controller
         DB::beginTransaction();
         try {
             $user = $this->storeFirstUser($request);
-            $this->storeSite($request, $user);
+            $site = $this->storeSite($request, $user);
             DB::commit();
-            return redirect()->route('site.index')->with(['successMessage' => 'Site saved']);
+            return redirect()->route('site_section.edit', ['site_id' => $site->id])->with(['successMessage' => 'Site details saved']);
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }
@@ -91,7 +91,7 @@ class SiteController extends Controller
             $this->updateFirstUser($site->site_admin_id, $request);
             $this->updateSite($id, $request);
             DB::commit();
-            return redirect()->route('site.index')->with(['successMessage' => 'Site updated']);
+            return redirect()->route('site_section.edit',['site_id'=>$id])->with(['successMessage' => 'Site details updated']);
         } catch (Exception $e) {
             return CatchErrors::rollback($e);
         }

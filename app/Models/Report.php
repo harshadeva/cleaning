@@ -39,8 +39,9 @@ class Report extends Model
 
     public function getOverallRating(){
         $ratingsSum = $this->reportSections()->active()->sum('rating');
-        $ratingsCount = $this->reportSections()->active()->count();
-        return round($ratingsSum / $ratingsCount);
+        $reportSectionsCount = $this->reportSections()->active()->count();
+        if($reportSectionsCount == 0) return 0;
+        return round($ratingsSum / $reportSectionsCount);
     }
 
 }

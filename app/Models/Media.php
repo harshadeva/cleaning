@@ -22,6 +22,11 @@ class Media extends Model
         return $this->hasMany(Report::class,'signature_id');
     }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class,'media_id');
+    }
+
     public function siteAdminMedias()
     {
         return $this->hasMany(SiteAdminMedia::class, 'media_id');
@@ -55,6 +60,19 @@ class Media extends Model
         return $imageArray;
     }
 
+    public static function defaultImagesArray()
+    {
+        $imageArray = [];
+        $imagesizes = config('common.imagesSize');
+        array_push($imagesizes, ['name' => 'original']);
+        foreach ($imagesizes as $imagesize) {
+            $folderName = $imagesize['name'];
+            $path = asset('assets/images/defaults/'. $folderName.'/default.jpg');
+            $imageArray[$folderName] = $path;
+        }
+        return $imageArray;
+    }
+
     public function getRawPathArray()
     {
         $imageArray = [];
@@ -63,6 +81,19 @@ class Media extends Model
         foreach ($imagesizes as $imagesize) {
             $folderName = $imagesize['name'];
             $path = '/public/'.self::getFolderPath('storage', $folderName) . $this->name;
+            $imageArray[$folderName] = $path;
+        }
+        return $imageArray;
+    }
+
+    public static function getDefaultRawPathArray()
+    {
+        $imageArray = [];
+        $imagesizes = config('common.imagesSize');
+        array_push($imagesizes, ['name' => 'original']);
+        foreach ($imagesizes as $imagesize) {
+            $folderName = $imagesize['name'];
+            $path = '/public/' . self::getFolderPath('storage', $folderName) . '/default.jpg';
             $imageArray[$folderName] = $path;
         }
         return $imageArray;

@@ -20,10 +20,12 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.3",
         "@popperjs/core": "^2.9.3",
+        "apexcharts": "^3.27.3",
         "babel-preset-es2015": "^6.24.1",
         "bootstrap": "^5.1.0",
         "bootstrap-vue": "^2.21.2",
         "vue": "^2.6.14",
+        "vue-apexcharts": "^1.6.2",
         "vue-cool-lightbox": "^2.7.4",
         "vue-select": "^3.12.1",
         "vue-signature-pad": "^2.0.4",

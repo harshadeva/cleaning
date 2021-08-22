@@ -33,7 +33,8 @@ class HomeController extends Controller
             $q->where('company_id', Auth::user()->employees()->first()->company_id);
         })->count();
         $employeesCount = Employee::active()->where('company_id', Auth::user()->employees()->first()->company_id)->count();
-        return view('home', ['sitesCount' => $sitesCount, 'reportsCount' => $reportsCount, 'employeesCount' => $employeesCount]);
+        $companyName = Auth::user()->employees()->first()->company->name;
+        return view('home', ['companyName'=> $companyName,'sitesCount' => $sitesCount, 'reportsCount' => $reportsCount, 'employeesCount' => $employeesCount]);
     }
 
     public function superAdminDashboard(){

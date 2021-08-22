@@ -17,35 +17,54 @@
         <div id="app">
 
             <div class="row">
+                @if (isset($companyName))
+                    <div class="col-md-12 text-center">
+                        <div class="card m-b-10">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h5>{{ $companyName }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                @if(isset($sectionsCount))
-                <div class="col-md-4">
-                   @include('components.dashboard.card',['icon'=>'fa fa-building','name'=>'Sections','class'=>'text-primary','value'=>$sectionsCount])
-                </div>
+                    </div>
                 @endif
 
-                 @if(isset($subscriptionsCount))
-                <div class="col-md-4">
-                   @include('components.dashboard.card',['icon'=>'fa fa-diamond','name'=>'Subscriptions','class'=>'text-primary','value'=>$subscriptionsCount])
-                </div>
+                @if (isset($sectionsCount))
+                    <div class="col-md-4">
+                        @include('components.dashboard.card',['icon'=>'fa
+                        fa-building','name'=>'Sections','class'=>'text-primary','value'=>$sectionsCount])
+                    </div>
                 @endif
 
-                @if(isset($sitesCount))
-                <div class="col-md-4">
-                   @include('components.dashboard.card',['icon'=>'fa fa-building','name'=>'Sites','class'=>'text-primary','value'=>$sitesCount])
-                </div>
+                @if (isset($subscriptionsCount))
+                    <div class="col-md-4">
+                        @include('components.dashboard.card',['icon'=>'fa
+                        fa-diamond','name'=>'Subscriptions','class'=>'text-primary','value'=>$subscriptionsCount])
+                    </div>
                 @endif
 
-                @if(isset($employeesCount))
-                 <div class="col-md-4">
-                    @include('components.dashboard.card',['icon'=>'fa fa-users','name'=>'Employees','class'=>'text-success','value'=>$employeesCount])
-                </div>
+                @if (isset($sitesCount))
+                    <div class="col-md-4">
+                        @include('components.dashboard.card',['icon'=>'fa
+                        fa-building','name'=>'Sites','class'=>'text-primary','value'=>$sitesCount])
+                    </div>
                 @endif
 
-                @if(isset($reportsCount))
-                <div class="col-md-4">
-                    @include('components.dashboard.card',['icon'=>'fa fa-file-pdf-o','name'=>'Reports','class'=>'text-info','value'=>$reportsCount])
-                </div>
+                @if (isset($employeesCount))
+                    <div class="col-md-4">
+                        @include('components.dashboard.card',['icon'=>'fa
+                        fa-users','name'=>'Employees','class'=>'text-success','value'=>$employeesCount])
+                    </div>
+                @endif
+
+                @if (isset($reportsCount))
+                    <div class="col-md-4">
+                        @include('components.dashboard.card',['icon'=>'fa
+                        fa-file-pdf-o','name'=>'Reports','class'=>'text-info','value'=>$reportsCount])
+                    </div>
                 @endif
 
             </div>

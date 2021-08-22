@@ -82,9 +82,13 @@ export default {
       };
 
       axios.post(route("settings.store"), data, config).then((response) => {
-        console.log(response);
         if (response.data.successMessage) {
         showSuccess(response.data.successMessage);
+        setTimeout(() => {
+              window.location.replace(
+                route("home")
+              );
+            }, 2000);
         }
         if (response.data.errorMessage) {
           showError(response.data.errorMessage);

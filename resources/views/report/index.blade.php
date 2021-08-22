@@ -62,7 +62,7 @@
                                                             </a>
                                                         @endcanany
 
-                                                        <a type='button' title="Print"
+                                                        <a type='button' target="_blank" title="Print"
                                                             href="{{ route('report.print', ['report_id' => $record->id]) }}"
                                                             class='btn btn-primary  text-white'>
                                                             <i class='fa fa-print'></i>

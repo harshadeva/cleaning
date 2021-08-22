@@ -22,7 +22,8 @@ class PdfController extends Controller
         $report = Report::find($reportId);
         $logo = $report->site->company->logo_path;
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('pdf.report', ['logo'=> $logo,'report' => $report]);
-        return $pdf->download('report.pdf');
+        // return $pdf->download('report.pdf');
+        return $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
     }
 
     private function dom(){

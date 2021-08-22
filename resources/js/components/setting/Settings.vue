@@ -20,9 +20,19 @@
                     ref="logoUpload"
                   ></file-preview>
                   <div class="col-md-12">
-                    <button type="submit" name="submit" class="btn btn-success">
+                      <h6 v-if="!nameChanged" class="text-danger">You have changed you company name.Are you sure?</h6>
+
+                    <button v-if="nameChanged" type="submit" name="submit" class="btn btn-success">
                       Submit
                     </button>
+                    <div v-if="!nameChanged">
+                        <button  type="submit" name="submit" class="btn btn-danger">
+                      Yes, Do It
+                    </button>
+                    <button @click="resetName"  name="submit" class="btn btn-success">
+                     Cancel
+                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -38,13 +48,23 @@ export default {
   props: ["record"],
   data() {
     return {
+        company_name:this.record.name,
       form: {
         name: this.record.name,
         file:null
       },
     };
   },
+  computed:{
+      nameChanged(){
+          return this.company_name == this.form.name;
+      }
+  },
   methods: {
+      resetName(){
+          event.preventDefault();
+          this.form.name = this.company_name;
+      },
     changeFile(item) {
       this.form.file = item;
     },

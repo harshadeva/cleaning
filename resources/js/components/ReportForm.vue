@@ -115,7 +115,6 @@
                           :glow="2"
                           :animate="true"
                           :inline="true"
-                          :text-class="black"
                           :star-size="starSize"
                           v-model="site_section.rating"
                         >
@@ -172,7 +171,7 @@
                     ref="signaturePad"
                   />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mt-1">
                   <button
                     v-if="form.signature_id != null"
                     class="btn btn-success"
@@ -194,7 +193,7 @@
         </div>
       </div>
 
-      <div v-if="selected_data.site != null" class="row pb-5 mt-2">
+      <div v-if="selected_data.site != null" class="row pb-5 mt-1">
         <div class="col-md-12">
           <button type="submit" name="submit" class="btn btn-success">
             Submit

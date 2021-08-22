@@ -17,7 +17,7 @@
                 @auth
                     @if (Auth::user()->hasRole('super admin'))
                         @canany(['company_view', 'company_edit', 'company_create', 'company_delete'])
-                            @include('layouts.leftbar.dropdown-nav-link',['label'=>'Company',
+                            @include('layouts.leftbar.dropdown-nav-link',['label'=>'Company','icon'=>asset('assets/images/svg-icon/dashboard.svg'),
                             'subroutes'=>[
                             ['permissions'=>['company_create'],'label'=>'Create','route'=>route('admin.company.create')],
                             ['permissions'=>['company_view','company_delete','company_edit'],'label'=>'View','route'=>route('admin.company.index')]
@@ -26,7 +26,7 @@
                         @endcanany
                         @canany(['user_creation_page', 'user_view'])
                             @include('layouts.leftbar.dropdown-nav-link',
-                            ['label'=>'User',
+                            ['label'=>'User','icon'=>asset('assets/images/svg-icon/dashboard.svg'),
                             'subroutes'=>[
                             // ['permissions'=>['user_creation_page'],'label'=>'Create','route'=>route('user.create')],
                             ['permissions'=>['user_view'],'label'=>'View','route'=>route('admin.user.index')]
@@ -37,7 +37,7 @@
                     @else
                         @canany(['user_creation_page', 'user_view'])
                             @include('layouts.leftbar.dropdown-nav-link',
-                            ['label'=>'Employee',
+                            ['label'=>'Employee','icon'=>asset('assets/images/svg-icon/dashboard.svg'),
                             'subroutes'=>[
                             ['permissions'=>['user_creation_page'],'label'=>'Register','route'=>route('user.create')],
                             ['permissions'=>['user_view'],'label'=>'View','route'=>route('user.index')]
@@ -47,7 +47,7 @@
                         @endcanany
                         @canany(['site_create', 'site_view', 'site_edit', 'site_delete'])
                             @include('layouts.leftbar.dropdown-nav-link',
-                            ['label'=>'Site',
+                            ['label'=>'Site','icon'=>asset('assets/images/svg-icon/dashboard.svg'),
                             'subroutes'=>[
                             ['permissions'=>['site_create'],'label'=>'Register','route'=>route('site.create')],
                             ['permissions'=>['site_view'],'label'=>'View','route'=>route('site.index')]
@@ -57,7 +57,7 @@
                         @endcanany
                         @canany(['report_create', 'report_view', 'report_edit', 'report_create'])
                             @include('layouts.leftbar.dropdown-nav-link',
-                            ['label'=>'Report',
+                            ['label'=>'Report','icon'=>asset('assets/images/svg-icon/dashboard.svg'),
                             'subroutes'=>[
                             ['permissions'=>['report_create'],'label'=>'Create','route'=>route('report.create')],
                             ['permissions'=>['report_view'],'label'=>'View','route'=>route('report.index')]

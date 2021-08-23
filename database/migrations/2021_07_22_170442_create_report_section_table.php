@@ -13,6 +13,7 @@ class CreateReportSectionTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('report_section', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('report_id');

@@ -13,6 +13,7 @@ class CreateSiteAdminMediaTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('site_admin_media', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('report_id');

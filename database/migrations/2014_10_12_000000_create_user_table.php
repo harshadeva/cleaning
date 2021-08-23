@@ -13,6 +13,7 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('user', function (Blueprint $table) {
             $table->id();
             $table->string('first_name',100);

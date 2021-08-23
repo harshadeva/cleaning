@@ -13,6 +13,7 @@ class CreateEmployeeTypeTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('employee_type', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);

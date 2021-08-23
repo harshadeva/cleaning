@@ -13,6 +13,7 @@ class CreateSectionTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('section', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200);

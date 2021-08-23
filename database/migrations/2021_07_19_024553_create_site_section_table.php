@@ -13,6 +13,7 @@ class CreateSiteSectionTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('site_section', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('section_id');

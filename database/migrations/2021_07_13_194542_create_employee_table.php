@@ -13,6 +13,7 @@ class CreateEmployeeTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('employee', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');

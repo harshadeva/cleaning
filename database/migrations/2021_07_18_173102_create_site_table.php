@@ -13,6 +13,7 @@ class CreateSiteTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('site', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');

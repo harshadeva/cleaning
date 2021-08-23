@@ -32,7 +32,12 @@ class Company extends Model
         return $this->belongsTo(Media::class, 'media_id');
     }
 
+
+
     public function getLogoPathAttribute(){
+
+       
+
        return  $this->logo ? $this->logo :['path'=> Media::defaultImagesArray(), 'raw_path'=> Media::getDefaultRawPathArray()] ;
     }
 

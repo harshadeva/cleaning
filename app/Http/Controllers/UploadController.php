@@ -19,12 +19,12 @@ class UploadController extends Controller
             $imageName = 'csmt' . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.' . $extension;
 
             Storage::makeDirectory(Media::getFolderPath('public', 'original'));
-            Image::make(file_get_contents($request->file))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));
+            Image::make(file_get_contents($request->file))->save(Media::getFolderPath('storage', 'original') . $imageName);
             $imagesizes = config('common.imagesSize');
             foreach ($imagesizes as $imagesize) {
                 $folderName = $imagesize['name'];
                 Storage::makeDirectory(Media::getFolderPath('public', $folderName));
-                Image::make($file)->resize($imagesize['width'], $imagesize['height'])->save(public_path(Media::getFolderPath('storage', $folderName) . $imageName));
+                Image::make($file)->resize($imagesize['width'], $imagesize['height'])->save(Media::getFolderPath('storage', $folderName) . $imageName);
             }
 
             $record = new Media();
@@ -48,13 +48,13 @@ class UploadController extends Controller
                 $imageName = 'csmt' . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.png';
 
                 Storage::makeDirectory(Media::getFolderPath('public', 'original'));
-                Image::make(file_get_contents($request->file))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));
+                Image::make(file_get_contents($request->file))->save(Media::getFolderPath('storage', 'original') . $imageName);
 
                 $imagesizes = config('common.imagesSize');
                 foreach ($imagesizes as $imagesize) {
                     $folderName = $imagesize['name'];
                     Storage::makeDirectory(Media::getFolderPath('public', $folderName));
-                    Image::make(file_get_contents($request->file))->resize($imagesize['width'], $imagesize['height'])->save(public_path(Media::getFolderPath('storage', $folderName) . $imageName));
+                    Image::make(file_get_contents($request->file))->resize($imagesize['width'], $imagesize['height'])->save(Media::getFolderPath('storage', $folderName) . $imageName);
                 }
 
                 $record = new Media();
@@ -74,13 +74,13 @@ class UploadController extends Controller
             $imageName = 'logo' . '_' . date('Y_m_d_H_i_s') . '_' . uniqid() . '.png';
 
             Storage::makeDirectory(Media::getFolderPath('public', 'original'));
-            Image::make(file_get_contents($request['file']))->save(public_path(Media::getFolderPath('storage', 'original') . $imageName));
+            Image::make(file_get_contents($request['file']))->save(Media::getFolderPath('storage', 'original') . $imageName);
 
             $imagesizes = config('common.imagesSize');
             foreach ($imagesizes as $imagesize) {
                 $folderName = $imagesize['name'];
                 Storage::makeDirectory(Media::getFolderPath('public', $folderName));
-                Image::make(file_get_contents($request->file))->resize($imagesize['width'], $imagesize['height'])->save(public_path(Media::getFolderPath('storage', $folderName) . $imageName));
+                Image::make(file_get_contents($request->file))->resize($imagesize['width'], $imagesize['height'])->save(Media::getFolderPath('storage', $folderName) . $imageName);
             }
 
             $record = new Media();

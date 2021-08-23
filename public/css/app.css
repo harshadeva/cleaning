@@ -1,18 +1,1 @@
-.vue-star-rating-rating-text {
-  font-weight: bold;
-  font-size: 1.9em;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 5px;
-  color: rgb(240, 0, 0);
-  background: #fff;
-}
-
-.toast-alert {
-background: rgb(5, 37, 216);
-}
-
-.btn-top-margin {
-    margin-top: 27px;
-}
-
+.vue-star-rating-rating-text{background:#fff;border-radius:5px;color:#f00000;font-size:1.9em;font-weight:700;padding-left:10px;padding-right:10px}.toast-alert{background:#0525d8}.btn-top-margin{margin-top:27px}

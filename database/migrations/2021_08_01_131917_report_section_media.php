@@ -13,6 +13,7 @@ class ReportSectionMedia extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('report_section_media', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('report_section_id');

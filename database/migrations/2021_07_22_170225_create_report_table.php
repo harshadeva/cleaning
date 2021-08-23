@@ -13,6 +13,7 @@ class CreateReportTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('report', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id');

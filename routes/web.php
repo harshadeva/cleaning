@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test_1', function () {
+            return storage_path();
+        });
+
 Route::middleware(['auth'])->group(
     function () {
         Route::get('test', function () {

@@ -13,6 +13,7 @@ class MediaTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->text('name');

@@ -46,8 +46,12 @@
          display: none;
      }
 
-     .role_name{
-        color: #777777;
+     .role_name {
+         color: #777777;
+     }
+
+     .vertical-menu .vertical-submenu>li>a:before {
+         content: "+";
      }
 
  </style>

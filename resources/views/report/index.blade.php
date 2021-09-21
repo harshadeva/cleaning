@@ -64,7 +64,7 @@
 
                                                         <a type='button' target="_blank" title="Print"
                                                             href="{{ route('report.print', ['report_id' => $record->id]) }}"
-                                                            class=php 'btn btn-primary  text-white'>
+                                                            class='btn btn-primary  text-white'>
                                                             <i class='fa fa-print'></i>
                                                         </a>
                                                         @canany(['comment_add'])

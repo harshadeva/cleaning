@@ -70,6 +70,8 @@ class ReportController extends Controller
             $record->date = $request['date'];
             $record->supervisor_comment = $request['supervisor_comment'];
             $record->site_admin_comment = $request['site_admin_comment'];
+            $record->creator_comment = $request['creator_comment'];
+            $record->overall_rating = $request['overall_rating'];
             $record->status = 1;
             $record->save();
             $this->storeSections($record, $request);
@@ -142,6 +144,8 @@ class ReportController extends Controller
             $record->signature_id = $request['signature_id'];
             $record->supervisor_comment = $request['supervisor_comment'];
             $record->site_admin_comment = $request['site_admin_comment'];
+            $record->creator_comment = $request['creator_comment'];
+            $record->overall_rating = $request['overall_rating'];
             $record->save();
             $this->storeSections($record, $request);
             DB::commit();

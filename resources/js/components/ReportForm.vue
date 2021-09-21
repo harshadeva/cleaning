@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit="submitForm">
+    <form @submit="submitForm" >
       <div class="card m-b-30">
         <div class="row">
           <div class="col-md-12">
@@ -41,19 +41,18 @@
                 <div class="row">
                   <div class="col-md-4 pb-2">
                     <em class="fa fa-star pb-2"></em>
-                    <span>{{ site_section.rating }}</span><span style="opacity:0.8"> / 10</span>
+                    <span>{{ site_section.rating }}</span
+                    ><span style="opacity: 0.8"> / 10</span>
                     &nbsp; &nbsp;
                     <em class="fa fa-image pb-2"></em>
                     <span>{{ site_section.files.length }}</span>
-                    &nbsp;
-                    &nbsp;
+                    &nbsp; &nbsp;
                     <em class="fa fa-building"></em>
                     <span>{{ site_section.section_name }}</span>
                   </div>
-                  <div class="col-md-5 pb-2" >
+                  <div class="col-md-5 pb-2">
                     <em class="fa fa-user"></em>
                     <span>{{ site_section.employee_name }}</span>
-
                   </div>
                   <div class="col-md-3 d-flex flex-row justify-content-end">
                     <b-button
@@ -65,7 +64,7 @@
                       "
                       v-b-toggle="'collapse-' + index"
                       class="btn-top-margin btn toggle-btn-color"
-                    >&nbsp;
+                      >&nbsp;
                       <span v-if="site_section.expanded">
                         <em class="fa fa-angle-double-up"></em>
                         Less&nbsp;&nbsp;</span
@@ -76,7 +75,7 @@
                     >
                     <button
                       class="btn btn-danger ml-1"
-                      @click="removeRepeater(index)"
+                      @click="removeRepeater($event, index)"
                     >
                       <em class="fa fa-times"></em> Remove
                     </button>
@@ -116,9 +115,11 @@
                           :animate="true"
                           :inline="true"
                           :star-size="starSize"
+                          :show-rating="false"
                           v-model="site_section.rating"
                         >
                         </star-rating>
+                        <span class="text-primary"><strong> {{ site_section.rating }} / 10 </strong></span>
                       </div>
                       <div class="col-md-12 mt-3">
                         <label>Remarks</label>
@@ -150,11 +151,48 @@
       </div>
       <div v-if="selected_data.site != null" class="row mt-2">
         <div class="col-md-12 d-flex flex-row-reverse">
-          <button class="btn btn-info text-white" @click="addRepeater">
+          <button class="btn btn-info text-white" @click="addRepeater()">
             <em class="fa fa-plus"></em> Add Another Section
           </button>
         </div>
       </div>
+
+      <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+                   <!-- <div class="col-md-12">
+                  <label>Overall Rating</label>
+                  <star-rating
+                          style="margin-top: 28px"
+                          :max-rating="10"
+                          :glow="2"
+                          :animate="true"
+                          :inline="true"
+                          :star-size="starSize"
+                          :show-rating="false"
+                          v-model="form.overall_rating"
+                        >
+                        </star-rating>
+                        <span class="text-primary"><strong> {{form.overall_rating }} / 10 </strong></span>
+                </div> -->
+                <div class="col-md-12 mt-3">
+                  <label>Audditor's Comment</label>
+                   <textarea
+                          v-model="form.creator_comment"
+                          class="form-control"
+                          placeholder="Write something"
+                        ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
       <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
         <div class="row">
           <div class="col-md-12">
@@ -179,12 +217,12 @@
                   >
                     Confirmed
                   </button>
-                  <button v-else class="btn btn-primary" @click="save">
+                  <button v-else class="btn btn-primary" @click="save($event)">
                     Confirm
                   </button>
                   <br />
-                  <button class="btn btn-danger mt-2" @click="undo">
-                   &nbsp; Clear &nbsp;&nbsp;
+                  <button class="btn btn-danger mt-2" @click="$event;">
+                    &nbsp; Clear &nbsp;&nbsp;
                   </button>
                 </div>
               </div>
@@ -195,7 +233,10 @@
 
       <div v-if="selected_data.site != null" class="row pb-5 mt-1">
         <div class="col-md-12">
-          <button type="submit" name="submit" class="btn btn-success">
+          <button
+            name="submit"
+            class="btn btn-success"
+          >
             Submit
           </button>
         </div>
@@ -203,7 +244,7 @@
 
       <div v-if="selected_data.site == null" class="row pb-5 mt-2">
         <div class="col-md-12 text-center">
-          <h5 style="opacity:0.5">Select site to load data !</h5>
+          <h5 style="opacity: 0.5">Select site to load data !</h5>
         </div>
       </div>
     </form>
@@ -229,6 +270,8 @@ export default {
       form: {
         site_id: "",
         date: "",
+        creator_comment: "",
+        overall_rating: "0",
         signature_id: null,
         site_sections: [],
       },
@@ -262,8 +305,7 @@ export default {
   },
   mounted() {
     this.addSection();
-    this.form.date =  new Date().toISOString().slice(0, 10)
-
+    this.form.date = new Date().toISOString().slice(0, 10);
   },
   methods: {
     loadSections(site) {
@@ -320,12 +362,12 @@ export default {
           }
         });
     },
-    undo() {
+    undo(event) {
       event.preventDefault();
       this.$refs.signaturePad.undoSignature();
       this.form.signature_id = null;
     },
-    save() {
+    save(event) {
       event.preventDefault();
       const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
       if (!isEmpty) {
@@ -378,7 +420,7 @@ export default {
       this.form.site_sections.push(newObject);
     },
 
-    removeRepeater(index) {
+    removeRepeater(event, index) {
       event.preventDefault();
       this.form.site_sections.splice(index, 1);
     },
@@ -395,14 +437,14 @@ export default {
       this.form.site_sections[index].employee_id = item ? item.id : null;
       this.form.site_sections[index].employee_name = item ? item.name : null;
     },
-    submitForm() {
+    submitForm(event) {
       event.preventDefault();
+
       axios
         .post(route("report.store"), this.form)
         .then((response) => {
           if (response.data.successMessage) {
             showSuccess(response.data.successMessage);
-            this.clearForm();
             setTimeout(() => {
               window.location.replace(
                 route("report.index", { successMessage: "Success" })
@@ -418,23 +460,12 @@ export default {
           showError(error.message);
         });
     },
-    clearForm() {
-      window.scrollTo(0, 0);
-      let form = {
-        site_id: "",
-        date: "",
-        site_sections: [],
-      };
-      this.form = form;
-      this.addRepeater();
-      this.selected_data.site = null;
-    },
   },
 };
 </script>
 <style scoped>
-.toggle-btn-color{
-    background: gray;
-    border: none;
+.toggle-btn-color {
+  background: gray;
+  border: none;
 }
 </style>

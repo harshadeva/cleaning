@@ -33,12 +33,8 @@ class Company extends Model
     }
 
 
-
     public function getLogoPathAttribute(){
-
-       
-
-       return  $this->logo ? $this->logo :['path'=> Media::defaultImagesArray(), 'raw_path'=> Media::getDefaultRawPathArray()] ;
+       return  $this->logo != null ? $this->logo :['path'=> Media::defaultImagesArray(), 'raw_path'=> Media::getDefaultRawPathArray()] ;
     }
 
 

@@ -80,7 +80,7 @@ class Media extends Model
         array_push($imagesizes, ['name' => 'original']);
         foreach ($imagesizes as $imagesize) {
             $folderName = $imagesize['name'];
-            $path = '/public/'.self::getFolderPath('storage', $folderName) . $this->name;
+            $path = self::getFolderPath('/storage/app/public/', $folderName) . $this->name;
             $imageArray[$folderName] = $path;
         }
         return $imageArray;
@@ -93,7 +93,7 @@ class Media extends Model
         array_push($imagesizes, ['name' => 'original']);
         foreach ($imagesizes as $imagesize) {
             $folderName = $imagesize['name'];
-            $path = '/public/' . self::getFolderPath('storage', $folderName) . '/default.jpg';
+            $path = asset('assets/images/defaults/' . $folderName . '/default.jpg');
             $imageArray[$folderName] = $path;
         }
         return $imageArray;

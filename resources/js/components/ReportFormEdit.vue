@@ -113,10 +113,12 @@
                         :glow="2"
                         :animate="true"
                         :inline="true"
+                          :show-rating="false"
                         :star-size="starSize"
                         v-model="site_section.rating"
                       >
                       </star-rating>
+                      <span class="text-primary"><strong> {{ site_section.rating }} / 10 </strong></span>
                     </div>
                     <div class="col-md-12 mt-3">
                       <label>Remarks</label>
@@ -159,6 +161,43 @@
           </button>
         </div>
       </div>
+
+
+         <div  class="card m-b-30 mt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+                   <!-- <div class="col-md-12">
+                  <label>Overall Rating</label>
+                  <star-rating
+                          style="margin-top: 28px"
+                          :max-rating="10"
+                          :glow="2"
+                          :animate="true"
+                          :inline="true"
+                          :star-size="starSize"
+                          :show-rating="false"
+                          v-model="form.overall_rating"
+                        >
+                        </star-rating>
+                        <span class="text-primary"><strong> {{form.overall_rating }} / 10 </strong></span>
+                </div> -->
+                <div class="col-md-12 mt-3">
+                  <label>Audditor's Comment</label>
+                   <textarea
+                          v-model="form.creator_comment"
+                          class="form-control"
+                          placeholder="Write something"
+                        ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
        <div class="card m-b-30 mt-4">
         <div class="row">
           <div class="col-md-12">
@@ -229,6 +268,8 @@ export default {
         _method: "PUT",
         id: "",
         date: "",
+        creator_comment: "",
+        overall_rating: "0",
         signature_id: null,
         site_sections: [],
       },
@@ -264,6 +305,8 @@ export default {
     this.form.date = this.recordArray.date;
     this.form.id = this.recordArray.id;
     this.form.signature_id = this.recordArray.signature_id;
+    this.form.creator_comment = this.recordArray.creator_comment;
+    this.form.overall_rating = this.recordArray.overall_rating;
     this.selected_data.signature = this.recordArray.signature.path['original'];
     this.recordArray.report_sections.forEach((report_section, key) => {
       this.setSectionData(report_section);

@@ -12,6 +12,18 @@
             margin-top: -105px;
         }
 
+        .company-details {
+            position: absolute;
+            right: 0px;
+            margin-top: 100px;
+
+        }
+        .company-contacts {
+            position: absolute;
+            right: 0px;
+            margin-top: 120px;
+        }
+
         .site-name>* {
             margin-top: 150px;
             left: 50%;
@@ -54,6 +66,8 @@
             margin-bottom: 0px;
         }
 
+
+
     </style>
 </head>
 
@@ -82,14 +96,23 @@
                 ],
             ];
             $type = pathinfo($logoUrl, PATHINFO_EXTENSION);
-            $logoData = file_get_contents($logoUrl, false, stream_context_create($arrContextOptions));
+            try {
+                           $logoData = file_get_contents($logoUrl, false, stream_context_create($arrContextOptions));
+            } catch (\Exception $e) {
+                          $logoData = "";
+            }
+
             $logoBase64Data = base64_encode($logoData);
             $logoData = 'data:image/' . $type . ';base64,' . $logoBase64Data;
             ?>
             <img style="width: 120px;height:100px;float: right;" src="{{ $logoData }}">
-        <?php
+            <?php
         }
         ?>
+        <div style="color:rgb(66, 66, 66)" class="company-details" >{{ $report->site->company->name }}</div>
+        <div style="color:rgb(66, 66, 66)" class="company-contacts" >{{ $report->site->company->contact_no1 }} @if ($report->site->company->contact_no2 != null)
+            / {{ $report->site->company->contact_no2 }}
+        @endif  </div>
         </div>
 
         <div class="site-name">
@@ -126,16 +149,18 @@
                                     ],
                                 ];
                                 $type = pathinfo($avatarUrl, PATHINFO_EXTENSION);
-                                $avatarData = file_get_contents($avatarUrl, false, stream_context_create($arrContextOptions));
+
+                                try {
+                                    $avatarData = file_get_contents($avatarUrl, false, stream_context_create($arrContextOptions));
+                                } catch (\Exception $e) {
+                                    $avatarData = '';
+                                }
                                 $avatarBase64Data = base64_encode($avatarData);
                                 $imageData = 'data:image/' . $type . ';base64,' . $avatarBase64Data;
 
                                 ?>
-
                                 <img style="margin-top: {{ $imageTopMargin }};" height="{{ $imageDefaultHeight }}"
                                     width="{{ $imageDefaultWidth }}" src="{{ $imageData }}">
-
-
 
                             @endforeach
                         </td>
@@ -146,14 +171,22 @@
             <br />
             <br />
             <table width="100%">
-                @if( $report->site_admin_comment != null)
-                <tr>
-                    <td colspan>
-                        <h5 style="display: inline">Site Admin Comment : </h5>
-                        <span>{{ $report->site_admin_comment }}</span>
-                    </td>
-                </tr>
-                @endif
+                 {{-- @if ($report->creator_comment != null) --}}
+                    <tr>
+                        <td colspan>
+                            <h5 style="display: inline">Auditor's Comment : </h5>
+                            <span>{{ $report->creator_comment }}</span>
+                        </td>
+                    </tr>
+                {{-- @endif --}}
+                {{-- @if ($report->site_admin_comment != null) --}}
+                    <tr>
+                        <td colspan>
+                            <h5 style="display: inline">Site Admin Comment : </h5>
+                            <span>{{ $report->site_admin_comment }}</span>
+                        </td>
+                    </tr>
+                {{-- @endif --}}
                 @if ($report->siteAdminMedias->count() > 0)
                     <tr>
                         <td>
@@ -168,15 +201,17 @@
                                     ],
                                 ];
                                 $type = pathinfo($siteAdminImageUrl, PATHINFO_EXTENSION);
-                                $siteAdminImageData = file_get_contents($siteAdminImageUrl, false, stream_context_create($arrContextOptions));
+                                try {
+                                    $siteAdminImageData = file_get_contents($siteAdminImageUrl, false, stream_context_create($arrContextOptions));
+                                } catch (\Exception $e) {
+                                    $siteAdminImageData = '';
+                                }
                                 $siteAdminImageBase64Data = base64_encode($siteAdminImageData);
                                 $adminCommentData = 'data:image/' . $type . ';base64,' . $siteAdminImageBase64Data;
 
                                 ?>
-
                                 <img style="margin-top: {{ $imageTopMargin }};" height="{{ $imageDefaultHeight }}"
                                     width="{{ $imageDefaultWidth }}" src="{{ $adminCommentData }}">
-
 
                             @endforeach
                         </td>
@@ -214,7 +249,12 @@
                             ],
                         ];
                         $type = pathinfo($signatureUrl, PATHINFO_EXTENSION);
-                        $signatureData = file_get_contents($signatureUrl, false, stream_context_create($arrContextOptions));
+                        try {
+                            $signatureData = file_get_contents($signatureUrl, false, stream_context_create($arrContextOptions));
+                        } catch (\Exception $e) {
+                            $signatureData = '';
+                        }
+
                         $signatureBase64Data = base64_encode($signatureData);
                         $signatureImageData = 'data:image/' . $type . ';base64,' . $signatureBase64Data;
 

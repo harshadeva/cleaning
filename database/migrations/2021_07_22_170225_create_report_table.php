@@ -20,8 +20,10 @@ class CreateReportTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('signature_id');
             $table->date('date');
+            $table->unsignedInteger('overall_rating')->default(0);
             $table->text('supervisor_comment')->nullable();
             $table->text('site_admin_comment')->nullable();
+            $table->text('creator_comment')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
 

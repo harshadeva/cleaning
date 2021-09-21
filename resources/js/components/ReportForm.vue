@@ -93,7 +93,6 @@
                         <label for="section">Section</label>
                         <v-select
                           v-model="site_section.section"
-                          :options="sectionsArray"
                           label="name"
                           @input="sectionChanged($event, index)"
                         />
@@ -252,7 +251,7 @@
 </template>
 <script>
 export default {
-  props: ["sites", "employees", "sections"],
+  props: ["sites", "employees"],
   data() {
     return {
       dropzoneOptions: {
@@ -286,9 +285,6 @@ export default {
     },
     employeesArray() {
       return JSON.parse(this.employees);
-    },
-    sectionsArray() {
-      return JSON.parse(this.sections);
     },
     starSize() {
       let screenWidth = screen.width;

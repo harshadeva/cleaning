@@ -22,12 +22,21 @@
               >
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-6">
+                      <div class="col-md-4">
                       <label>Section</label>
+                       <input
+                    type="text"
+                    v-model="site_section.section"
+                    class="form-control"
+                    placeholder="Section name"
+                  />
+                    </div>
+                    <div class="col-md-4">
+                      <label>Employee</label>
                       <v-select
-                        v-model="site_section.section"
-                        :options="sections"
-                        @input="sectionChanged($event, index)"
+                        v-model="site_section.employee"
+                        :options="employees"
+                        @input="employeeChanged($event, index)"
                         label="name"
                       />
                     </div>
@@ -69,7 +78,7 @@
 </template>
 <script>
 export default {
-  props: ["sections", "site"],
+  props: ["employees", "site"],
   data() {
     return {
       form: {
@@ -89,8 +98,10 @@ export default {
     loadSections() {
       this.site.site_sections.forEach((item) => {
         this.form.site_sections.push({
-          section_id: item.section_id,
-          section: item.section,
+            id:item.id,
+          employee_id: item.employee_id,
+          employee: item.employee,
+          section: item.name,
         });
       });
     },
@@ -98,12 +109,12 @@ export default {
       event.preventDefault();
       this.form.site_sections.splice(index, 1);
     },
-    sectionChanged(item, index) {
+    employeeChanged(item, index) {
       if (item != null) {
-        this.form.site_sections[index].section_id =
-          this.form.site_sections[index].section.id;
+        this.form.site_sections[index].employee_id =
+          this.form.site_sections[index].employee.id;
       } else {
-        this.form.site_sections[index].section_id = null;
+        this.form.site_sections[index].employee_id = null;
       }
     },
     addRepeater(event = null) {
@@ -111,8 +122,10 @@ export default {
         event.preventDefault();
       }
       let object = {
+          id:null,
         section: null,
-        section_id: "",
+        employee: null,
+        employee_id: "",
       };
       this.form.site_sections.push(object);
     },

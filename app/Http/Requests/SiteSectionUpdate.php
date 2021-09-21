@@ -32,7 +32,8 @@ class SiteSectionUpdate extends FormRequest
         return [
             'site_id'=>'required',
             'site_sections'=>'array|min:1',
-            'site_sections.*.section_id'=>'required|numeric',
+            'site_sections.*.employee_id'=>'required|numeric',
+            'site_sections.*.section'=>'required',
         ];
     }
 
@@ -41,7 +42,7 @@ class SiteSectionUpdate extends FormRequest
         return [
         'site_id'=>'site',
         'site_sections'=>'site section',
-        'site_sections.*.section_id'=>'section'
+            'site_sections.*.employee_id'=>'employee'
         ];
     }
 }

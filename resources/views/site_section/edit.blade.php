@@ -26,7 +26,7 @@
     <!-- Start Contentbar -->
     <div class="contentbar">
         <div id="app">
-        <site-sections :site="{{ $site }}" :sections="{{ $sections }}"></site-sections>
+        <site-sections :site="{{ $site }}" :employees="{{ $employees }}"></site-sections>
         </div>
     </div>
     <!-- End Contentbar -->

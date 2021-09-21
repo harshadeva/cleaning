@@ -74,7 +74,7 @@
 
             <div class="row mb-5 mt-n3">
                 <div class="col-md-12">
-                    @include('components.buttons.submit')
+                    @include('components.buttons.submit',['label'=>"Submit & Add Sections"])
                 </div>
             </div>
         </form>

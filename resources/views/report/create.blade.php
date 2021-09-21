@@ -26,7 +26,7 @@
     <!-- Start Contentbar -->
     <div class="contentbar">
         <div id="app">
-            <report-form sections="{{ $sections }}" employees="{{ $employees }}" sites="{{ $sites }}"></report-form>
+            <report-form  employees="{{ $employees }}" sites="{{ $sites }}"></report-form>
         </div>
     </div>
     <!-- End Contentbar -->

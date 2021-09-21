@@ -47,13 +47,12 @@ class ReportController extends Controller
     public function create(Request $request)
     {
         try {
-            $sites = Site::with(['siteSections.section'])->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id)->get();
-            $sections = Section::active()->get();
+            $sites = Site::with(['siteSections.employee'])->where('company_id', User::find(Auth::user()->id)->employees()->first()->company_id)->get();
             $employees = Employee::with(['user'])->auth()->worker()->active()->get()->map(function ($item) {
                 $item['name'] = $item->user->name;
                 return $item;
             });
-            return view('report.create', ['sites' => $sites, 'employees' => $employees, 'sections' => $sections]);
+            return view('report.create', ['sites' => $sites, 'employees' => $employees]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }
@@ -127,9 +126,8 @@ class ReportController extends Controller
     {
         try {
             $record = Report::with(['site','signature', 'reportSections.employee.user', 'reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
-            $sections = Section::active()->get();
             $employees = Employee::with(['user'])->auth()->worker()->active()->get();
-            return view('report.edit', ['record' => $record, 'employees' => $employees, 'sections' => $sections]);
+            return view('report.edit', ['record' => $record, 'employees' => $employees]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
         }

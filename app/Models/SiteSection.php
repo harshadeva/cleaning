@@ -15,9 +15,9 @@ class SiteSection extends Model
         return $query->where('status',1);
     }
 
-    public function section()
+    public function employee()
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsTo(Employee::class);
     }
 
     public function site()

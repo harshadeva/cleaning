@@ -65,7 +65,7 @@
                     class="form-control"
                     type="text"
                     disabled
-                    :value="report_section.section.name"
+                    :value="report_section.section_name"
                   />
                 </div>
                 <div class="col-md-7">

@@ -34,42 +34,39 @@ class ReportStoreRequest extends FormRequest
             'signature_id' => 'required|exists:media,id',
             'date' => 'required|date',
             'site_sections'=>'array|required|min:1',
-            'site_sections.*.section_id'=>'required|numeric|exists:section,id',
+            'site_sections.*.section_name'=>'required',
             'site_sections.*.rating'=>'required|numeric|min:0|max:10',
             'site_sections.*.employee_id'=>'required|numeric',
             'site_sections.*.remark'=>'nullable|max:2500',
         ];
     }
 
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
+    // public function withValidator($validator)
+    // {
+    //     $validator->after(function ($validator) {
 
-            if ($validator->errors()->count() > 0) {
-                return;
-            }
+    //         if ($validator->errors()->count() > 0) {
+    //             return;
+    //         }
 
-            $sections = $this->site_sections;
-            foreach ($sections as $section) {
-                $collection = collect($sections);
-                if (!isset($section['section_id']) || $section['section_id']  == null) {
-                    return $validator->errors()->add('section_id', "Please select section");
-                }
-                if (!isset($section['employee_id']) || $section['section_id']  == null) {
-                    return $validator->errors()->add('employee_id', "Please select employee");
-                }
-                $exists = $collection->where('section_id', $section['section_id'])->where('employee_id', $section['employee_id'])->count();
-                if ($exists > 1) {
-                    return $validator->errors()->add('employee_id', "Employee has repeated in same section");
-                }
-            }
-        });
-    }
+    //         $sections = $this->site_sections;
+    //         foreach ($sections as $section) {
+    //             $collection = collect($sections);
+    //             if (!isset($section['employee_id']) || $section['section_id']  == null) {
+    //                 return $validator->errors()->add('employee_id', "Please select employee");
+    //             }
+    //             // $exists = $collection->where('section_id', $section['section_id'])->where('employee_id', $section['employee_id'])->count();
+    //             // if ($exists > 1) {
+    //             //     return $validator->errors()->add('employee_id', "Employee has repeated in same section");
+    //             // }
+    //         }
+    //     });
+    // }
 
     public function attributes(){
         return [
             'signature_id'=> 'signature',
-            'site_sections.*.section_id'=> 'section name',
+            'site_sections.*.section_name'=> 'section name',
             'site_sections.*.rating'=> 'rating',
             'site_sections.*.employee_id'=> 'employee',
             'site_sections.*.remark'=> 'remark',

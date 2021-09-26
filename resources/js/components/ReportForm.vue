@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit="submitForm" >
+    <form @submit="submitForm">
       <div class="card m-b-30">
         <div class="row">
           <div class="col-md-12">
@@ -90,11 +90,13 @@
                     <!-- <hr /> -->
                     <b-row>
                       <div class="col-md-6">
-                        <label for="section">Section</label>
-                        <v-select
-                          v-model="site_section.section"
-                          label="name"
-                          @input="sectionChanged($event, index)"
+                        <label>Section</label>
+                        <input
+                          type="text"
+                          readonly
+                          v-model="site_section.section_name"
+                          class="form-control"
+                          placeholder="Section name"
                         />
                       </div>
                       <div class="col-md-6">
@@ -118,7 +120,11 @@
                           v-model="site_section.rating"
                         >
                         </star-rating>
-                        <span class="text-primary"><strong> {{ site_section.rating }} / 10 </strong></span>
+                        <span class="text-primary"
+                          ><strong>
+                            {{ site_section.rating }} / 10
+                          </strong></span
+                        >
                       </div>
                       <div class="col-md-12 mt-3">
                         <label>Remarks</label>
@@ -148,20 +154,20 @@
           </div>
         </div>
       </div>
-      <div v-if="selected_data.site != null" class="row mt-2">
+      <!-- <div v-if="selected_data.site != null" class="row mt-2">
         <div class="col-md-12 d-flex flex-row-reverse">
           <button class="btn btn-info text-white" @click="addRepeater()">
             <em class="fa fa-plus"></em> Add Another Section
           </button>
         </div>
-      </div>
+      </div> -->
 
       <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
         <div class="row">
           <div class="col-md-12">
             <div class="card-body">
               <div class="row">
-                   <!-- <div class="col-md-12">
+                <!-- <div class="col-md-12">
                   <label>Overall Rating</label>
                   <star-rating
                           style="margin-top: 28px"
@@ -178,19 +184,17 @@
                 </div> -->
                 <div class="col-md-12 mt-3">
                   <label>Audditor's Comment</label>
-                   <textarea
-                          v-model="form.creator_comment"
-                          class="form-control"
-                          placeholder="Write something"
-                        ></textarea>
+                  <textarea
+                    v-model="form.creator_comment"
+                    class="form-control"
+                    placeholder="Write something"
+                  ></textarea>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
 
       <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
         <div class="row">
@@ -232,12 +236,7 @@
 
       <div v-if="selected_data.site != null" class="row pb-5 mt-1">
         <div class="col-md-12">
-          <button
-            name="submit"
-            class="btn btn-success"
-          >
-            Submit
-          </button>
+          <button name="submit" class="btn btn-success">Submit</button>
         </div>
       </div>
 
@@ -300,7 +299,7 @@ export default {
     },
   },
   mounted() {
-    this.addSection();
+    // this.addSection();
     this.form.date = new Date().toISOString().slice(0, 10);
   },
   methods: {
@@ -308,37 +307,37 @@ export default {
       this.form.site_sections = [];
       if (site && site.site_sections.length > 0) {
         site.site_sections.forEach((item) => {
+          console.log(item);
           let object = {
+            site_section_id: item.id,
             expanded: false,
-            section_id: item.section_id,
-            section_name: item.section.name,
-            employee_name: "Employee name",
+            section_name: item.name,
+            employee_name: item.employee.name,
             rating: 0,
-            employee_id: "",
+            employee_id: item.employee_id,
             remark: "",
-            section: item.section,
-            employee: null,
+            employee: item.employee,
             files: [],
           };
           this.form.site_sections.push(object);
         });
       }
     },
-    addSection() {
-      let object = {
-        expanded: false,
-        section_id: "",
-        section_name: "Section name",
-        employee_name: "Employee name",
-        rating: 0,
-        employee_id: "",
-        remark: "",
-        section: null,
-        employee: null,
-        files: [],
-      };
-      this.form.site_sections.push(object);
-    },
+    // addSection() {
+    //   let object = {
+    //     expanded: false,
+    //     section_id: "",
+    //     section_name: "Section name",
+    //     employee_name: "Employee name",
+    //     rating: 0,
+    //     employee_id: "",
+    //     remark: "",
+    //     section: null,
+    //     employee: null,
+    //     files: [],
+    //   };
+    //   this.form.site_sections.push(object);
+    // },
     signatureUpload(file) {
       let data = new FormData();
       data.append("file", file);
@@ -399,22 +398,24 @@ export default {
       this.form.site_sections[index].rating = rating;
     },
     /* Form repeater functions : Start */
-    addRepeater() {
-      event.preventDefault();
-      let newObject = {
-        expanded: false,
-        section_id: "",
-        section_name: "Section name",
-        employee_name: "Employee name",
-        rating: 0,
-        employee_id: "",
-        remark: "",
-        section: null,
-        employee: null,
-        files: [],
-      };
-      this.form.site_sections.push(newObject);
-    },
+    // addRepeater() {
+    //   event.preventDefault();
+    //   let newObject = {
+    //     id: null,
+    //     section_section_id: null,
+    //     expanded: false,
+    //     section_id: "",
+    //     section_name: "Section name",
+    //     employee_name: "Employee name",
+    //     rating: 0,
+    //     employee_id: "",
+    //     remark: "",
+    //     section: null,
+    //     employee: null,
+    //     files: [],
+    //   };
+    //   this.form.site_sections.push(newObject);
+    // },
 
     removeRepeater(event, index) {
       event.preventDefault();

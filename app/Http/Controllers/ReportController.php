@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
@@ -87,11 +88,13 @@ class ReportController extends Controller
         $arrayColumns = array_column($sections, 'id');
         ReportSection::where('report_id', $report->id)->whereNotIn('id', $arrayColumns)->delete();
         foreach ($sections as $section) {
+            Log::info($section);
             $reportSection =  ReportSection::updateOrCreate([
                 'id' => $section['id'] ?? null,
                 'report_id' => $report->id
             ], [
-                'section_id' => $section['section_id'],
+                'site_section_id' => $section['site_section_id'],
+                'section_name' => $section['section_name'],
                 'employee_id' => $section['employee_id'],
                 'rating' => $section['rating'],
                 'description' => $section['remark'],
@@ -115,7 +118,7 @@ class ReportController extends Controller
     public function show($id)
     {
         try {
-            $record = Report::with(['site', 'signature', 'reportSections.employee.user', 'reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
+            $record = Report::with(['site', 'signature', 'reportSections.employee.user', 'reportSections.reportSectionMedias.media'])->find($id);
             return view('report.show', ['record' => $record]);
         } catch (Exception $e) {
             return CatchErrors::render($e);
@@ -125,7 +128,7 @@ class ReportController extends Controller
     public function edit($id)
     {
         try {
-            $record = Report::with(['site','signature', 'reportSections.employee.user', 'reportSections.section', 'reportSections.reportSectionMedias.media'])->find($id);
+            $record = Report::with(['site','signature', 'reportSections.employee.user', 'reportSections.reportSectionMedias.media'])->find($id);
             $employees = Employee::with(['user'])->auth()->worker()->active()->get();
             return view('report.edit', ['record' => $record, 'employees' => $employees]);
         } catch (Exception $e) {

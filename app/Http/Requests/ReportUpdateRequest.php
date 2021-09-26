@@ -44,10 +44,10 @@ class ReportUpdateRequest extends FormRequest
 
             $sections = $this->site_sections;
             foreach ($sections as $section) {
-                if (!isset($section['section_id']) || $section['section_id']  == null) {
-                    return $validator->errors()->add('section_id', "Please select section");
-                }
-                if (!isset($section['employee_id']) || $section['section_id']  == null) {
+                // if (!isset($section['section_id']) || $section['section_id']  == null) {
+                //     return $validator->errors()->add('section_id', "Please select section");
+                // }
+                if (!isset($section['employee_id'])) {
                     return $validator->errors()->add('employee_id', "Please select employee");
                 }
             }

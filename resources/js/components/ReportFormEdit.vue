@@ -89,12 +89,13 @@
                   <hr />
                   <b-row>
                     <div class="col-md-6">
-                      <label for="section">Section</label>
-                      <v-select
-                        v-model="site_section.section"
-                        :options="sectionsArray"
-                        label="name"
-                        @input="sectionChanged($event, index)"
+                      <label>Section</label>
+                      <input
+                        type="text"
+                        readonly
+                        v-model="site_section.section_name"
+                        class="form-control"
+                        placeholder="Section name"
                       />
                     </div>
                     <div class="col-md-6">
@@ -113,12 +114,14 @@
                         :glow="2"
                         :animate="true"
                         :inline="true"
-                          :show-rating="false"
+                        :show-rating="false"
                         :star-size="starSize"
                         v-model="site_section.rating"
                       >
                       </star-rating>
-                      <span class="text-primary"><strong> {{ site_section.rating }} / 10 </strong></span>
+                      <span class="text-primary"
+                        ><strong> {{ site_section.rating }} / 10 </strong></span
+                      >
                     </div>
                     <div class="col-md-12 mt-3">
                       <label>Remarks</label>
@@ -154,21 +157,20 @@
           </div>
         </div>
       </div>
-      <div class="row mt-2">
+      <!-- <div class="row mt-2">
         <div class="col-md-12 d-flex flex-row-reverse">
           <button class="btn btn-info" @click="addRepeater">
             <em class="fa fa-plus"></em> Add Another Section
           </button>
         </div>
-      </div>
+      </div> -->
 
-
-         <div  class="card m-b-30 mt-4">
+      <div class="card m-b-30 mt-4">
         <div class="row">
           <div class="col-md-12">
             <div class="card-body">
               <div class="row">
-                   <!-- <div class="col-md-12">
+                <!-- <div class="col-md-12">
                   <label>Overall Rating</label>
                   <star-rating
                           style="margin-top: 28px"
@@ -185,11 +187,11 @@
                 </div> -->
                 <div class="col-md-12 mt-3">
                   <label>Audditor's Comment</label>
-                   <textarea
-                          v-model="form.creator_comment"
-                          class="form-control"
-                          placeholder="Write something"
-                        ></textarea>
+                  <textarea
+                    v-model="form.creator_comment"
+                    class="form-control"
+                    placeholder="Write something"
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -197,39 +199,44 @@
         </div>
       </div>
 
-
-       <div class="card m-b-30 mt-4">
+      <div class="card m-b-30 mt-4">
         <div class="row">
           <div class="col-md-12">
             <div class="card-body">
               <div class="row pb-5 mt-2">
                 <div class="col-md-12">
-                    <label>Signature</label>
-
+                  <label>Signature</label>
                 </div>
                 <div class="col-md-6">
-                  <VueSignaturePad v-if="signature_edited"
+                  <VueSignaturePad
+                    v-if="signature_edited"
                     :customStyle="{ border: '1px solid black' }"
                     width="100%"
                     height="100px"
                     ref="signaturePad"
                   />
-                        <img v-else alt="signature" height="100px" width="100%" :src="selected_data.signature">
-
+                  <img
+                    v-else
+                    alt="signature"
+                    height="100px"
+                    width="100%"
+                    :src="selected_data.signature"
+                  />
                 </div>
                 <div class="col-md-6">
                   <button
+                    v-on:click.stop.prevent
                     v-if="form.signature_id != null"
                     class="btn btn-success"
                   >
                     Confirmed <em class="fa fa-check"> </em>
                   </button>
                   <button v-else class="btn btn-primary" @click="save">
-                    Confirm <em class="fa fa-question-circle"></em>
+                    Confirmed
                   </button>
                   <br />
                   <button class="btn btn-danger mt-2" @click="undo">
-                    Clear &nbsp;<em class="fa fa-history"></em>
+                    &nbsp; Clear &nbsp;&nbsp;
                   </button>
                 </div>
               </div>
@@ -249,7 +256,7 @@
 </template>
 <script>
 export default {
-  props: ["record", "employees", "sections"],
+  props: ["record", "employees"],
   data() {
     return {
       dropzoneOptions: {
@@ -263,7 +270,7 @@ export default {
             .content,
         },
       },
-      signature_edited:false,
+      signature_edited: false,
       form: {
         _method: "PUT",
         id: "",
@@ -273,9 +280,9 @@ export default {
         signature_id: null,
         site_sections: [],
       },
-      selected_data:{
-          signature:""
-      }
+      selected_data: {
+        signature: "",
+      },
     };
   },
   computed: {
@@ -284,9 +291,6 @@ export default {
     },
     employeesArray() {
       return JSON.parse(this.employees);
-    },
-    sectionsArray() {
-      return JSON.parse(this.sections);
     },
     starSize() {
       let screenWidth = screen.width;
@@ -307,16 +311,20 @@ export default {
     this.form.signature_id = this.recordArray.signature_id;
     this.form.creator_comment = this.recordArray.creator_comment;
     this.form.overall_rating = this.recordArray.overall_rating;
-    this.selected_data.signature = this.recordArray.signature.path['original'];
+    this.selected_data.signature = this.recordArray.signature.path["original"];
     this.recordArray.report_sections.forEach((report_section, key) => {
       this.setSectionData(report_section);
       this.setDropzones(report_section, key);
     });
-     this.$refs.signaturePad.lockSignaturePad();
-     this.$refs.signaturePad.addImages([this.recordArray.signature.path['original']]);
+    if ("signaturePad" in this.$options.components) {
+      this.$refs.signaturePad.lockSignaturePad();
+      this.$refs.signaturePad.addImages([
+        this.recordArray.signature.path["original"],
+      ]);
+    }
   },
   methods: {
-       signatureUpload(file) {
+    signatureUpload(file) {
       let data = new FormData();
       data.append("file", file);
       const config = {
@@ -337,11 +345,10 @@ export default {
     },
     undo() {
       event.preventDefault();
-     this.signature_edited = true;
+      this.signature_edited = true;
       this.form.signature_id = null;
       this.$refs.signaturePad.undoSignature();
-     this.$refs.signaturePad.openSignaturePad();
-
+      this.$refs.signaturePad.openSignaturePad();
     },
     save() {
       event.preventDefault();
@@ -359,15 +366,14 @@ export default {
     setSectionData(report_section) {
       let object = {
         expanded: false,
-        section_name: report_section.section.name,
-        employee_name: report_section.employee.name,
         id: report_section.id,
-        section_id: report_section.section_id,
+        site_section_id: report_section.site_section_id,
+        section_name: report_section.section_name,
+        employee_name: report_section.employee.name,
         rating: report_section.rating,
         remark: report_section.description,
         employee_id: report_section.employee_id,
         employee: report_section.employee,
-        section: report_section.section,
         files: report_section.report_section_medias.map((a) => a.media.id),
       };
       this.form.site_sections.push(object);
@@ -420,33 +426,30 @@ export default {
       }
     },
     /* Form repeater functions : Start */
-    addRepeater() {
-      event.preventDefault();
-      let newObject = {
-        id: "",
-        section_id: "",
-        rating: 0,
-        employee_id: "",
-        remark: "",
-        section_name: "Section name",
-        employee_name: "Employee name",
-        expanded: null,
-        section: null,
-        employee: null,
-        files: [],
-      };
-      this.form.site_sections.push(newObject);
-    },
+    // addRepeater() {
+    //   event.preventDefault();
+    //   let newObject = {
+    //     id: "",
+    //     section_id: "",
+    //     rating: 0,
+    //     employee_id: "",
+    //     remark: "",
+    //     section_name: "Section name",
+    //     employee_name: "Employee name",
+    //     expanded: null,
+    //     section: null,
+    //     employee: null,
+    //     files: [],
+    //   };
+    //   this.form.site_sections.push(newObject);
+    // },
 
-    removeRepeater(index) {
-      event.preventDefault();
-      this.form.site_sections.splice(index, 1);
-    },
+    // removeRepeater(index) {
+    //   event.preventDefault();
+    //   this.form.site_sections.splice(index, 1);
+    // },
     /* Form repeater functions : End */
-    sectionChanged(item, index) {
-      this.form.site_sections[index].section_id = item ? item.id : null;
-      this.form.site_sections[index].section_name = item ? item.name : "";
-    },
+
     employeeChanged(item, index) {
       this.form.site_sections[index].employee_id = item ? item.id : null;
       this.form.site_sections[index].employee_name = item ? item.name : "";
@@ -484,7 +487,8 @@ export default {
         date: "",
         site_sections: [
           {
-            section_id: "",
+            id: null,
+            site_section_id: null,
             rating: 0,
             employee_id: "",
             remark: "",

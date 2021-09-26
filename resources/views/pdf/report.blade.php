@@ -128,7 +128,7 @@
                 </tr>
                 @foreach ($report->reportSections as $reportSection)
                     <tr class="details">
-                        <td>{{ $reportSection->section->name }}</td>
+                        <td>{{ $reportSection->section_name }}</td>
                         <td>{{ $reportSection->employee->name }}</td>
                         <td>{{ $reportSection->rating }} <span style="opacity: 0.6"> /
                                 {{ config('common.rating__by') }}

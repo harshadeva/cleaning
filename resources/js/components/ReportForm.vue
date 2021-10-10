@@ -208,7 +208,7 @@
                   <VueSignaturePad
                     :customStyle="{ border: '1px solid black' }"
                     width="100%"
-                    height="100px"
+                    height="120px"
                     ref="signaturePad"
                   />
                 </div>
@@ -224,7 +224,7 @@
                     Confirm
                   </button>
                   <br />
-                  <button class="btn btn-danger mt-2" @click="$event;">
+                  <button class="btn btn-danger mt-2" @click="undo($event)">
                     &nbsp; Clear &nbsp;&nbsp;
                   </button>
                 </div>

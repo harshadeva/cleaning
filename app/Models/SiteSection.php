@@ -26,8 +26,12 @@ class SiteSection extends Model
     }
 
     public function getAvarage(){
-        return ReportSection::where('section_id',$this->section_id)->whereHas('report',function($q){
+        $sum =  ReportSection::where('site_section_id',$this->id)->whereHas('report',function($q){
             $q->where('site_id',$this->site_id);
         })->active()->sum('rating');
+        $count =  ReportSection::where('site_section_id',$this->id)->whereHas('report',function($q){
+            $q->where('site_id',$this->site_id);
+        })->active()->count();
+        return round($sum / $count,1);
     }
 }

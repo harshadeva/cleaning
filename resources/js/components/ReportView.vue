@@ -32,13 +32,14 @@
                 >
                 </textarea>
               </div>
-              <div v-if="report.site_admin_comment != null" class="col-md-12 mt-2">
+              <div class="col-md-12 mt-2">
                 <label>Site Admin Commnent</label>
-                <textarea
+                <textarea v-if="report.site_admin_comment != null" 
                   class="form-control"
                   :value="report.site_admin_comment"
                   disabled
                 >
+                <span v-else>There are no commnent</span>
                 </textarea>
               </div>
             </div>
@@ -77,12 +78,14 @@
                     disabled
                   />
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mt-3">
                   <label
                     >Rating
-                    <span class="vue-star-rating-rating-text">{{
-                      report_section.rating
-                    }}</span>
+                    &nbsp; <span class="text-primary"
+                          ><strong>
+                            {{ report_section.rating }} / 10
+                          </strong></span
+                        >
                   </label>
                   <star-rating
                     :max-rating="10"
@@ -94,7 +97,7 @@
                   >
                   </star-rating>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mt-3">
                   <label>Remarks</label>
                   <textarea
                     class="form-control"

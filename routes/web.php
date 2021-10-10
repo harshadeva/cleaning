@@ -12,6 +12,7 @@ use App\Http\Controllers\SiteSectionController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Models\Media;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
+
 
 Route::get('test_1', function () {
             return storage_path();
@@ -34,6 +39,7 @@ Route::middleware(['auth'])->group(
         Route::get('test', function () {
             return view('pdf.report');
         });
+        Route::get('/home', [HomeController::class, 'index']);//redirect after login to this url
         Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::prefix('admin')->name('admin.')->group(
             function () {

@@ -123,7 +123,7 @@
                 <tr>
                     <th>Section</th>
                     <th>Employee</th>
-                    <th>Stars</th>
+                    <th>Rating</th>
                     <th>Remark</th>
                 </tr>
                 @foreach ($report->reportSections as $reportSection)

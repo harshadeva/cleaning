@@ -194,7 +194,7 @@ code {
   border-right: 1px solid rgba(0, 0, 0, 0.03);
   z-index: 9;
   transition: all 0.3s ease;
-      border-radius: 0px 10px 10px 0;
+      /* border-radius: 0px 10px 10px 0; */
 }
 
 .rightbar {

@@ -81,7 +81,7 @@
                                             @if (isset($record) && count($record->siteSections) > 0)
                                                 @foreach ($record->siteSections as $siteSection)
                                                     <tr>
-                                                        <td>{{ $siteSection->section->name }}</td>
+                                                        <td>{{ $siteSection->name }}</td>
                                                         <td style="text-align: center" >{{ $siteSection->getAvarage() }} / {{config('common.rating__by')  }} </td>
                                                     </tr>
                                                 @endforeach

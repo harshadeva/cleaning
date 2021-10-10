@@ -212,7 +212,7 @@
                     v-if="signature_edited"
                     :customStyle="{ border: '1px solid black' }"
                     width="100%"
-                    height="100px"
+                    height="120px"
                     ref="signaturePad"
                   />
                   <img

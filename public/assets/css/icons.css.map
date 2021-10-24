@@ -25,7 +25,6 @@
         "../icons/ionicons/scss/_ionicons-icons.scss",
         "../icons/themify-icons/themify-icons.scss",
         "../icons/dripicons/dripicons.scss",
-        "../icons/typicons/typicons.scss"
     ],
     "names": [],
     "file": "icons.css"

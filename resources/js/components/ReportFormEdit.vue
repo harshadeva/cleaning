@@ -199,6 +199,26 @@
         </div>
       </div>
 
+      <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+               
+                <div class="col-md-12 mt-3">
+                  <label>Site Admin's Comment</label>
+                  <textarea
+                    v-model="form.site_admin_comment"
+                    class="form-control"
+                    placeholder="Write something"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="card m-b-30 mt-4">
         <div class="row">
           <div class="col-md-12">
@@ -276,6 +296,7 @@ export default {
         id: "",
         date: "",
         creator_comment: "",
+        site_admin_comment: "",
         overall_rating: "0",
         signature_id: null,
         site_sections: [],
@@ -310,6 +331,7 @@ export default {
     this.form.id = this.recordArray.id;
     this.form.signature_id = this.recordArray.signature_id;
     this.form.creator_comment = this.recordArray.creator_comment;
+    this.form.site_admin_comment = this.recordArray.site_admin_comment;
     this.form.overall_rating = this.recordArray.overall_rating;
     this.selected_data.signature = this.recordArray.signature.path["original"];
     this.recordArray.report_sections.forEach((report_section, key) => {

@@ -109,10 +109,14 @@
             <?php
         }
         ?>
-        <div style="color:rgb(66, 66, 66)" class="company-details" >{{ $report->site->company->name }}</div>
-        <div style="color:rgb(66, 66, 66)" class="company-contacts" >{{ $report->site->company->contact_no1 }} @if ($report->site->company->contact_no2 != null)
+        <div style="color:rgb(66, 66, 66)" class="company-details" >{{ $report->site->company->name }} <br/>
+            {{ $report->site->company->contact_no1 }} @if ($report->site->company->contact_no2 != null)
             / {{ $report->site->company->contact_no2 }}
-        @endif  </div>
+        @endif
+        </div>
+        {{-- <div style="color:rgb(66, 66, 66)" class="company-contacts" >{{ $report->site->company->contact_no1 }} @if ($report->site->company->contact_no2 != null)
+            / {{ $report->site->company->contact_no2 }}
+        @endif  </div> --}}
         </div>
 
         <div class="site-name">

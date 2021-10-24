@@ -195,6 +195,26 @@
           </div>
         </div>
       </div>
+      
+      <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+               
+                <div class="col-md-12 mt-3">
+                  <label>Site Admin's Comment</label>
+                  <textarea
+                    v-model="form.site_admin_comment"
+                    class="form-control"
+                    placeholder="Write something"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div v-if="selected_data.site != null" class="card m-b-30 mt-4">
         <div class="row">
@@ -233,13 +253,11 @@
           </div>
         </div>
       </div>
-
       <div v-if="selected_data.site != null" class="row pb-5 mt-1">
         <div class="col-md-12">
           <button name="submit" class="btn btn-success">Submit</button>
         </div>
       </div>
-
       <div v-if="selected_data.site == null" class="row pb-5 mt-2">
         <div class="col-md-12 text-center">
           <h5 style="opacity: 0.5">Select site to load data !</h5>
@@ -269,6 +287,7 @@ export default {
         site_id: "",
         date: "",
         creator_comment: "",
+        site_admin_comment: "",
         overall_rating: "0",
         signature_id: null,
         site_sections: [],
@@ -307,7 +326,6 @@ export default {
       this.form.site_sections = [];
       if (site && site.site_sections.length > 0) {
         site.site_sections.forEach((item) => {
-          console.log(item);
           let object = {
             site_section_id: item.id,
             expanded: false,
@@ -324,8 +342,10 @@ export default {
       }
     },
     // addSection() {
+
     //   let object = {
     //     expanded: false,
+    
     //     section_id: "",
     //     section_name: "Section name",
     //     employee_name: "Employee name",
@@ -333,6 +353,7 @@ export default {
     //     employee_id: "",
     //     remark: "",
     //     section: null,
+    
     //     employee: null,
     //     files: [],
     //   };

@@ -9,11 +9,11 @@
 
     <!-- styles -->
     @include('layouts.styles')
-    <input type="hidden" name="csrf-token" value="{{ csrf_token() }}">
     @routes
 </head>
 
 <body class="vertical-layout">
+    <div id="app">
 
     <!-- Start Containerbar -->
     <div id="containerbar">
@@ -30,6 +30,7 @@
         </div>
         @yield('content')
 
+    </div>
     </div>
 
     <!-- scripts -->

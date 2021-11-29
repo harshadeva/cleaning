@@ -38,7 +38,7 @@
                                         @csrf
                                         <div class="form-head">
                                             <a href="{{ url('/') }}" class="logo"><img
-                                                    src="{{ asset('assets/images/login_form.jpg') }}" class="img-fluid"
+                                                    src="{{ asset('assets/images/login_form.png') }}" class="img-fluid"
                                                     alt="logo"></a>
                                         </div>
                                         <h4 class="text-primary my-4">Log in !</h4>

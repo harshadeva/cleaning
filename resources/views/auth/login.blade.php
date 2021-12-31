@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Cleaning service monitoring tool">
+    <meta name="description" content="Auditdeck">
     <meta name="author" content="Harshadeva priyankara bandara">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>CSMT - Login</title>
+    <title>Auditdeck - Login</title>
     <!-- Fevicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+    {{-- <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}"> --}}
     <!-- Start CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
@@ -67,12 +67,12 @@
                                                         for="rememberme">Remember me</label>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            {{-- <div class="col-sm-6">
                                                 <div class="forgot-psw">
                                                     <a id="forgot-psw" href="{{ url('/user-forgotpsw') }}"
                                                         class="font-14">Forgot password?</a>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <button type="submit" class="btn btn-success btn-lg btn-block font-18">Log
                                             in</button>
